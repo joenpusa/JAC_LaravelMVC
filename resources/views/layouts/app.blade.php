@@ -18,6 +18,7 @@
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/custom.css') }}" rel="stylesheet">
 </head>
 <body>
     <div id="app">
@@ -87,6 +88,24 @@
         <main class="py-4">
             @yield('content')
         </main>
+        <footer class="bg-dark text-light">
+            <div class="container">
+                <div class="row text-center">
+                    <div class="col-md-4">
+                        <h5>Columna 1</h5>
+                        <p>Contenido de la primera columna</p>
+                    </div>
+                    <div class="col-md-4">
+                        <h5>Columna 2</h5>
+                        <p>Contenido de la segunda columna</p>
+                    </div>
+                    <div class="col-md-4">
+                        <h5>Columna 3</h5>
+                        <p>Contenido de la tercera columna</p>
+                    </div>
+                </div>
+            </div>
+        </footer>
     </div>
 </body>
 </html>
