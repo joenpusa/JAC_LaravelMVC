@@ -1,27 +1,54 @@
-/* Asegura que el cuerpo de la página ocupe toda la altura */
+
 html, body {
     height: 100%;
     margin: 0;
-    display: flex;
-    flex-direction: column;
 }
 
-/* Contenedor principal que crece con el contenido */
+
 .container {
     flex: 1;
 }
 
-/* Pie de página que se mantiene fijo en la parte inferior */
+#app {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+main {
+    flex-grow: 1;
+}
+
 footer {
-    background-color: #212529;
+    background-color: #559be0;
     color: white;
-    padding: 20px 0;
+    padding: 20px 0 0 0;
     text-align: center;
     width: 100%;
     flex-shrink: 0;
 }
 
-/* Estilos adicionales para las columnas */
 footer .row div {
     padding: 10px;
+}
+
+.copyright {
+    background-color: #628aaa;
+    padding: 20px;
+    text-align: center;
+    width: 100%;
+    margin-top: 0;
+}
+.logo-footer {
+    width: 70%;
+    padding: 5px;
+}
+
+/* nav */
+.bg-dark {
+    background-color: #333 !important; /* Cambia a un color oscuro específico si lo deseas */
+}
+
+.text-light {
+    color: #fff !important;
 }
