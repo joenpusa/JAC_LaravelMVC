@@ -4,6 +4,17 @@
 @section('content')
     <div class="container">
         <h1>{{ isset($junta) ? 'Editar' : 'Crear' }} Junta</h1>
+        @if ($errors->any())
+            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                <p>Proceso no realizado:</p>
+                <ul>
+                    @foreach ($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                    @endforeach
+                </ul>
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        @endif
         <form action="{{ isset($junta) ? route('juntas.update', $junta->id) : route('juntas.store') }}" method="POST">
             @csrf
             @if (isset($junta))

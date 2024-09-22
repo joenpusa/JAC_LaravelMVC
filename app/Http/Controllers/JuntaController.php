@@ -40,6 +40,33 @@ class JuntaController extends Controller
      */
     public function store(Request $request)
     {
+        $request->validate([
+            'presidente_id' => 'required|exists:funcionarios,id',
+            'secretario_id' => 'required|exists:funcionarios,id',
+            'vicepresidente_id' => 'required|exists:funcionarios,id',
+            'tesorero_id' => 'required|exists:funcionarios,id',
+            'fiscal_id' => 'required|exists:funcionarios,id',
+            'comuna_id' => 'required|exists:comunas,id',
+            'concil1_id' => 'required|exists:funcionarios,id',
+            'concil2_id' => 'required|exists:funcionarios,id',
+            'concil3_id' => 'required|exists:funcionarios,id',
+            'delegado1_id' => 'required|exists:funcionarios,id',
+            'delegado2_id' => 'required|exists:funcionarios,id',
+            'delegado3_id' => 'required|exists:funcionarios,id',
+        ], [
+            'presidente_id.exists' => 'El presidente debe ser un funcionario registrado.',
+            'secretario_id.exists' => 'El secretario debe ser un funcionario registrado.',
+            'vicepresidente_id.exists' => 'El vicepresidente debe ser un funcionario registrado.',
+            'tesorero_id.exists' => 'El tesorero debe ser un funcionario registrado.',
+            'fiscal_id.exists' => 'El fiscal debe ser un funcionario registrado.',
+            'comuna_id.exists' => 'la comuna debe estar registrada.',
+            'concil1_id.exists' => 'El conciliador 1 debe ser un funcionario registrado.',
+            'concil2_id.exists' => 'El conciliador 2 debe ser un funcionario registrado.',
+            'concil3_id.exists' => 'El conciliador 3 debe ser un funcionario registrado.',
+            'delegado1_id.exists' => 'El delegado 1 debe ser un funcionario registrado.',
+            'delegado2_id.exists' => 'El delegado 1 debe ser un funcionario registrado.',
+            'delegado3_id.exists' => 'El delegado 1 debe ser un funcionario registrado.',
+        ]);
         Junta::create($request->all());
         return redirect()->route('juntas.index')->with('success', 'JAC creada exitosamente.');
     }

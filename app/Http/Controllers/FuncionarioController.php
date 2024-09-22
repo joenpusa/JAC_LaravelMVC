@@ -36,18 +36,20 @@ class FuncionarioController extends Controller
      */
     public function store(Request $request)
     {
-        // $request->validate([
-        //     'nombre' => 'required',
-        //     'tipo_documento' => 'required',
-        //     'num_documento' => 'required|unique:funcionarios',
-        //     'num_afiliacion' => 'required',
-        //     'genero' => 'required',
-        //     'direccion' => 'required',
-        //     'profesion' => 'required',
-        //     'discapacidad' => 'required',
-        //     'grupo_etnico' => 'required',
-        //     'email' => 'required',
-        // ]);
+         $request->validate([
+             'nombre' => 'required',
+             'tipo_documento' => 'required',
+             'num_documento' => 'required|unique:funcionarios',
+             'num_afiliacion' => 'required',
+             'genero' => 'required',
+             'direccion' => 'required',
+             'profesion' => 'required',
+             'discapacidad' => 'required',
+             'grupo_etnico' => 'required',
+             'email' => 'required',
+         ],[
+            'num_documento.unique' => 'El número de documento ya está registrado.',
+        ]);
 
         Funcionario::create($request->all());
         return redirect()->route('funcionarios.index')->with('success', 'Funcionario creado exitosamente.');
