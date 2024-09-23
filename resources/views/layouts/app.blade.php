@@ -57,6 +57,9 @@
                                 <a class="nav-link text-light" href="{{ route('comunas.index') }}">Comunas</a>
                             </li>
                             <li class="nav-item">
+                                <a class="nav-link text-light" href="{{ route('certificados.index') }}">Certificados</a>
+                            </li>
+                            <li class="nav-item">
                                 <a class="nav-link text-light" href="{{ route('juntas.index') }}">Juntas</a>
                             </li>
                             <li class="nav-item">

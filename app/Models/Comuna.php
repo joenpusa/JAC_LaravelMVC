@@ -7,5 +7,12 @@ use Illuminate\Database\Eloquent\Model;
 
 class Comuna extends Model
 {
-    use HasFactory;
+    protected $fillable = [
+        'nombre'
+    ];
+
+    public function juntas()
+    {
+        return $this->hasMany(Junta::class);
+    }
 }

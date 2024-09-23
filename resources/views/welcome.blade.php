@@ -14,14 +14,24 @@
             </ul>
             <div class="tab-content" id="myTabContent">
                 <div class="tab-pane fade show active" id="generate" role="tabpanel" aria-labelledby="generate-tab">
-                    <form method="POST" action="{{ route('login') }}">
+                    <form method="POST" action="{{ route('certificado.generar') }}">
                         @csrf
                         <div class="container">
-                            <!-- Select para juntas -->
+                            @if ($errors->any())
+                                <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                                    <p>Proceso no realizado:</p>
+                                    <ul>
+                                        @foreach ($errors->all() as $error)
+                                            <li>{{ $error }}</li>
+                                        @endforeach
+                                    </ul>
+                                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                                </div>
+                            @endif
                             <div class="mb-3">
                                 <label for="juntas" class="form-label">Juntas</label>
                                 <select name="junta_id" id="junta" class="form-select select2 form-control" required>
-                                    <option value="">Seleccione el conciliador 1</option>
+                                    <option value="">Seleccione la JAC</option>
                                     @foreach ($juntas as $j)
                                         <option value="{{ $j->id }}">{{ $j->nombre }}</option>
                                     @endforeach
@@ -44,9 +54,28 @@
                     </form>
                 </div>
                 <div class="tab-pane fade" id="validate" role="tabpanel" aria-labelledby="validate-tab">
-                    <form method="POST" action="{{ route('login') }}">
+                    <form method="POST" action="{{ route('certificado.validar') }}">
                         @csrf
                         <div class="container">
+                            @if ($errors->any())
+                                <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                                    <p>Proceso no realizado:</p>
+                                    <ul>
+                                        @foreach ($errors->all() as $error)
+                                            <li>{{ $error }}</li>
+                                        @endforeach
+                                    </ul>
+                                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                                </div>
+                            @endif
+
+                            @if (session('success'))
+                                <div class="alert alert-success alert-dismissible fade show" role="alert">
+                                    {{ session('success') }}
+                                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                                </div>
+                            @endif
+
                             <div class="mb-3">
                                 <label for="fecha_certificado" class="form-label">Fecha certificado</label>
                                 <input type="date" name="fecha_certificado" class="form-control" required>

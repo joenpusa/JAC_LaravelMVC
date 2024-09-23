@@ -7,5 +7,14 @@ use Illuminate\Database\Eloquent\Model;
 
 class Certificado extends Model
 {
-    use HasFactory;
+    protected $fillable = [
+        'nombre_dignatario',
+        'comuna',
+        'nombre_junta',
+        'codigo_hash',
+        'resolucion',
+        'fecha_resolucion',
+        'fecha_eleccion',
+        'documento_dignario'
+    ];
 }

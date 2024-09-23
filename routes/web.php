@@ -5,6 +5,7 @@ use App\Http\Controllers\FuncionarioController;
 use App\Http\Controllers\JuntaController;
 use App\Http\Controllers\ComunaController;
 use App\Http\Controllers\WelcomeController;
+use App\Http\Controllers\CertificadoController;
 
 /*
 |--------------------------------------------------------------------------
@@ -18,13 +19,16 @@ use App\Http\Controllers\WelcomeController;
 */
 
 Route::get('/', [WelcomeController::class, 'index']);
-
 Auth::routes();
-
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Route::post('/generar-certificado', [CertificadoController::class, 'generar'])->name('certificado.generar');
+Route::post('/validar-certificado', [CertificadoController::class, 'validar'])->name('certificado.validar');
+
 
 Route::middleware(['auth'])->group(function () {
+    //Rutas protegidas por autenticacion
     Route::resource('funcionarios', FuncionarioController::class);
     Route::resource('juntas', JuntaController::class);
     Route::resource('comunas', ComunaController::class);
+    Route::resource('certificados', CertificadoController::class);
 });
