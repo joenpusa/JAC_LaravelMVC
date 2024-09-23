@@ -57,12 +57,13 @@ class CertificadoController extends Controller
         try {
             $validated = $request->validate([
                 'junta_id' => 'required|exists:juntas,id',
-                'num_documento' => 'required|numeric|exists:funcionarios,num_documento',
+                'num_documento' => 'required|numeric',
             ],[
-                'num_documento.exists' => 'El documento descrito no coincide con el presidente de la junta.',
+                'num_documento.numeric' => 'El documento debe ser numérico.',
                 'junta_id.exists' => 'La junta no fue encontrada.',
             ]);
             $junta = Junta::find($validated['junta_id']);
+
             if ($junta && $junta->presidente && $junta->presidente->num_documento == $validated['num_documento']) {
 
                 $certificado = Certificado::create([
@@ -81,7 +82,7 @@ class CertificadoController extends Controller
                 return redirect()->back()->withErrors(['num_documento' => 'El número de documento no coincide con el presidente de la junta seleccionada.']);
             }
         }catch(\Exception $e){
-            return redirect()->back()->with('error', 'Ocurrió un error al procesar su solicitud.');
+            return redirect()->back()->withErrors('error', 'Ocurrió un error al procesar su solicitud.');
         }
     }
 
@@ -90,17 +91,17 @@ class CertificadoController extends Controller
         try {
             $request->validate([
                 'fecha_certificado' => 'required|date',
-                'cod_certificado' => 'required|string|max:255',
+                'cod_certificado' => 'required|string|max:25',
             ]);
             $certificado = Certificado::whereDate('created_at', $request->fecha_certificado)
-                ->where('cod_certificado', $request->cod_certificado)
+                ->where('codigo_hash', $request->cod_certificado)
                 ->first();
             if (!$certificado) {
                 return redirect()->back()->withErrors(['error' => 'El certificado no es válido.']);
             }
-            return redirect()->route('/')->with('success', 'Certificado encontrado con éxito.');
+            return redirect()->back()->with('success', 'Certificado encontrado con éxito.');
         }catch(\Exception $e){
-            return redirect()->back()->with('error', 'Ocurrió un error al procesar su solicitud.');
+            return redirect()->back()->withErrors('error', 'Ocurrió un error al procesar su solicitud.');
         }
     }
 }

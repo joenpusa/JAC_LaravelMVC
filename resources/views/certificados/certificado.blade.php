@@ -61,7 +61,6 @@
     <p>Que, revisados los expedientes y las bases de datos que reposan en esta Dependencia, se pudo constatar que la <strong>JUNTA DE ACCIÓN COMUNAL</strong> de la <strong>JUNTA DE ACCIÓN COMUNAL DEL BARRIO {{ $certificado->nombre_junta }}</strong> de la {{ $certificado->comuna }}, del Municipio de San José de Cúcuta, Departamento Norte de Santander, cuenta con personería jurídica vigente otorgada mediante Resolución {{ $certificado->resolucion }} de {{ $certificado->fecha_resolucion }}</p>
     <p>Que,	el señor (a) <strong>{{ $certificado->nombre_dignatario }}</strong>, identificado (a) con la cédula de ciudadanía No. {{ $certificado->documento_dignario }}, es la actual REPRESENTANTE LEGAL de la precitada Junta de Acción Comunal, reconocida e inscrita por este Despacho mediante la elección realizada el {{ $certificado->fecha_eleccion }}</p>
     <p>Que, de conformidad con la ley 753 de 2002, el Decreto Municipal No. 0724 de 19 de julio de 2018, este Despacho ejerce Vigilancia, Inspección y Control sobre los organismos comunales de 1º y de 2º nivel existentes en el municipio.</p>
-    <p>Se expide la presente a los XXXXX (0X) días del mes de XXX de 20XX.</p>
     @php
         use Carbon\Carbon;
         function numeroEnLetras($numero) {
