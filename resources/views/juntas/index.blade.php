@@ -36,5 +36,9 @@
                 @endforeach
             </tbody>
         </table>
+
+        <div class="d-flex justify-content-center">
+            {{ $juntas->links('pagination::bootstrap-4') }}
+        </div>
     </div>
 @endsection

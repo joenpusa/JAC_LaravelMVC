@@ -16,7 +16,7 @@ class JuntaController extends Controller
      */
     public function index()
     {
-        $juntas = Junta::with('presidente', 'comuna')->get();
+        $juntas = Junta::with('presidente', 'comuna')->paginate(20);
         return view('juntas.index', compact('juntas'));
     }
 
