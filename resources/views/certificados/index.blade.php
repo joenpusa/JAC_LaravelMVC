@@ -3,6 +3,14 @@
 @section('content')
     <div class="container">
         <h1>Historial de certificados certificados</h1>
+        <form action="{{ route('certificados.index') }}" method="GET" role="search">
+            <div class="input-group mb-3">
+                <input type="text" name="search" class="form-control" placeholder="Buscar certificado..." value="{{ request('search') }}">
+                <div class="input-group-append">
+                    <button class="btn btn-outline-secondary" type="submit">Buscar</button>
+                </div>
+            </div>
+        </form>
         <table class="table table-striped">
             <thead>
                 <tr>
@@ -26,7 +34,7 @@
             </tbody>
         </table>
         <div class="d-flex justify-content-center">
-            {{ $certificados->links('pagination::bootstrap-4') }}
+            {{ $certificados->appends(['search' => request('search')])->links('pagination::bootstrap-4') }}
         </div>
     </div>
 @endsection

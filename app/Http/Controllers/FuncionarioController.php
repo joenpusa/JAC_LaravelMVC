@@ -12,10 +12,21 @@ class FuncionarioController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $funcionarios = Funcionario::paginate(20);;
-        return view('funcionarios.index', compact('funcionarios'));
+        $search = $request->input('search');
+
+        $funcionarios = Funcionario::query();
+        if ($search) {
+            $funcionarios = $funcionarios->where('nombre', 'LIKE', "%{$search}%")
+                                        ->orWhere('tipo_documento', 'LIKE', "%{$search}%")
+                                        ->orWhere('num_documento', 'LIKE', "%{$search}%")
+                                        ->orWhere('profesion', 'LIKE', "%{$search}%");
+        }
+
+        $funcionarios = $funcionarios->orderBy('nombre', 'asc')->paginate(20);
+
+        return view('funcionarios.index', compact('funcionarios', 'search'));
     }
 
     /**

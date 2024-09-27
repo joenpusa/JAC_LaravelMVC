@@ -14,9 +14,24 @@ class JuntaController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $juntas = Junta::with('presidente', 'comuna')->paginate(20);
+        $search = $request->input('search');
+
+
+        $juntas = Junta::with(['presidente', 'comuna'])
+            ->when($search, function ($query, $search) {
+                $query->where('juntas.nombre', 'like', "%{$search}%")
+                    ->orWhereHas('presidente', function ($query) use ($search) {
+                        $query->where('nombre', 'like', "%{$search}%")
+                              ->orWhere('num_documento', 'like', "%{$search}%");
+                    })
+                    ->orWhereHas('comuna', function ($query) use ($search) {
+                        $query->where('nombre', 'like', "%{$search}%");
+                    })
+                    ->orWhere('juntas.resolucion', 'like', "%{$search}%");
+            })->paginate(20);
+
         return view('juntas.index', compact('juntas'));
     }
 

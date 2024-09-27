@@ -14,9 +14,20 @@ class CertificadoController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $certificados = Certificado::orderBy('created_at', 'desc')->paginate(10);
+        $search = $request->input('search');
+
+        $certificados = Certificado::query();
+
+        if ($search) {
+            $certificados = $certificados->where('nombre_junta', 'LIKE', "%{$search}%")
+                                        ->orWhere('documento_dignario', 'LIKE', "%{$search}%")
+                                        ->orWhere('nombre_dignatario', 'LIKE', "%{$search}%")
+                                        ->orWhere('codigo_hash', 'LIKE', "%{$search}%")
+                                        ->orWhere('created_at', 'LIKE', "%{$search}%");;
+        }
+        $certificados = $certificados->orderBy('created_at', 'desc')->paginate(20);
         return view('certificados.index', compact('certificados'));
     }
 

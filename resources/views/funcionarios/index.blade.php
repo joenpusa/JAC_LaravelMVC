@@ -9,11 +9,20 @@
                 {{ $message }}
             </div>
         @endif
+        <form action="{{ route('funcionarios.index') }}" method="GET" role="search">
+            <div class="input-group mb-3">
+                <input type="text" name="search" class="form-control" placeholder="Buscar funcionarios..." value="{{ request('search') }}">
+                <div class="input-group-append">
+                    <button class="btn btn-outline-secondary" type="submit">Buscar</button>
+                </div>
+            </div>
+        </form>
         <table class="table table-striped">
             <thead>
                 <tr>
                     <th>Nombre</th>
-                    <th>Documento</th>
+                    <th>Tipo Documento</th>
+                    <th>Num Documento</th>
                     <th>Profesión</th>
                     <th>Acciones</th>
                 </tr>
@@ -22,6 +31,7 @@
                 @foreach ($funcionarios as $funcionario)
                     <tr>
                         <td>{{ $funcionario->nombre }}</td>
+                        <td>{{ $funcionario->tipo_documento }}</td>
                         <td>{{ $funcionario->num_documento }}</td>
                         <td>{{ $funcionario->profesion }}</td>
                         <td>
@@ -37,7 +47,7 @@
             </tbody>
         </table>
         <div class="d-flex justify-content-center">
-            {{ $funcionarios->links('pagination::bootstrap-4') }}
+            {{ $funcionarios->appends(['search' => request('search')])->links('pagination::bootstrap-4') }}
         </div>
     </div>
 @endsection
