@@ -1,64 +1,77 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400"></a></p>
+<h1>Proyecto Laravel 8.6 con Laravel Mix y Bootstrap</h1>
 
-<p align="center">
-<a href="https://travis-ci.org/laravel/framework"><img src="https://travis-ci.org/laravel/framework.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
+<p>
+Este proyecto está construido con Laravel 8.6 e incluye el sistema de autenticación proporcionado por Laravel. Además, utiliza <strong>Laravel Mix</strong> para la compilación de assets y <strong>Bootstrap</strong> para el diseño frontend.
 </p>
 
-## About Laravel
+<h2>Requisitos previos</h2>
+<p>
+Antes de iniciar, asegúrate de tener instalados los siguientes requisitos en tu servidor o entorno local:
+</p>
+<ul>
+  <li><strong>Servidor web:</strong> Nginx o Apache</li>
+  <li><strong>PHP:</strong> Versión 8.1 o superior</li>
+  <li><strong>Composer:</strong> Administrador de dependencias de PHP</li>
+  <li><strong>npm:</strong> Administrador de paquetes de Node.js</li>
+</ul>
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+<h2>Instalación del proyecto</h2>
+<p>Sigue los siguientes pasos para instalar y configurar el proyecto en tu entorno local o en un servidor:</p>
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+<ol>
+  <li><strong>Clonar el repositorio:</strong>
+    <pre><code>git clone https://github.com/joenpusa/JAC_LaravelMVC.git
+    </code></pre>
+  </li>
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+  <li><strong>En el directorio del proyecto instalar dependencias de PHP con Composer:</strong>
+    <pre><code>composer install</code></pre>
+  </li>
 
-## Learning Laravel
+  <li><strong>Instalar dependencias de JavaScript con npm:</strong>
+    <pre><code>npm install</code></pre>
+  </li>
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+  <li><strong>Compilar assets con Laravel Mix:</strong>
+    <pre><code>npm run dev</code></pre>
+    <p>O para compilación optimizada en producción:</p>
+    <pre><code>npm run prod</code></pre>
+  </li>
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains over 1500 video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+  <li><strong>Configurar el archivo <code>.env</code>:</strong>
+    <p>Copia el archivo <code>.env.example</code> y renómbralo como <code>.env</code>:</p>
+    <pre><code>cp .env.example .env</code></pre>
+    <p>Luego, configura las variables de entorno necesarias (base de datos, URL, etc.).</p>
+  </li>
 
-## Laravel Sponsors
+  <li><strong>Generar la clave de la aplicación:</strong>
+    <pre><code>php artisan key:generate</code></pre>
+  </li>
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the Laravel [Patreon page](https://patreon.com/taylorotwell).
+  <li><strong>Configurar la base de datos:</strong>
+    <p>Asegúrate de tener una base de datos creada y configurada en el archivo <code>.env</code>. Luego, ejecuta las migraciones:</p>
+    <pre><code>php artisan migrate</code></pre>
+  </li>
 
-### Premium Partners
+  <li><strong>Iniciar el servidor local de Laravel:</strong>
+    <pre><code>php artisan serve</code></pre>
+    <p>Si estás utilizando Nginx o Apache, asegúrate de configurar correctamente el servidor web para apuntar al directorio <code>public/</code> del proyecto.</p>
+  </li>
+</ol>
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Cubet Techno Labs](https://cubettech.com)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[Many](https://www.many.co.uk)**
-- **[Webdock, Fast VPS Hosting](https://www.webdock.io/en)**
-- **[DevSquad](https://devsquad.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[OP.GG](https://op.gg)**
-- **[WebReinvent](https://webreinvent.com/?utm_source=laravel&utm_medium=github&utm_campaign=patreon-sponsors)**
-- **[Lendio](https://lendio.com)**
+<h2>Autenticación</h2>
+<p>
+Este proyecto incluye el sistema de autenticación proporcionado por Laravel. Una vez instaladas las dependencias y migraciones, puedes acceder al sistema de login y registro predeterminado en las rutas:
+</p>
+<ul>
+  <li><code>/login</code></li>
+  <li><code>/register</code></li>
+</ul>
 
-## Contributing
-
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
-
-## Code of Conduct
-
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
-
-## Security Vulnerabilities
-
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
-
-## License
-
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+<h2>Compilación de assets con Laravel Mix</h2>
+<p>
+Laravel Mix facilita la compilación de archivos CSS y JS. Se utiliza <strong>Bootstrap</strong> como framework CSS, y puedes personalizar y compilar los assets según tus necesidades.
+</p>
+<p>
+Para ver más detalles sobre cómo personalizar las compilaciones, revisa el archivo <code>webpack.mix.js</code>.
+</p>
