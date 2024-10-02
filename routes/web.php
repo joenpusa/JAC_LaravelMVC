@@ -31,4 +31,7 @@ Route::middleware(['auth'])->group(function () {
     Route::resource('juntas', JuntaController::class);
     Route::resource('comunas', ComunaController::class);
     Route::resource('certificados', CertificadoController::class);
+
+    //rutas de eventos ajax
+    Route::post('/funcionario/upload', [FuncionarioController::class, 'upload'])->name('funcionario.upload');
 });

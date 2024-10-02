@@ -83,6 +83,25 @@
                     <label for="direccion" class="form-label">Dirección</label>
                     <input type="text" name="direccion" value="{{ old('direccion', $funcionario->direccion ?? '') }}" class="form-control" required>
                 </div>
+                <div class="mb-3 col-12  w-100">
+                    <form id="uploadForm" action="{{ route('funcionario.upload') }}" enctype="multipart/form-data" class="form-inline">
+                        @csrf
+                        {{-- <div class="form-group">
+                            <label for="document" class="mr-2">Cargar Documento</label>
+                            <input type="file" id="document" name="document" class="form-control mr-2">
+                        </div> --}}
+                        <div class="input-group">
+                            <div class="custom-file">
+                              <input type="file" class="custom-file-input" id="document" aria-describedby="inputGroupFileAddon04">
+                            </div>
+                            <div class="input-group-append">
+                              <button class="btn btn-outline-secondary" type="button" id="uploadButton">Button</button>
+                            </div>
+                          </div>
+                        {{-- <button type="button" id="previewButton" class="btn btn-primary mr-2">Previsualizar</button>
+                        <button type="button" id="uploadButton" class="btn btn-success">Subir Documento</button> --}}
+                    </form>
+                </div>
 
                 <div class="mb-3 col-12">
                     <button type="submit" class="btn btn-success">{{ isset($funcionario) ? 'Actualizar' : 'Crear' }}</button>

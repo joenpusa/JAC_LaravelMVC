@@ -15,4 +15,8 @@ mix.js('resources/js/app.js', 'public/js')
     .sass('resources/sass/app.scss', 'public/css')
     .postCss('resources/css/app.css', 'public/css', [])
     .css('resources/css/custom.css', 'public/css')
-    .sourceMaps();
+    .sourceMaps()
+    .autoload({
+        jquery: ['$', 'window.jQuery']
+    })
+    .version();
