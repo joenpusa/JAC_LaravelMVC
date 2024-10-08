@@ -83,30 +83,38 @@
                     <label for="direccion" class="form-label">Dirección</label>
                     <input type="text" name="direccion" value="{{ old('direccion', $funcionario->direccion ?? '') }}" class="form-control" required>
                 </div>
-                <div class="mb-3 col-12  w-100">
-                    <form id="uploadForm" action="{{ route('funcionario.upload') }}" enctype="multipart/form-data" class="form-inline">
-                        @csrf
-                        {{-- <div class="form-group">
-                            <label for="document" class="mr-2">Cargar Documento</label>
-                            <input type="file" id="document" name="document" class="form-control mr-2">
-                        </div> --}}
-                        <div class="input-group">
-                            <div class="custom-file">
-                              <input type="file" class="custom-file-input" id="document" aria-describedby="inputGroupFileAddon04">
-                            </div>
-                            <div class="input-group-append">
-                              <button class="btn btn-outline-secondary" type="button" id="uploadButton">Button</button>
-                            </div>
-                          </div>
-                        {{-- <button type="button" id="previewButton" class="btn btn-primary mr-2">Previsualizar</button>
-                        <button type="button" id="uploadButton" class="btn btn-success">Subir Documento</button> --}}
-                    </form>
-                </div>
 
                 <div class="mb-3 col-12">
                     <button type="submit" class="btn btn-success">{{ isset($funcionario) ? 'Actualizar' : 'Crear' }}</button>
                 </div>
             </div>
         </form>
+        {{-- <div class="mb-3 col-12">
+            <label for="direccion" class="form-label">Soporte Documental</label>
+            <form id="uploadForm" action="{{ route('funcionario.upload') }}" method="POST" enctype="multipart/form-data">
+                @csrf
+                @method('PUT')
+                <input type="file" id="document" name="document" class="form-control">
+                <input type="hidden" value="{{$funcionario->id}}" name="funcionario_id">
+                <button type="button" id="uploadButton" class="btn btn-default">Cargar</button>
+            </form>
+        </div> --}}
+        <div class="mb-3 row align-items-center">
+            <label for="direccion" class="form-label col-auto">Soporte Documental</label>
+            <div class="col">
+                <form id="uploadForm" action="{{ route('funcionario.upload') }}" method="POST" enctype="multipart/form-data" class="d-flex align-items-center">
+                    @csrf
+                    @method('PUT')
+                    <input type="file" id="document" name="document" class="form-control me-2" required>
+                    <input type="hidden" value="{{ $funcionario->id }}" name="funcionario_id">
+                    <button type="button" id="uploadButton" class="btn btn-default me-2">Cargar</button>
+                    @if(isset($funcionario->key_anexo))
+                        <a href="{{ asset('storage/documents/funcionarios/'.$funcionario->key_anexo) }}" target="_blank" class="btn btn-primary">Ver</a>
+                    @endif
+                </form>
+            </div>
+        </div>
     </div>
+    <script src="{{ mix('js/funcionario.js') }}"></script>
+
 @endsection

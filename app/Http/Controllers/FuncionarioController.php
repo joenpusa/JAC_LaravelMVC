@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Funcionario;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class FuncionarioController extends Controller
 {
@@ -119,7 +120,37 @@ class FuncionarioController extends Controller
      */
     public function destroy(Funcionario $funcionario)
     {
+
         $funcionario->delete();
         return redirect()->route('funcionarios.index')->with('success', 'Funcionario eliminado exitosamente.');
+    }
+
+    public function upload(Request $request)
+    {
+        $request->validate([
+            'document' => 'required|file|max:5120',
+            'funcionario_id' => 'required|numeric',
+        ]);
+
+        $funcionario = Funcionario::find($request->funcionario_id);
+
+        if (!$funcionario) {
+            return response()->json(['error' => 'Funcionario no encontrado'], 404);
+        }
+
+        if ($funcionario->key_anexo) {
+            Storage::disk('public')->delete('documents/funcionarios/'.$funcionario->key_anexo);
+        }
+
+        $file = $request->file('document');
+        $originalFileName = $file->getClientOriginalName();
+        $filePath = time() . '_' . $originalFileName;
+        $file->storeAs('documents/funcionarios', $filePath, 'public');
+
+        $funcionario->name_anexo = $originalFileName;
+        $funcionario->key_anexo = $filePath;
+        $funcionario->save();
+
+        return response()->json(['success' => 'Archivo subido con éxito', 'fileName' => $originalFileName]);
     }
 }

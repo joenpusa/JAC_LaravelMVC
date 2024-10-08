@@ -33,5 +33,5 @@ Route::middleware(['auth'])->group(function () {
     Route::resource('certificados', CertificadoController::class);
 
     //rutas de eventos ajax
-    Route::post('/funcionario/upload', [FuncionarioController::class, 'upload'])->name('funcionario.upload');
+    Route::put('/funcionario/upload', [FuncionarioController::class, 'upload'])->name('funcionario.upload');
 });
