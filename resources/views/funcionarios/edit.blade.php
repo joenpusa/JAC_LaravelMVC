@@ -89,23 +89,16 @@
                 </div>
             </div>
         </form>
-        {{-- <div class="mb-3 col-12">
-            <label for="direccion" class="form-label">Soporte Documental</label>
-            <form id="uploadForm" action="{{ route('funcionario.upload') }}" method="POST" enctype="multipart/form-data">
-                @csrf
-                @method('PUT')
-                <input type="file" id="document" name="document" class="form-control">
-                <input type="hidden" value="{{$funcionario->id}}" name="funcionario_id">
-                <button type="button" id="uploadButton" class="btn btn-default">Cargar</button>
-            </form>
-        </div> --}}
+        <div aria-live="polite" aria-atomic="true" style="position: relative; z-index: 9999;">
+            <div id="toast-container" style="position: fixed; top: 20px; right: 20px;"></div>
+        </div>
         <div class="mb-3 row align-items-center">
             <label for="direccion" class="form-label col-auto">Soporte Documental</label>
             <div class="col">
                 <form id="uploadForm" action="{{ route('funcionario.upload') }}" method="POST" enctype="multipart/form-data" class="d-flex align-items-center">
                     @csrf
                     @method('PUT')
-                    <input type="file" id="document" name="document" class="form-control me-2" required>
+                    <input type="file" id="document" name="document" class="form-control me-2"  accept=".pdf,.zip" required>
                     <input type="hidden" value="{{ $funcionario->id }}" name="funcionario_id">
                     <button type="button" id="uploadButton" class="btn btn-default me-2">Cargar</button>
                     @if(isset($funcionario->key_anexo))

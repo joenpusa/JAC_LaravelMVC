@@ -128,8 +128,15 @@ class FuncionarioController extends Controller
     public function upload(Request $request)
     {
         $request->validate([
-            'document' => 'required|file|max:5120',
+            'document' => 'required|file|max:5120|mimes:pdf,zip',
             'funcionario_id' => 'required|numeric',
+        ],[
+            'document.required' => 'El documento es requerido.',
+            'document.file' => 'El archivo debe ser un archivo válido.',
+            'document.max' => 'El documento supera el peso máximo permitido de 5MB.',
+            'document.mimes' => 'El archivo debe ser de tipo PDF o ZIP.',
+            'funcionario_id.required' => 'El ID del funcionario es requerido.',
+            'funcionario_id.numeric' => 'El ID del funcionario debe ser numérico.',
         ]);
 
         $funcionario = Funcionario::find($request->funcionario_id);
