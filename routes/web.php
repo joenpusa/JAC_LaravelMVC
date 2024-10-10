@@ -6,6 +6,7 @@ use App\Http\Controllers\JuntaController;
 use App\Http\Controllers\ComunaController;
 use App\Http\Controllers\WelcomeController;
 use App\Http\Controllers\CertificadoController;
+use App\Http\Controllers\ConfiguracionController;
 
 /*
 |--------------------------------------------------------------------------
@@ -31,6 +32,9 @@ Route::middleware(['auth'])->group(function () {
     Route::resource('juntas', JuntaController::class);
     Route::resource('comunas', ComunaController::class);
     Route::resource('certificados', CertificadoController::class);
+
+    Route::get('/configuracion', [ConfiguracionController::class, 'index'])->name('configuracion.index');
+    Route::post('/configuracion', [ConfiguracionController::class, 'store'])->name('configuracion.store');
 
     //rutas de eventos ajax
     Route::put('/funcionario/upload', [FuncionarioController::class, 'upload'])->name('funcionario.upload');

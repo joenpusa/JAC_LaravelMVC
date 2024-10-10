@@ -55,6 +55,9 @@
                             @endif
                         @else
                             <li class="nav-item">
+                                <a class="nav-link text-light" href="{{ route('configuracion.index') }}">Configuración</a>
+                            </li>
+                            <li class="nav-item">
                                 <a class="nav-link text-light" href="{{ route('comunas.index') }}">Comunas</a>
                             </li>
                             <li class="nav-item">
