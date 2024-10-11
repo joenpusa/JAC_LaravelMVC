@@ -9,32 +9,42 @@ class ConfiguracionController extends Controller
 {
     public function index()
     {
-        $config = Configuracion::first(); // Obtener la primera configuración
+        $config = Configuracion::first();
         return view('configuracion.index', compact('config'));
     }
 
     public function store(Request $request)
     {
         $request->validate([
-            'nombre_app' => 'required|string|max:255',
+            'nombre_app' => 'required|string|max:30',
+            'nom_entidad' => 'required|string|max:255',
             'direccion' => 'required|string|max:255',
             'horario' => 'required|string|max:255',
             'logo' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
-            'telefono' => 'required|string|max:20',
+            'telefono' => 'required|string|max:40',
             'email' => 'required|email|max:255',
         ]);
 
-        $config = Configuracion::firstOrCreate([]);
-        $config->nombre_app = $request->nombre_app;
-        $config->direccion = $request->direccion;
-        $config->horario = $request->horario;
-        $config->telefono = $request->telefono;
-        $config->email = $request->email;
+        //parametro vacio porque la configuracion es una sola
+        $config = Configuracion::firstOrCreate([
+            'nombre_app' => $request->nombre_app,
+            'nom_entidad' => $request->nom_entidad,
+            'direccion' => $request->direccion,
+            'horario' => $request->horario,
+            'telefono' => $request->telefono,
+            'email' => $request->email,
+        ]);
 
-        // Manejar la subida de logo
         if ($request->hasFile('logo')) {
-            $logoPath = $request->file('logo')->store('logos', 'public');
-            $config->logo = $logoPath;
+            if ($config->logo && file_exists(public_path('images/' . $config->logo))) {
+                unlink(public_path('images/' . $config->logo));
+            }
+
+            $logoFile = $request->file('logo');
+            $logoName = time() . '_' . $logoFile->getClientOriginalName();
+            $logoFile->move(public_path('images'), $logoName);
+
+            $config->logo = 'images/' . $logoName;
         }
 
         $config->save();

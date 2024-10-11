@@ -18,8 +18,8 @@
                 <input type="text" class="form-control" name="nombre_app" value="{{ $config->nombre_app ?? '' }}" required>
             </div>
             <div class="col-6">
-                <label for="nombre_app">Nombre de la entidad</label>
-                <input type="text" class="form-control" name="nombre_app" value="{{ $config->nombre_entidad ?? '' }}" required>
+                <label for="nom_entidad">Nombre de la entidad</label>
+                <input type="text" class="form-control" name="nom_entidad" value="{{ $config->nom_entidad ?? '' }}" required>
             </div>
             <div class="col-6">
                 <label for="direccion">Dirección</label>
