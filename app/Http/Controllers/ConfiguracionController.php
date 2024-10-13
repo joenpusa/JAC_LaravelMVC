@@ -25,7 +25,6 @@ class ConfiguracionController extends Controller
             'email' => 'required|email|max:255',
         ]);
 
-        //parametro vacio porque la configuracion es una sola
         $config = Configuracion::firstOrCreate([
             'nombre_app' => $request->nombre_app,
             'nom_entidad' => $request->nom_entidad,
