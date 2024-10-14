@@ -1,7 +1,7 @@
 <nav class="navbar navbar-expand-md bg-dark text-light shadow-sm">
     <div class="container">
         <a class="navbar-brand text-light" href="{{ Auth::check() ? url('/home') : url('/') }}">
-            {{ config('app.name', 'OPA JAC Cúcuta') }}
+            {{ $appConfig->nombre_app }}
         </a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="OPA JAC Cúcuta">
             <span class="navbar-toggler-icon"></span>
