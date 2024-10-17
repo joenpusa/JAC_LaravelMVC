@@ -8,14 +8,11 @@
         </button>
 
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <!-- Left Side Of Navbar -->
             <ul class="navbar-nav me-auto">
 
             </ul>
 
-            <!-- Right Side Of Navbar -->
             <ul class="navbar-nav ms-auto">
-                <!-- Authentication Links -->
                 @guest
                     @if (Route::has('login'))
                         <li class="nav-item">
@@ -29,21 +26,6 @@
                         </li>
                     @endif
                 @else
-                    <li class="nav-item">
-                        <a class="nav-link text-light" href="{{ route('configuracion.index') }}">Configuración</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link text-light" href="{{ route('comunas.index') }}">Comunas</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link text-light" href="{{ route('certificados.index') }}">Certificados</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link text-light" href="{{ route('juntas.index') }}">Juntas</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link text-light" href="{{ route('funcionarios.index') }}">Dignatarios</a>
-                    </li>
                     <li class="nav-item dropdown">
                         <a id="navbarDropdown" class="nav-link dropdown-toggle text-light" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
                             {{ Auth::user()->name }}
