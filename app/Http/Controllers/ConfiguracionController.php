@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Support\Facades\Cache;
 use App\Models\Configuracion;
 use Illuminate\Http\Request;
 
@@ -24,15 +25,16 @@ class ConfiguracionController extends Controller
             'telefono' => 'required|string|max:40',
             'email' => 'required|email|max:255',
         ]);
-
-        $config = Configuracion::firstOrCreate([
-            'nombre_app' => $request->nombre_app,
-            'nom_entidad' => $request->nom_entidad,
-            'direccion' => $request->direccion,
-            'horario' => $request->horario,
-            'telefono' => $request->telefono,
-            'email' => $request->email,
-        ]);
+        $config = Configuracion::first();
+        if (!$config) {
+            $config = new Configuracion;
+        }
+        $config->nombre_app = $request->nombre_app;
+        $config->nom_entidad = $request->nom_entidad;
+        $config->direccion = $request->direccion;
+        $config->horario = $request->horario;
+        $config->telefono = $request->telefono;
+        $config->email = $request->email;
 
         if ($request->hasFile('logo')) {
             if ($config->logo && file_exists(public_path('images/' . $config->logo))) {
@@ -47,6 +49,7 @@ class ConfiguracionController extends Controller
         }
 
         $config->save();
+        Cache::forget('app_config');
 
         return redirect()->back()->with('success', 'Configuración actualizada correctamente');
     }

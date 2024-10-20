@@ -11,3 +11,11 @@ mix.js('resources/js/app.js', 'public/js')
         jquery: ['$', 'window.jQuery']
     })
     .version();
+
+mix.styles([
+    'public/assets/css/style.css',
+], 'public/css/all.css');
+
+mix.scripts([
+        'public/assets/js/script.js',
+    ], 'public/js/all.js');
