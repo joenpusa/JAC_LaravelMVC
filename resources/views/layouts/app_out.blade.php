@@ -24,29 +24,14 @@
 <body>
     <div id="app" class="d-flex flex-column min-vh-100">
 
-        @include('layouts.nav')
-
+        @include('layouts.nav_out')
         <main class="flex-grow-1">
             <div class="row" style="height: 100%; padding-bottom: 0px; margin-bottom: 0px;">
-                @auth
-                    <div class="col-12">
-                        <button class="btn btn-primary d-md-none mb-3" type="button" data-bs-toggle="collapse" data-bs-target="#sidebar" aria-expanded="false" aria-controls="sidebar">
-                            Mostrar/Ocultar Menú
-                        </button>
-                    </div>
-
-                    <div class="col-3 bg-dark">
-                        <div id="sidebar" class="collapse d-md-block">
-                            @include('layouts.sidebar')
-                        </div>
-                    </div>
-                @endauth
-                <div class="py-4 {{ Auth::check() ? 'col-md-9' : 'col-md-12' }}">
+                <div class="py-4 col-md-12">
                     @yield('content')
                 </div>
             </div>
         </main>
-
         @include('layouts.footer')
 
     </div>
