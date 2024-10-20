@@ -2743,14 +2743,14 @@ progress {
 .form-control {
   display: block;
   width: 100%;
-  padding: 0.5rem 0;
+  padding: 0.5rem;
   font-size: 0.875rem;
   font-weight: 400;
   line-height: 1.5rem;
   color: #495057;
-  background-color: transparent;
+  background-color: #fff;
   background-clip: padding-box;
-  border: 1px solid #d2d6da;
+  border: 1px solid #77848d;
   appearance: none;
   border-radius: 0.375rem;
   transition: 0.2s ease;
@@ -2772,8 +2772,6 @@ progress {
 
 .form-control:focus {
   color: #495057;
-  background-color: transparent;
-  border-color: transparent;
   outline: 0;
   box-shadow: none;
 }
@@ -2797,7 +2795,6 @@ progress {
   margin: -0.5rem 0;
   margin-inline-end: 0;
   color: #495057;
-  background-color: transparent;
   pointer-events: none;
   border-color: inherit;
   border-style: solid;
@@ -2824,7 +2821,6 @@ progress {
   margin-bottom: 0;
   line-height: 1.5rem;
   color: #344767;
-  background-color: transparent;
   border: solid transparent;
   border-width: 1px 0;
 }
@@ -2907,18 +2903,18 @@ textarea.form-control-lg {
 .form-select {
   display: block;
   width: 100%;
-  padding: 0.5rem 1rem 0.5rem 0;
+  padding: 0.5rem 1rem 0.5rem;
   -moz-padding-start: -3px;
   font-size: 0.875rem;
   font-weight: 400;
   line-height: 1.5rem;
   color: #495057;
-  background-color: transparent;
+  background-color: #fff;
   background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3e%3cpath fill='none' stroke='%23343a40' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M2 5l6 6 6-6'/%3e%3c/svg%3e");
   background-repeat: no-repeat;
   background-position: right 0 center;
   background-size: 16px 12px;
-  border: 1px solid #d2d6da;
+  border: 1px solid #77848d;
   border-radius: 0.375rem;
   transition: 0.2s ease;
   appearance: none;
@@ -22679,10 +22675,6 @@ label,
   transition: 0.2s ease all;
 }
 
-.form-control {
-  border: none;
-}
-
 .form-control.is-invalid {
   border: 1px solid #d2d6da;
   padding: 0.625rem 0.75rem;
@@ -27932,5 +27924,3 @@ pre[class*="language-"] {
     overflow: auto !important;
   }
 }
-
-/*# sourceMappingURL=dashboard-free.css.map */
