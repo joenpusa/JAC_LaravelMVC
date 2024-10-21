@@ -15,4 +15,9 @@ class Comuna extends Model
     {
         return $this->hasMany(Junta::class);
     }
+
+    public function municipio()
+    {
+        return $this->belongsTo(Municipio::class);
+    }
 }
