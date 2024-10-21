@@ -4,8 +4,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <link rel="apple-touch-icon" sizes="76x76" href="./assets/img/apple-icon.png">
-    <link rel="icon" type="image/png" href="./assets/img/favicon.png">
+    <link rel="icon" type="image/png" href="{{ asset('assets/img/favicon.png') }}">
     <title>
         {{ $appConfig->nombre_app }}
     </title>
@@ -19,6 +18,8 @@
     <!-- Material Icons -->
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet">
     <!-- CSS Files -->
+    <link href="{{ mix('css/app.css') }}" rel="stylesheet">
+    <link href="{{ mix('css/custom.css') }}" rel="stylesheet">
     <link id="pagestyle" href="{{ asset('assets/css/material-dashboard.css?v=3.1.0') }}" rel="stylesheet" />
   </head>
   <body class="g-sidenav-show  bg-gray-100">
@@ -47,6 +48,7 @@
       </div>
     </main>
     <!--   Core JS Files   -->
+    <script src="{{ mix('js/app.js') }}"></script>
     <script src="{{ asset('assets/js/core/popper.min.js') }}" ></script>
     <script src="{{ asset('assets/js/core/bootstrap.min.js') }}" ></script>
     <script src="{{ asset('assets/js/plugins/perfect-scrollbar.min.js') }}" ></script>
@@ -61,9 +63,7 @@
         Scrollbar.init(document.querySelector('#sidenav-scrollbar'), options);
       }
     </script>
-
     <!-- Github buttons -->
     <script async defer src="https://buttons.github.io/buttons.js"></script>
-    <!-- Control Center for Material Dashboard: parallax effects, scripts for the example pages etc --><script src="./assets/js/material-dashboard.min.js?v=3.1.0"></script>
   </body>
 </html>
