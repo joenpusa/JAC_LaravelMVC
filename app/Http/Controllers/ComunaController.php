@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Comuna;
+use App\Models\Municipio;
 use Illuminate\Http\Request;
 
 class ComunaController extends Controller
@@ -12,10 +13,19 @@ class ComunaController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request )
     {
-        $comunas = Comuna::all();
-        return view('comunas.index', compact('comunas'));
+        $search = $request->input('search');
+
+        $comunas = Comuna::with(['municipio'])
+            ->when($search, function ($query, $search) {
+                $query->where('comunas.nombre', 'like', "%{$search}%")
+                    ->orWhereHas('municipio', function ($query) use ($search) {
+                        $query->where('nombre_municipio', 'like', "%{$search}%");
+                    });
+            })->paginate(20);
+
+        return view('comunas.index', compact('comunas', 'search'));
     }
 
     /**
@@ -25,7 +35,8 @@ class ComunaController extends Controller
      */
     public function create()
     {
-        //
+        $municipios = Municipio::all();
+        return view('comunas.create', compact('municipios'));
     }
 
     /**
@@ -36,7 +47,14 @@ class ComunaController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'nombre' => 'required',
+            'municipio_id' => 'required|exists:municipios,id',
+        ], [
+            'municipio_id.exists' => 'El municipio no es valido.',
+        ]);
+        Comuna::create($request->all());
+        return redirect()->route('comuna.index')->with('success', 'Comuna creada exitosamente.');
     }
 
     /**
