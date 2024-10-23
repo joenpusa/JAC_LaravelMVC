@@ -20,16 +20,23 @@
         <table class="table table-striped">
             <thead>
                 <tr>
-                    <th>Id</th>
+                    <th>Municipio</th>
                     <th>Nombre</th>
+                    <th>Acciones</th>
                 </tr>
             </thead>
             <tbody>
                 @foreach ($comunas as $c)
                     <tr>
-                        <td>{{ $c->id }}</td>
+                        <td>{{ $c->municipio->nombre_municipio }}</td>
                         <td>{{ $c->nombre }}</td>
-
+                        <td>
+                            <form action="{{ route('comunas.destroy', $c->id) }}" method="POST" style="display:inline;">
+                                @csrf
+                                @method('DELETE')
+                                <button type="submit" class="btn btn-danger">Eliminar</button>
+                            </form>
+                        </td>
                     </tr>
                 @endforeach
             </tbody>

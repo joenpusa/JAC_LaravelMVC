@@ -54,7 +54,7 @@ class ComunaController extends Controller
             'municipio_id.exists' => 'El municipio no es valido.',
         ]);
         Comuna::create($request->all());
-        return redirect()->route('comuna.index')->with('success', 'Comuna creada exitosamente.');
+        return redirect()->route('comunas.index')->with('success', 'Comuna creada exitosamente.');
     }
 
     /**
@@ -99,6 +99,7 @@ class ComunaController extends Controller
      */
     public function destroy(Comuna $comuna)
     {
-        //
+        $comuna->delete();
+        return redirect()->route('comunas.index')->with('success', 'Comuna eliminada exitosamente.');
     }
 }
