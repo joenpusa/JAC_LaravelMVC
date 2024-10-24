@@ -49,4 +49,9 @@ class Junta extends Model
     {
         return $this->belongsTo(Comuna::class, 'comuna_id');
     }
+
+    public function documentos()
+    {
+        return $this->hasMany(Documento::class);
+    }
 }

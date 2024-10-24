@@ -151,10 +151,78 @@
                         @endforeach
                     </select>
                 </div>
+                <!-- Botón para abrir el modal y cargar un nuevo documento -->
+                <div class="mb-3">
+                    <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#addDocumentModal">
+                        Cargar documento
+                    </button>
+                </div>
+
+                <!-- Tabla de documentos asociados -->
+                <h3>Documentos Asociados</h3>
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Nombre del Documento</th>
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @forelse($junta->documentos as $index => $documento)
+                            <tr>
+                                <td>{{ $index + 1 }}</td>
+                                <td>{{ $documento->nomanexo }}</td>
+                                <td>
+                                    <!-- Botón de ver documento -->
+                                    <a href="{{ route('documentos.show', $documento->id) }}" class="btn btn-info btn-sm">
+                                        Ver
+                                    </a>
+                                    <!-- Botón de eliminar documento -->
+                                    <form action="{{ route('documentos.destroy', $documento->id) }}" method="POST" style="display:inline-block;">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('¿Está seguro de eliminar este documento?')">Eliminar</button>
+                                    </form>
+                                </td>
+                            </tr>
+                        @empty
+                            <tr>
+                                <td colspan="3">No hay documentos asociados a esta junta.</td>
+                            </tr>
+                        @endforelse
+                    </tbody>
+                </table>
                 <div class="mb-3 col-12">
                     <button type="submit" class="btn btn-success">{{ isset($junta) ? 'Actualizar' : 'Crear' }}</button>
                 </div>
             </div>
         </form>
+    </div>
+
+    <div class="modal fade" id="addDocumentModal" tabindex="-1" aria-labelledby="addDocumentModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="addDocumentModalLabel">Cargar Nuevo Documento</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form action="{{ route('documentos.store') }}" method="POST" enctype="multipart/form-data">
+                        @csrf
+                        <div class="mb-3">
+                            <label for="nomanexo" class="form-label">Nombre del Documento</label>
+                            <input type="text" name="nomanexo" class="form-control" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="archivo" class="form-label">Archivo</label>
+                            <input type="file" name="archivo" class="form-control" required>
+                        </div>
+                        <input type="hidden" name="junta_id" value="{{ $junta->id }}">
+                        <button type="submit" class="btn btn-success">Cargar Documento</button>
+                    </form>
+                </div>
+            </div>
+        </div>
     </div>
 @endsection
