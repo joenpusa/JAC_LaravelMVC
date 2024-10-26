@@ -21,6 +21,7 @@ use App\Http\Controllers\DocumentoController;
 */
 
 Route::get('/', [WelcomeController::class, 'index']);
+
 Auth::routes();
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 Route::post('/generar-certificado', [CertificadoController::class, 'generar'])->name('certificado.generar');

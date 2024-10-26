@@ -7,7 +7,7 @@
         </div>
         <ul class="navbar-nav  justify-content-end">
           <li class="nav-item d-xl-none ps-3 d-flex align-items-center">
-            <a href="javascript:;" class="nav-link text-body p-0" id="iconNavbarSidenav">
+            <a href="javascript:;" class="nav-link text-body p-0" id="sidenav-main-icon">
               <div class="sidenav-toggler-inner">
                 <i class="sidenav-toggler-line"></i>
                 <i class="sidenav-toggler-line"></i>
@@ -16,12 +16,12 @@
             </a>
           </li>
           <li class="nav-item px-3 d-flex align-items-center dropdown">
-            <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+            <a id="navbarDropdown" class="nav-link dropdown-toggle" href="javascript:;" role="button" aria-haspopup="true" aria-expanded="false">
                 <i class="fa fa-user me-sm-1"></i>
                 {{ Auth::user()->name }}
             </a>
 
-            <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+            <div class="dropdown-menu dropdown-menu-end">
                 <a class="dropdown-item" href="{{ route('logout') }}"
                    onclick="event.preventDefault();
                                  document.getElementById('logout-form').submit();">

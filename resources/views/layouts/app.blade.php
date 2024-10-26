@@ -48,13 +48,13 @@
       </div>
     </main>
     <!--   Core JS Files   -->
-    <script src="{{ mix('js/app.js') }}"></script>
     <script src="{{ asset('assets/js/core/popper.min.js') }}" ></script>
     <script src="{{ asset('assets/js/core/bootstrap.min.js') }}" ></script>
-    <script src="{{ asset('assets/js/plugins/perfect-scrollbar.min.js') }}" ></script>
-    <script src="{{ asset('assets/js/plugins/smooth-scrollbar.min.js') }}" ></script>
+    {{-- <script src="{{ asset('assets/js/plugins/perfect-scrollbar.min.js') }}" ></script>
+    <script src="{{ asset('assets/js/plugins/smooth-scrollbar.min.js') }}" ></script> --}}
+    <script src="{{ mix('js/app.js') }}"></script>
 
-    <script>
+    {{-- <script>
       var win = navigator.platform.indexOf('Win') > -1;
       if (win && document.querySelector('#sidenav-scrollbar')) {
         var options = {
@@ -62,7 +62,7 @@
         }
         Scrollbar.init(document.querySelector('#sidenav-scrollbar'), options);
       }
-    </script>
+    </script> --}}
     <!-- Github buttons -->
     <script async defer src="https://buttons.github.io/buttons.js"></script>
   </body>

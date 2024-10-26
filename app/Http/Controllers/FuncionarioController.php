@@ -142,7 +142,7 @@ class FuncionarioController extends Controller
         $funcionario = Funcionario::find($request->funcionario_id);
 
         if (!$funcionario) {
-            return response()->json(['error' => 'Funcionario no encontrado'], 404);
+            return redirect()->back()->with('error', 'Dignatario no encontrado.');
         }
 
         if ($funcionario->key_anexo) {
@@ -158,6 +158,6 @@ class FuncionarioController extends Controller
         $funcionario->key_anexo = $filePath;
         $funcionario->save();
 
-        return response()->json(['success' => 'Archivo subido con éxito', 'fileName' => $originalFileName]);
+        return redirect()->back()->with('success', 'Documento cargado correctamente.');
     }
 }

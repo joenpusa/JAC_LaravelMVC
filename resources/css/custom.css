@@ -24,3 +24,13 @@ html, body {
     width: 25px;
     height: 25px;
 }
+
+#navbarDropdown.show + .dropdown-menu{
+    opacity: 1;
+    display: block !important;
+    pointer-events: auto !important;
+}
+
+#navbarDropdown.show + .dropdown-menu > .dropdown-item{
+    pointer-events: auto !important;
+}

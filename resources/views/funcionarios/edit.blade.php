@@ -3,15 +3,28 @@
 @section('content')
     <div class="container">
         <h1>{{ isset($funcionario) ? 'Editar' : 'Crear' }} Dignatario</h1>
-        @if ($errors->any())
-            <div class="alert alert-danger alert-dismissible fade show text-white" role="alert">
-                <p>Proceso no realizado:</p>
-                <ul>
-                    @foreach ($errors->all() as $error)
-                        <li>{{ $error }}</li>
-                    @endforeach
-                </ul>
-                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        @if ($errors->any() || $message = Session::get('error'))
+            <div class="alert alert-danger alert-dismissible text-white" role="alert">
+                <span class="text-sm">
+                    <p>Proceso no realizado:</p>
+                    <ul>
+                        {{ $message ?? '' }}
+                        @foreach ($errors->all() as $error)
+                            <li>{{ $error }}</li>
+                        @endforeach
+                    </ul>
+                </span>
+                <button type="button" class="btn-close text-lg py-3 opacity-10" data-bs-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+        @endif
+        @if ($message = Session::get('success'))
+            <div class="alert alert-success alert-dismissible text-white" role="alert">
+                <span class="text-sm">{{ $message }} </span>
+                <button type="button" class="btn-close text-lg py-3 opacity-10" data-bs-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
             </div>
         @endif
         <form action="{{ isset($funcionario) ? route('funcionarios.update', $funcionario->id) : route('funcionarios.store') }}" method="POST">
@@ -100,7 +113,7 @@
                     @method('PUT')
                     <input type="file" id="document" name="document" class="form-control me-2"  accept=".pdf,.zip" required>
                     <input type="hidden" value="{{ $funcionario->id }}" name="funcionario_id">
-                    <button type="button" id="uploadButton" class="btn btn-default me-2">Cargar</button>
+                    <button type="submit" class="btn btn-default me-2">Cargar</button>
                     @if(isset($funcionario->key_anexo))
                         <a href="{{ asset('storage/documents/funcionarios/'.$funcionario->key_anexo) }}" target="_blank" class="btn btn-primary">Ver</a>
                     @endif

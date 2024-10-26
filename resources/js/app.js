@@ -8,6 +8,8 @@ $(document).ready(function() {
     $('.select2').select2();
 });
 
+/*
+
 window.showToast = function(type, message) {
     var toastTypeClass = type === 'success' ? 'toast-success' : 'toast-danger';
     var toastCircleClass = type === 'success' ? 'bg-success' : 'bg-danger';
@@ -27,3 +29,16 @@ window.showToast = function(type, message) {
     var toast = new bootstrap.Toast($('#toast-container .toast').last());
     toast.show();
 }
+*/
+
+(function() {
+    const userMenu = document.getElementById('navbarDropdown');
+    userMenu.addEventListener('click', function(event) {
+        userMenu.classList.toggle('show');
+    });
+
+    const sidebarIcon = document.getElementById('sidenav-main-icon');
+    sidebarIcon.addEventListener('click', function(event) {
+        document.body.classList.toggle('g-sidenav-pinned');
+    });
+})();
