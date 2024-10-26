@@ -52,7 +52,18 @@ class DocumentoController extends Controller
      */
     public function show($id)
     {
-        //
+        $documento = Documento::find($id);
+
+        if (!$documento) {
+            return redirect()->back()->with('error', 'El documento no existe.');
+        }
+
+        if (Storage::disk('public')->exists($documento->keyanexo)) {
+            $url = Storage::url($documento->keyanexo);
+            return redirect($url);
+        } else {
+            return redirect()->back()->with('error', 'El archivo no se encuentra en el sistema.');
+        }
     }
 
 

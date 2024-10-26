@@ -189,11 +189,9 @@
                     <tr>
                         <td>{{ $documento->nomanexo }}</td>
                         <td>
-                            <!-- Botón de ver documento -->
-                            <a href="{{ route('documentos.show', $documento->id) }}" class="btn btn-info btn-sm">
+                            <a href="{{ route('documentos.show', $documento->id) }}" class="btn btn-info btn-sm" target="_blank">
                                 Ver
                             </a>
-                            <!-- Botón de eliminar documento -->
                             <form action="{{ route('documentos.destroy', $documento->id) }}" method="POST" style="display:inline-block;">
                                 @csrf
                                 @method('DELETE')
