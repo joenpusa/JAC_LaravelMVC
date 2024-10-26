@@ -5,7 +5,7 @@
     <div class="container">
         <h1>{{ isset($comuna) ? 'Editar' : 'Crear' }} Comuna</h1>
         @if ($errors->any())
-            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+            <div class="alert alert-danger alert-dismissible fade show text-white" role="alert">
                 <p>Proceso no realizado:</p>
                 <ul>
                     @foreach ($errors->all() as $error)

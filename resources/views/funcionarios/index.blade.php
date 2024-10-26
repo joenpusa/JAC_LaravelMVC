@@ -5,7 +5,7 @@
         <h1>Lista de Dignatarios</h1>
         <a href="{{ route('funcionarios.create') }}" class="btn btn-primary mb-3">Crear Nuevo</a>
         @if ($message = Session::get('success'))
-            <div class="alert alert-success">
+            <div class="alert alert-success text-white">
                 {{ $message }}
             </div>
         @endif

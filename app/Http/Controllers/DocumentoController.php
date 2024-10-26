@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Documento;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 
 class DocumentoController extends Controller
 {
@@ -40,8 +41,7 @@ class DocumentoController extends Controller
             'junta_id' => $request->junta_id,
             'user_id' => Auth::user()->id
         ]);
-        return redirect()->route('juntas.edit', $request->junta_id)
-                     ->with('success', 'Documento cargado correctamente.');
+        return redirect()->back()->with('success', 'Documento cargado correctamente');
     }
 
     /**
@@ -64,10 +64,19 @@ class DocumentoController extends Controller
      */
     public function destroy($id)
     {
-        $documento = Documento::findOrFail($id);
-
+        $documento = Documento::find($id);
+        if (!$documento) {
+            return redirect()->back()->with('error', 'El documento no existe.');
+        }
         if ($documento->keyanexo) {
-            Storage::disk('public')->delete('documentos_juntas/funcionarios/'.$documento->junta_id.'/'.$documento->nombre_documento);
+            if (Storage::disk('public')->exists($documento->keyanexo)) {
+                $deleted = Storage::disk('public')->delete($documento->keyanexo);
+                if (!$deleted) {
+                    return redirect()->back()->with('error', 'No se pudo eliminar el archivo. valide permisos de escritura');
+                }
+            }else{
+                return redirect()->back()->with('error', 'Archivo no encontrado ' . $documento->keyanexo);
+            }
         }
         $documento->delete();
 

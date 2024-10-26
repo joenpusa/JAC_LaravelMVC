@@ -14,6 +14,16 @@
                 <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
             </div>
         @endif
+        @if ($message = Session::get('success'))
+            <div class="alert alert-success text-white">
+                {{ $message }}
+            </div>
+        @endif
+        @if ($message = Session::get('error'))
+            <div class="alert alert-danger text-white">
+                {{ $message }}
+            </div>
+        @endif
         <form action="{{ isset($junta) ? route('juntas.update', $junta->id) : route('juntas.store') }}" method="POST">
             @csrf
             @if (isset($junta))
@@ -151,53 +161,53 @@
                         @endforeach
                     </select>
                 </div>
-                <!-- Botón para abrir el modal y cargar un nuevo documento -->
-                <div class="mb-3">
-                    <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#addDocumentModal">
+
+                <div class="mb-3 col-12" style="display:inline-block;">
+                    <button type="submit" class="btn btn-success">{{ isset($junta) ? 'Actualizar' : 'Crear' }}</button>
+                    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addDocumentModal">
                         Cargar documento
                     </button>
                 </div>
-
-                <!-- Tabla de documentos asociados -->
-                <h3>Documentos Asociados</h3>
-                <table class="table table-striped">
-                    <thead>
-                        <tr>
-                            <th>#</th>
-                            <th>Nombre del Documento</th>
-                            <th>Acciones</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @forelse($junta->documentos as $index => $documento)
-                            <tr>
-                                <td>{{ $index + 1 }}</td>
-                                <td>{{ $documento->nomanexo }}</td>
-                                <td>
-                                    <!-- Botón de ver documento -->
-                                    <a href="{{ route('documentos.show', $documento->id) }}" class="btn btn-info btn-sm">
-                                        Ver
-                                    </a>
-                                    <!-- Botón de eliminar documento -->
-                                    <form action="{{ route('documentos.destroy', $documento->id) }}" method="POST" style="display:inline-block;">
-                                        @csrf
-                                        @method('DELETE')
-                                        <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('¿Está seguro de eliminar este documento?')">Eliminar</button>
-                                    </form>
-                                </td>
-                            </tr>
-                        @empty
-                            <tr>
-                                <td colspan="3">No hay documentos asociados a esta junta.</td>
-                            </tr>
-                        @endforelse
-                    </tbody>
-                </table>
-                <div class="mb-3 col-12">
-                    <button type="submit" class="btn btn-success">{{ isset($junta) ? 'Actualizar' : 'Crear' }}</button>
-                </div>
             </div>
         </form>
+        <!-- Botón para abrir el modal y cargar un nuevo documento -->
+        <div class="mb-3">
+
+        </div>
+
+        <!-- Tabla de documentos asociados -->
+        <h3>Documentos Asociados</h3>
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Nombre del Documento</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                @forelse($junta->documentos as $documento)
+                    <tr>
+                        <td>{{ $documento->nomanexo }}</td>
+                        <td>
+                            <!-- Botón de ver documento -->
+                            <a href="{{ route('documentos.show', $documento->id) }}" class="btn btn-info btn-sm">
+                                Ver
+                            </a>
+                            <!-- Botón de eliminar documento -->
+                            <form action="{{ route('documentos.destroy', $documento->id) }}" method="POST" style="display:inline-block;">
+                                @csrf
+                                @method('DELETE')
+                                <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('¿Está seguro de eliminar este documento?')">Eliminar</button>
+                            </form>
+                        </td>
+                    </tr>
+                @empty
+                    <tr>
+                        <td colspan="3">No hay documentos asociados a esta junta.</td>
+                    </tr>
+                @endforelse
+            </tbody>
+        </table>
     </div>
 
     <div class="modal fade" id="addDocumentModal" tabindex="-1" aria-labelledby="addDocumentModalLabel" aria-hidden="true">

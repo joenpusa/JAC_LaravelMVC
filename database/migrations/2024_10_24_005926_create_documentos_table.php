@@ -20,13 +20,11 @@ class CreateDocumentosTable extends Migration
             $table->unsignedBigInteger('junta_id');
             $table->foreign('junta_id')
                   ->references('id')
-                  ->on('juntas')
-                  ->onDelete('cascade');;
+                  ->on('juntas');
             $table->unsignedBigInteger('user_id');
             $table->foreign('user_id')
                   ->references('id')
-                  ->on('users')
-                  ->onDelete('cascade');;
+                  ->on('users');
             $table->timestamps();
         });
     }
