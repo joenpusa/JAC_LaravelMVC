@@ -3,6 +3,9 @@
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
+use App\Models\User;
+use App\Models\Role;
+use Illuminate\Support\Facades\Hash;
 
 class DatabaseSeeder extends Seeder
 {
@@ -13,7 +16,18 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        // \App\Models\User::factory(10)->create();
+        $adminRole = Role::firstOrCreate(['name' => 'administrador']);
+        $funcionarioRole = Role::firstOrCreate(['name' => 'funcionario']);
+
+        User::firstOrCreate(
+            ['email' => 'tic@nortedesantander.gov.co'],
+            [
+                'name' => 'Administrador Base',
+                'password' => Hash::make('Gobernacion2024'),
+                'role_id' => $adminRole->id
+            ]
+        );
+
         $this->call(DepartamentoSeeder::class);
         $this->call(MunicipioSeeder::class);
     }

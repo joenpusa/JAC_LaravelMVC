@@ -2,7 +2,7 @@
 
 @section('content')
     <div class="container">
-        <h1>Historial de certificados certificados</h1>
+        <h1>Historial de certificados</h1>
         <form action="{{ route('certificados.index') }}" method="GET" role="search">
             <div class="input-group mb-3">
                 <input type="text" name="search" class="form-control" placeholder="Buscar certificado..." value="{{ request('search') }}">

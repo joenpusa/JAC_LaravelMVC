@@ -8,6 +8,7 @@ use App\Http\Controllers\WelcomeController;
 use App\Http\Controllers\CertificadoController;
 use App\Http\Controllers\ConfiguracionController;
 use App\Http\Controllers\DocumentoController;
+use App\Http\Controllers\UserController;
 
 /*
 |--------------------------------------------------------------------------
@@ -38,6 +39,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/configuracion', [ConfiguracionController::class, 'index'])->name('configuracion.index');
     Route::post('/configuracion', [ConfiguracionController::class, 'store'])->name('configuracion.store');
     Route::resource('documentos', DocumentoController::class)->only(['store', 'destroy', 'show']);
+    Route::resource('users', UserController::class);
 
     //rutas de eventos ajax
     Route::put('/funcionario/upload', [FuncionarioController::class, 'upload'])->name('funcionario.upload');

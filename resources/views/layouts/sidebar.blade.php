@@ -8,18 +8,11 @@
     <hr class="horizontal light mt-0 mb-2">
     <div class="collapse navbar-collapse  w-auto " id="sidenav-collapse-main">
       <ul class="navbar-nav">
-        <li class="nav-item">
-          <a class="nav-link text-white " href="{{ route('configuracion.index') }}">
-            <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
-              <i class="material-icons opacity-10">dashboard</i>
-            </div>
-            <span class="nav-link-text ms-1">Configuración</span>
-          </a>
-        </li>
+
         <li class="nav-item">
           <a class="nav-link text-white " href="{{ route('comunas.index') }}">
             <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
-              <i class="material-icons opacity-10">table_view</i>
+              <i class="material-icons opacity-10">location_city</i>
             </div>
             <span class="nav-link-text ms-1">Comunas</span>
           </a>
@@ -27,7 +20,7 @@
         <li class="nav-item">
             <a class="nav-link text-white " href="{{ route('certificados.index') }}">
               <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
-                <i class="material-icons opacity-10">table_view</i>
+                <i class="material-icons opacity-10">find_in_page</i>
               </div>
               <span class="nav-link-text ms-1">Certificados</span>
             </a>
@@ -35,7 +28,7 @@
         <li class="nav-item">
             <a class="nav-link text-white " href="{{ route('juntas.index') }}">
               <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
-                <i class="material-icons opacity-10">table_view</i>
+                <i class="material-icons opacity-10">diversity_1</i>
               </div>
               <span class="nav-link-text ms-1">Juntas</span>
             </a>
@@ -43,22 +36,30 @@
         <li class="nav-item">
             <a class="nav-link text-white " href="{{ route('funcionarios.index') }}">
               <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
-                <i class="material-icons opacity-10">table_view</i>
+                <i class="material-icons opacity-10">badge</i>
               </div>
               <span class="nav-link-text ms-1">Dignatarios</span>
             </a>
         </li>
         <li class="nav-item mt-3">
-          <h6 class="ps-4 ms-2 text-uppercase text-xs text-white font-weight-bolder opacity-8">Account pages</h6>
+          <h6 class="ps-4 ms-2 text-uppercase text-xs text-white font-weight-bolder opacity-8">Administración</h6>
         </li>
         <li class="nav-item">
-          <a class="nav-link text-white " href="#">
+          <a class="nav-link text-white " href="{{ route('users.index') }}">
             <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
-              <i class="material-icons opacity-10">person</i>
+              <i class="material-icons opacity-10">group</i>
             </div>
-            <span class="nav-link-text ms-1">Profile</span>
+            <span class="nav-link-text ms-1">Usuarios</span>
           </a>
         </li>
+        <li class="nav-item">
+            <a class="nav-link text-white " href="{{ route('configuracion.index') }}">
+              <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
+                <i class="material-icons opacity-10">settings</i>
+              </div>
+              <span class="nav-link-text ms-1">Configuración</span>
+            </a>
+          </li>
       </ul>
     </div>
     <div class="sidenav-footer position-absolute w-100 bottom-0 ">
