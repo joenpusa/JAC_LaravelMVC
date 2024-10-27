@@ -42,7 +42,8 @@ Route::middleware(['auth'])->group(function () {
     Route::resource('users', UserController::class);
     Route::patch('/users/{user}/toggle-active', [UserController::class, 'toggleActive'])->name('users.toggleActive');
     Route::patch('/users/{user}/reset-password', [UserController::class, 'resetPassword'])->name('users.resetPassword');
-
+    Route::get('/password/change', [UserController::class, 'showChangePasswordForm'])->name('password.change')->middleware('auth');
+    Route::post('/password/change', [UserController::class, 'changePassword'])->name('password.update')->middleware('auth');
 
     //rutas de eventos ajax
     Route::put('/funcionario/upload', [FuncionarioController::class, 'upload'])->name('funcionario.upload');

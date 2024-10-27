@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\Role;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Auth;
 
 class UserController extends Controller
 {
@@ -50,12 +52,32 @@ class UserController extends Controller
 
     public function resetPassword(User $user)
     {
-        $newPassword = 'nueva_contraseña_segura'; // Genera una contraseña segura
+        $newPassword = Str::random(8) . rand(1000, 9999);;
         $user->password = Hash::make($newPassword);
         $user->save();
 
-        // Aquí puedes enviar la nueva contraseña por correo si es necesario
-
         return redirect()->route('users.index')->with('success', 'Contraseña restablecida');
+    }
+
+    public function showChangePasswordForm()
+    {
+        return view('auth.passwords.change');
+    }
+
+    public function changePassword(Request $request)
+    {
+        $request->validate([
+            'current_password' => 'required',
+            'new_password' => 'required|min:8|confirmed',
+        ]);
+
+        if (!Hash::check($request->current_password, Auth::user()->password)) {
+            return redirect()->back()->with('error', 'La contraseña actual no es correcta.');
+        }
+
+        Auth::user()->update([
+            'password' => Hash::make($request->new_password),
+        ]);
+        return redirect()->back()->with('success', 'Contraseña cambiada con éxito.');
     }
 }
