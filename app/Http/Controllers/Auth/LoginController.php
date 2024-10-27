@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Auth;
 use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class LoginController extends Controller
 {
@@ -36,5 +38,38 @@ class LoginController extends Controller
     public function __construct()
     {
         $this->middleware('guest')->except('logout');
+    }
+
+    /**
+     * Attempt to log the user into the application with an active status.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return bool
+     */
+    protected function attemptLogin(Request $request)
+    {
+        return Auth::attempt(
+            $this->credentials($request) + ['activo' => 1],
+            $request->filled('remember')
+        );
+    }
+
+    /**
+     * Handle a failed login response.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    protected function sendFailedLoginResponse(Request $request)
+    {
+        $user = Auth::getProvider()->retrieveByCredentials($this->credentials($request));
+
+        if ($user && !$user->activo) {
+            return redirect()->route('login')->withErrors(['email' => 'Tu cuenta está desactivada.']);
+        }
+
+        return redirect()->back()->withErrors([
+            'email' => trans('auth.failed'),
+        ]);
     }
 }

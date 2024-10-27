@@ -52,12 +52,22 @@
                         <td>{{ $user->email }}</td>
                         <td>{{ $user->role->name ?? 'Sin Rol' }}</td>
                         <td>
-                            <a href="#" class="btn btn-warning">Editar</a>
-                            <form action="#" method="POST" style="display:inline;">
-                                @csrf
-                                @method('DELETE')
-                                <button type="submit" class="btn btn-danger">Eliminar</button>
-                            </form>
+                            @if (auth()->user()->role->name === 'administrador')
+                                <form action="{{ route('users.toggleActive', $user) }}" method="POST" style="display:inline;">
+                                    @csrf
+                                    @method('PATCH')
+                                    <button type="submit" class="btn bnt-xs {{ $user->activo ? 'btn-danger' : 'btn-success' }}">
+                                        {{ $user->activo ? 'Desactivar' : 'Activar' }}
+                                    </button>
+                                </form>
+                                <form action="{{ route('users.resetPassword', $user) }}" method="POST" style="display:inline;">
+                                    @csrf
+                                    @method('PATCH')
+                                    <button type="submit" class="btn btn-warning">
+                                        Restablecer contraseña
+                                    </button>
+                                </form>
+                            @endif
                         </td>
                     </tr>
                 @endforeach

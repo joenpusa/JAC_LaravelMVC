@@ -39,4 +39,23 @@ class UserController extends Controller
 
         return redirect()->route('users.index')->with('success', 'Usuario creado con éxito');
     }
+
+    public function toggleActive(User $user)
+    {
+        $user->activo = !$user->activo;
+        $user->save();
+
+        return redirect()->route('users.index')->with('success', 'Estado del usuario actualizado');
+    }
+
+    public function resetPassword(User $user)
+    {
+        $newPassword = 'nueva_contraseña_segura'; // Genera una contraseña segura
+        $user->password = Hash::make($newPassword);
+        $user->save();
+
+        // Aquí puedes enviar la nueva contraseña por correo si es necesario
+
+        return redirect()->route('users.index')->with('success', 'Contraseña restablecida');
+    }
 }

@@ -23,7 +23,7 @@ use App\Http\Controllers\UserController;
 
 Route::get('/', [WelcomeController::class, 'index']);
 
-Auth::routes();
+Auth::routes(['register' => false]);
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 Route::post('/generar-certificado', [CertificadoController::class, 'generar'])->name('certificado.generar');
 Route::post('/validar-certificado', [CertificadoController::class, 'validar'])->name('certificado.validar');
@@ -40,6 +40,9 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/configuracion', [ConfiguracionController::class, 'store'])->name('configuracion.store');
     Route::resource('documentos', DocumentoController::class)->only(['store', 'destroy', 'show']);
     Route::resource('users', UserController::class);
+    Route::patch('/users/{user}/toggle-active', [UserController::class, 'toggleActive'])->name('users.toggleActive');
+    Route::patch('/users/{user}/reset-password', [UserController::class, 'resetPassword'])->name('users.resetPassword');
+
 
     //rutas de eventos ajax
     Route::put('/funcionario/upload', [FuncionarioController::class, 'upload'])->name('funcionario.upload');
