@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Junta;
-
+use App\Models\Asociacion;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -16,7 +16,8 @@ class WelcomeController extends Controller
             return redirect()->route('home');
         }
         $juntas = Junta::All();
-        return view('welcome', compact('juntas'));
+        $asociaciones = Asociacion::All();
+        return view('welcome', compact('juntas', 'asociaciones'));
     }
 
 }

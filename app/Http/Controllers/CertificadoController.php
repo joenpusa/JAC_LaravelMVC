@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Certificado;
 use Illuminate\Http\Request;
 use App\Models\Junta;
+use App\Models\Asociacion;
 use PDF;
 
 class CertificadoController extends Controller
@@ -86,11 +87,48 @@ class CertificadoController extends Controller
                     'fecha_resolucion' => $junta->fecha_resolucion,
                     'fecha_eleccion' => $junta->fecha_eleccion,
                     'documento_dignario' => $junta->presidente->num_documento,
+                    'tipo' => 'Junta'
                 ]);
                 $pdf = PDF::loadView('certificados.certificado', compact('certificado'));
                 return $pdf->download('certificado.pdf');
             } else {
                 return redirect()->back()->withErrors(['num_documento' => 'El número de documento no coincide con el presidente de la junta seleccionada.']);
+            }
+        }catch(\Exception $e){
+            return redirect()->back()->withErrors('error', 'Ocurrió un error al procesar su solicitud.');
+        }
+    }
+
+    public function generarAso(Request $request)
+    {
+
+        try {
+            $validated = $request->validate([
+                'asociacion_id' => 'required|exists:asociaciones,id',
+                'num_documento' => 'required|numeric',
+            ],[
+                'num_documento.numeric' => 'El documento debe ser numérico.',
+                'asociacion_id.exists' => 'La asociacion no fue encontrada.',
+            ]);
+            $asociacion = Asociacion::find($validated['asociacion_id']);
+
+            if ($asociacion && $asociacion->presidente && $asociacion->presidente->num_documento == $validated['num_documento']) {
+
+                $certificado = Certificado::create([
+                    'nombre_dignatario' => $asociacion->presidente->nombre,
+                    'comuna' => $asociacion->comuna->nombre,
+                    'nombre_junta' => $asociacion->nombre,
+                    'codigo_hash' => uniqid(),
+                    'resolucion' => $asociacion->resolucion,
+                    'fecha_resolucion' => $asociacion->fecha_resolucion,
+                    'fecha_eleccion' => $asociacion->fecha_eleccion,
+                    'documento_dignario' => $asociacion->presidente->num_documento,
+                    'tipo' => 'Asociación'
+                ]);
+                $pdf = PDF::loadView('certificados.certificado', compact('certificado'));
+                return $pdf->download('certificadoAsociacion.pdf');
+            } else {
+                return redirect()->back()->withErrors(['num_documento' => 'El número de documento no coincide con el presidente de la asociacion seleccionada.']);
             }
         }catch(\Exception $e){
             return redirect()->back()->withErrors('error', 'Ocurrió un error al procesar su solicitud.');

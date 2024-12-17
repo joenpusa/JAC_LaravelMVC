@@ -16,8 +16,9 @@ Route::get('/', [WelcomeController::class, 'index']);
 Auth::routes(['register' => false]);
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 Route::post('/generar-certificado', [CertificadoController::class, 'generar'])->name('certificado.generar');
+Route::post('/generar-certificado-aso', [CertificadoController::class, 'generarAso'])->name('certificado.generarAso');
 Route::post('/validar-certificado', [CertificadoController::class, 'validar'])->name('certificado.validar');
-
+//ruta para descargar archivos
 
 Route::middleware(['auth'])->group(function () {
     //Rutas protegidas por autenticacion
