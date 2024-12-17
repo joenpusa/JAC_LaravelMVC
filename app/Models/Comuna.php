@@ -21,4 +21,9 @@ class Comuna extends Model
     {
         return $this->belongsTo(Municipio::class);
     }
+
+    public function asociaciones()
+    {
+        return $this->hasMany(Asociacion::class);
+    }
 }

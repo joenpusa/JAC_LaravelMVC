@@ -3,6 +3,10 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Funcionario;
+use App\Models\Junta;
+use App\Models\Certificado;
+use App\Models\Comuna;
 
 class HomeController extends Controller
 {
@@ -23,6 +27,10 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('home');
+        $funcionarios = Funcionario::count();
+        $juntas = Junta::count();
+        $certificados = Certificado::count();
+        $comunas = Comuna::count();
+        return view('home', compact('funcionarios', 'juntas', 'certificados', 'comunas'));
     }
 }

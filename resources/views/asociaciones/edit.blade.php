@@ -2,7 +2,7 @@
 
 @section('content')
     <div class="container">
-        <h1>{{ isset($junta) ? 'Editar' : 'Crear' }} Junta</h1>
+        <h1>{{ isset($asociacion) ? 'Editar' : 'Crear' }} Asociación</h1>
         @if ($errors->any() || ($message = Session::get('error')))
             <div class="alert alert-danger alert-dismissible text-white" role="alert">
                 <span class="text-sm">
@@ -27,32 +27,36 @@
                 </button>
             </div>
         @endif
-        <form action="{{ isset($junta) ? route('juntas.update', $junta->id) : route('juntas.store') }}" method="POST">
+        <form
+            action="{{ isset($asociacion) ? route('asociaciones.update', $asociacion->id) : route('asociaciones.store') }}"
+            method="POST">
             @csrf
-            @if (isset($junta))
+            @if (isset($asociacion))
                 @method('PUT')
             @endif
             <div class="row">
                 <div class="mb-3 col-6">
                     <label for="nombre" class="form-label">Nombre</label>
-                    <input type="text" name="nombre" value="{{ old('nombre', $junta->nombre ?? '') }}"
+                    <input type="text" name="nombre" value="{{ old('nombre', $asociacion->nombre ?? '') }}"
                         class="form-control" required>
                 </div>
                 <div class="mb-3 col-6">
                     <label for="resolucion" class="form-label">Resolución</label>
-                    <input type="text" name="resolucion" value="{{ old('resolucion', $junta->resolucion ?? '') }}"
+                    <input type="text" name="resolucion" value="{{ old('resolucion', $asociacion->resolucion ?? '') }}"
                         class="form-control" required>
                 </div>
 
                 <div class="mb-3 col-6">
                     <label for="fecha_resolucion" class="form-label">Fecha resolución</label>
                     <input type="date" name="fecha_resolucion"
-                        value="{{ old('fecha_resolucion', $junta->fecha_resolucion ?? '') }}" class="form-control" required>
+                        value="{{ old('fecha_resolucion', $asociacion->fecha_resolucion ?? '') }}" class="form-control"
+                        required>
                 </div>
                 <div class="mb-3 col-6">
                     <label for="fecha_eleccion" class="form-label">Fecha elección</label>
                     <input type="date" name="fecha_eleccion"
-                        value="{{ old('fecha_eleccion', $junta->fecha_eleccion ?? '') }}" class="form-control" required>
+                        value="{{ old('fecha_eleccion', $asociacion->fecha_eleccion ?? '') }}" class="form-control"
+                        required>
                 </div>
                 <!-- Select para Presidente -->
                 <div class="mb-3">
@@ -61,7 +65,7 @@
                         <option value="">Seleccione el presidente</option>
                         @foreach ($funcionarios as $funcionario)
                             <option value="{{ $funcionario->id }}"
-                                {{ $funcionario->id == $junta->presidente_id ? 'selected' : '' }}>
+                                {{ $funcionario->id == $asociacion->presidente_id ? 'selected' : '' }}>
                                 {{ $funcionario->num_documento }} - {{ $funcionario->nombre }}</option>
                         @endforeach
                     </select>
@@ -73,7 +77,7 @@
                         <option value="">Seleccione el vicepresidente</option>
                         @foreach ($funcionarios as $funcionario)
                             <option value="{{ $funcionario->id }}"
-                                {{ $funcionario->id == $junta->vicepresidente_id ? 'selected' : '' }}>
+                                {{ $funcionario->id == $asociacion->vicepresidente_id ? 'selected' : '' }}>
                                 {{ $funcionario->num_documento }} - {{ $funcionario->nombre }}</option>
                         @endforeach
                     </select>
@@ -85,7 +89,7 @@
                         <option value="">Seleccione el secretario</option>
                         @foreach ($funcionarios as $funcionario)
                             <option value="{{ $funcionario->id }}"
-                                {{ $funcionario->id == $junta->secretario_id ? 'selected' : '' }}>
+                                {{ $funcionario->id == $asociacion->secretario_id ? 'selected' : '' }}>
                                 {{ $funcionario->num_documento }} - {{ $funcionario->nombre }}</option>
                         @endforeach
                     </select>
@@ -97,7 +101,7 @@
                         <option value="">Seleccione el tesorero</option>
                         @foreach ($funcionarios as $funcionario)
                             <option value="{{ $funcionario->id }}"
-                                {{ $funcionario->id == $junta->tesorero_id ? 'selected' : '' }}>
+                                {{ $funcionario->id == $asociacion->tesorero_id ? 'selected' : '' }}>
                                 {{ $funcionario->num_documento }} - {{ $funcionario->nombre }}</option>
                         @endforeach
                     </select>
@@ -109,7 +113,7 @@
                         <option value="">Seleccione el fiscal</option>
                         @foreach ($funcionarios as $funcionario)
                             <option value="{{ $funcionario->id }}"
-                                {{ $funcionario->id == $junta->fiscal_id ? 'selected' : '' }}>
+                                {{ $funcionario->id == $asociacion->fiscal_id ? 'selected' : '' }}>
                                 {{ $funcionario->num_documento }} - {{ $funcionario->nombre }}</option>
                         @endforeach
                     </select>
@@ -121,7 +125,7 @@
                         <option value="">Seleccione el conciliador 1</option>
                         @foreach ($funcionarios as $funcionario)
                             <option value="{{ $funcionario->id }}"
-                                {{ $funcionario->id == $junta->concil1_id ? 'selected' : '' }}>
+                                {{ $funcionario->id == $asociacion->concil1_id ? 'selected' : '' }}>
                                 {{ $funcionario->num_documento }} - {{ $funcionario->nombre }}</option>
                         @endforeach
                     </select>
@@ -132,7 +136,7 @@
                         <option value="">Seleccione el conciliador 2</option>
                         @foreach ($funcionarios as $funcionario)
                             <option value="{{ $funcionario->id }}"
-                                {{ $funcionario->id == $junta->concil2_id ? 'selected' : '' }}>
+                                {{ $funcionario->id == $asociacion->concil2_id ? 'selected' : '' }}>
                                 {{ $funcionario->num_documento }} - {{ $funcionario->nombre }}</option>
                         @endforeach
                     </select>
@@ -143,7 +147,7 @@
                         <option value="">Seleccione el conciliador 3</option>
                         @foreach ($funcionarios as $funcionario)
                             <option value="{{ $funcionario->id }}"
-                                {{ $funcionario->id == $junta->concil3_id ? 'selected' : '' }}>
+                                {{ $funcionario->id == $asociacion->concil3_id ? 'selected' : '' }}>
                                 {{ $funcionario->num_documento }} - {{ $funcionario->nombre }}</option>
                         @endforeach
                     </select>
@@ -154,7 +158,7 @@
                         <option value="">Seleccione el delegado 1</option>
                         @foreach ($funcionarios as $funcionario)
                             <option value="{{ $funcionario->id }}"
-                                {{ $funcionario->id == $junta->delegado1_id ? 'selected' : '' }}>
+                                {{ $funcionario->id == $asociacion->delegado1_id ? 'selected' : '' }}>
                                 {{ $funcionario->num_documento }} - {{ $funcionario->nombre }}</option>
                         @endforeach
                     </select>
@@ -165,7 +169,7 @@
                         <option value="">Seleccione el delegado 2</option>
                         @foreach ($funcionarios as $funcionario)
                             <option
-                                value="{{ $funcionario->id }}"{{ $funcionario->id == $junta->delegado2_id ? 'selected' : '' }}>
+                                value="{{ $funcionario->id }}"{{ $funcionario->id == $asociacion->delegado2_id ? 'selected' : '' }}>
                                 {{ $funcionario->num_documento }} - {{ $funcionario->nombre }}</option>
                         @endforeach
                     </select>
@@ -176,24 +180,25 @@
                         <option value="">Seleccione el delegado 3</option>
                         @foreach ($funcionarios as $funcionario)
                             <option value="{{ $funcionario->id }}"
-                                {{ $funcionario->id == $junta->delegado3_id ? 'selected' : '' }}>
+                                {{ $funcionario->id == $asociacion->delegado3_id ? 'selected' : '' }}>
                                 {{ $funcionario->num_documento }} - {{ $funcionario->nombre }}</option>
                         @endforeach
                     </select>
                 </div>
                 <div class="mb-3">
-                    <label for="comuna" class="form-label">Comuna de la junta</label>
+                    <label for="comuna" class="form-label">Comuna de la asociación</label>
                     <select name="comuna_id" id="comuna" class="form-select select2 form-control" required>
                         <option value="">Seleccione comuna</option>
                         @foreach ($comunas as $c)
-                            <option value="{{ $c->id }}" {{ $c->id == $junta->comuna_id ? 'selected' : '' }}>
+                            <option value="{{ $c->id }}" {{ $c->id == $asociacion->comuna_id ? 'selected' : '' }}>
                                 {{ $c->nombre }}</option>
                         @endforeach
                     </select>
                 </div>
 
                 <div class="mb-3 col-12" style="display:inline-block;">
-                    <button type="submit" class="btn btn-success">{{ isset($junta) ? 'Actualizar' : 'Crear' }}</button>
+                    <button type="submit"
+                        class="btn btn-success">{{ isset($asociacion) ? 'Actualizar' : 'Crear' }}</button>
                     <button type="button" class="btn btn-primary" data-bs-toggle="modal"
                         data-bs-target="#addDocumentModal">
                         Cargar documento
@@ -216,7 +221,7 @@
                 </tr>
             </thead>
             <tbody>
-                @forelse($junta->documentos as $documento)
+                @forelse($asociacion->documentos as $documento)
                     <tr>
                         <td>{{ $documento->nomanexo }}</td>
                         <td>
@@ -235,7 +240,7 @@
                     </tr>
                 @empty
                     <tr>
-                        <td colspan="3">No hay documentos asociados a esta junta.</td>
+                        <td colspan="3">No hay documentos asociados a esta asociación.</td>
                     </tr>
                 @endforelse
             </tbody>
@@ -261,8 +266,8 @@
                             <label for="archivo" class="form-label">Archivo</label>
                             <input type="file" name="archivo" class="form-control" required>
                         </div>
-                        <input type="hidden" name="documentable_type" value="junta">
-                        <input type="hidden" name="documentable_id" value="{{ $junta->id }}">
+                        <input type="hidden" name="documentable_type" value="asociacion">
+                        <input type="hidden" name="documentable_id" value="{{ $asociacion->id }}">
                         <button type="submit" class="btn btn-success">Cargar Documento</button>
                     </form>
                 </div>

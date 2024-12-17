@@ -107,7 +107,9 @@ class JuntaController extends Controller
     {
         $funcionarios = Funcionario::all();
         $comunas = Comuna::all();
-        $junta->load('documentos');
+        $junta->load(['documentos' => function ($query) {
+            $query->where('documentable_type', Junta::class);
+        }]);
         return view('juntas.edit', compact('junta','funcionarios','comunas'));
     }
 

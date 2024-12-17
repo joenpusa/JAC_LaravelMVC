@@ -10,17 +10,20 @@ class Documento extends Model
     protected $fillable = [
         'nomanexo',
         'keyanexo',
-        'junta_id',
-        'user_id'
+        'user_id',
+        'documentable_id',
+        'documentable_type',
     ];
 
-    public function junta()
+    public function documentable()
     {
-        return $this->belongsTo(Junta::class);
+        return $this->morphTo();
     }
 
     public function user()
     {
         return $this->belongsTo(User::class);
     }
+
+
 }

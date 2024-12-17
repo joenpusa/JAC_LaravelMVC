@@ -28,4 +28,9 @@ class Funcionario extends Model
     {
         return $this->hasMany(Junta::class);
     }
+
+    public function asociaciones()
+    {
+        return $this->hasMany(Asociacion::class);
+    }
 }

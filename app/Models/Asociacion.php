@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Junta extends Model
+class Asociacion extends Model
 {
     protected $fillable = [
         'nombre',
@@ -27,6 +27,8 @@ class Junta extends Model
         'nomanexo',
         'keyanexo'
     ];
+
+    protected $table = 'asociaciones';
 
     public function presidente()
     {

@@ -9,17 +9,7 @@ use App\Http\Controllers\CertificadoController;
 use App\Http\Controllers\ConfiguracionController;
 use App\Http\Controllers\DocumentoController;
 use App\Http\Controllers\UserController;
-
-/*
-|--------------------------------------------------------------------------
-| Web Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider within a group which
-| contains the "web" middleware group. Now create something great!
-|
-*/
+use App\Http\Controllers\AsociacionController;
 
 Route::get('/', [WelcomeController::class, 'index']);
 
@@ -35,6 +25,8 @@ Route::middleware(['auth'])->group(function () {
     Route::resource('juntas', JuntaController::class);
     Route::resource('comunas', ComunaController::class);
     Route::resource('certificados', CertificadoController::class);
+    Route::get('asociaciones/{asociacion}/edit', [AsociacionController::class, 'edit']);
+    Route::resource('asociaciones', AsociacionController::class);
 
     Route::get('/configuracion', [ConfiguracionController::class, 'index'])->name('configuracion.index');
     Route::post('/configuracion', [ConfiguracionController::class, 'store'])->name('configuracion.store');
