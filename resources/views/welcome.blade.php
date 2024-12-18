@@ -45,7 +45,7 @@
                             <div class="container">
                                 <div class="mb-3">
                                     <label for="juntas" class="form-label">Juntas</label>
-                                    <select name="junta_id" id="junta" class="form-select select2 form-control"
+                                    <select name="junta_id" id="junta_id" class="form-select select2 form-control"
                                         required>
                                         <option value="">Seleccione la JAC</option>
                                         @foreach ($juntas as $j)
@@ -55,11 +55,13 @@
                                 </div>
                                 <div class="mb-3">
                                     <label for="num_documento" class="form-label">Documento Presidente</label>
-                                    <input type="number" name="num_documento" class="form-control" required>
+                                    <input type="number" name="num_documento" id="num_documento" class="form-control"
+                                        required>
                                 </div>
                                 <div class="mb-3 col-12">
                                     <button type="submit" class="btn btn-primary">Generar</button>
-                                    <button type="button" class="btn btn-secundary">Solicitar Documentos</button>
+                                    <button type="button" class="btn btn-secundary"
+                                        onclick="descargarArchivosJunta()">Solicitar Documentos</button>
                                 </div>
                                 <p class="mt-3">
                                     Para generar un certificado debes seleccionar la JAC a la que perteneces y
@@ -78,7 +80,7 @@
                             <div class="container">
                                 <div class="mb-3">
                                     <label for="asociaciones" class="form-label">Asociaciones</label>
-                                    <select name="asociacion_id" id="asociacion" class="form-select select2 form-control"
+                                    <select name="asociacion_id" id="asociacion_id" class="form-select select2 form-control"
                                         required>
                                         <option value="">Seleccione la Asociación</option>
                                         @foreach ($asociaciones as $j)
@@ -87,12 +89,14 @@
                                     </select>
                                 </div>
                                 <div class="mb-3">
-                                    <label for="num_documento" class="form-label">Documento Presidente</label>
-                                    <input type="number" name="num_documento" class="form-control" required>
+                                    <label for="num_documentoAso" class="form-label">Documento Presidente</label>
+                                    <input type="number" name="num_documentoAso" id="num_documentoAso"
+                                        class="form-control" required>
                                 </div>
                                 <div class="mb-3 col-12">
                                     <button type="submit" class="btn btn-primary">Generar</button>
-                                    <button type="button" class="btn btn-secundary">Solicitar Documentos</button>
+                                    <button type="button" class="btn btn-secundary"
+                                        onclick="descargarArchivosAsociacion()">Solicitar Documentos</button>
                                 </div>
                                 <p class="mt-3">
                                     Para generar un certificado debes seleccionar la asociación a la que perteneces y
@@ -133,5 +137,28 @@
             </div>
         </div>
     </div>
+    <script>
+        function descargarArchivosJunta() {
+            const juntaId = document.getElementById('junta_id').value;
+            const numDocumento = document.getElementById('num_documento').value;
+
+            if (!juntaId || !numDocumento) {
+                alert('Por favor selecciona una junta y digita el número de documento del presidente.');
+                return;
+            }
+            window.location.href = `/juntas/${juntaId}/descargar-archivos/${numDocumento}`;
+        }
+
+        function descargarArchivosAsociacion() {
+            const asociacionId = document.getElementById('asociacion_id').value;
+            const numDocumento = document.getElementById('num_documentoAso').value;
+
+            if (!asociacionId || !numDocumento) {
+                alert('Por favor selecciona una asociación y digita el número de documento del presidente.');
+                return;
+            }
+            window.location.href = `/asociaciones/${asociacionId}/descargar-archivos/${numDocumento}`;
+        }
+    </script>
 
 @endsection

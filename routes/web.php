@@ -18,6 +18,8 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 Route::post('/generar-certificado', [CertificadoController::class, 'generar'])->name('certificado.generar');
 Route::post('/generar-certificado-aso', [CertificadoController::class, 'generarAso'])->name('certificado.generarAso');
 Route::post('/validar-certificado', [CertificadoController::class, 'validar'])->name('certificado.validar');
+Route::get('/juntas/{junta_id}/descargar-archivos/{num_documento}', [DocumentoController::class, 'descargarArchivos'])->name('juntas.descargar-archivos');
+Route::get('/asociaciones/{asociacion_id}/descargar-archivos/{num_documentoAso}', [DocumentoController::class, 'descargarArchivosAso'])->name('asocoaciones.descargar-archivos');
 //ruta para descargar archivos
 
 Route::middleware(['auth'])->group(function () {
@@ -37,6 +39,8 @@ Route::middleware(['auth'])->group(function () {
     Route::patch('/users/{user}/reset-password', [UserController::class, 'resetPassword'])->name('users.resetPassword');
     Route::get('/password/change', [UserController::class, 'showChangePasswordForm'])->name('password.change')->middleware('auth');
     Route::post('/password/change', [UserController::class, 'changePassword'])->name('password.update')->middleware('auth');
+
+
 
     //rutas de eventos ajax
     Route::put('/funcionario/upload', [FuncionarioController::class, 'upload'])->name('funcionario.upload');
