@@ -16,6 +16,7 @@ class Certificado extends Model
         'fecha_resolucion',
         'fecha_eleccion',
         'documento_dignario',
-        'tipo'
+        'tipo',
+        'verificado',
     ];
 }

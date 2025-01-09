@@ -142,12 +142,16 @@ class CertificadoController extends Controller
                 'fecha_certificado' => 'required|date',
                 'cod_certificado' => 'required|string|max:25',
             ]);
+            // Buscar el certificado en la base de datos
             $certificado = Certificado::whereDate('created_at', $request->fecha_certificado)
                 ->where('codigo_hash', $request->cod_certificado)
                 ->first();
             if (!$certificado) {
                 return redirect()->back()->withErrors(['error' => 'El certificado no es válido.']);
             }
+
+            // Actualizar el campo 'verificado' a 'Si'
+            $certificado->update(['verificado' => 'Si']);
             return redirect()->back()->with('success', 'Certificado encontrado con éxito.');
         }catch(\Exception $e){
             return redirect()->back()->withErrors('error', 'Ocurrió un error al procesar su solicitud.');

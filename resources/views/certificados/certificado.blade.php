@@ -34,6 +34,7 @@
 </head>
 
 <body>
+    <br>
     <table>
         <tbody>
             <tr>
@@ -49,11 +50,13 @@
             </tr>
         </tbody>
     </table>
+    <br><br>
     <center>
         <h3>LA SECRETARIA DE DESARROLLO SOCIAL</h3>
 
         <h3>HACE CONSTAR:</h3>
     </center>
+    <br>
     <p>
         Que el(la) señor(a) <strong>{{ $certificado->nombre_dignatario }}</strong>, identificado(a) con la cédula de
         ciudadanía No. <strong>{{ $certificado->documento_dignario }}</strong> esta registrado(a) como Representante de

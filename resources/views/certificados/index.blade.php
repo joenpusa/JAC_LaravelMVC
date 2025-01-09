@@ -5,7 +5,8 @@
         <h1>Historial de certificados</h1>
         <form action="{{ route('certificados.index') }}" method="GET" role="search">
             <div class="input-group mb-3">
-                <input type="text" name="search" class="form-control" placeholder="Buscar certificado..." value="{{ request('search') }}">
+                <input type="text" name="search" class="form-control" placeholder="Buscar certificado..."
+                    value="{{ request('search') }}">
                 <div class="input-group-append">
                     <button class="btn btn-outline-secondary" type="submit">Buscar</button>
                 </div>
@@ -19,6 +20,7 @@
                     <th>Documento dignatario</th>
                     <th>Dignatario certificado</th>
                     <th>Codigo verificación</th>
+                    <th>Verificado</th>
                 </tr>
             </thead>
             <tbody>
@@ -29,6 +31,7 @@
                         <td>{{ $c->documento_dignario }}</td>
                         <td>{{ $c->nombre_dignatario }}</td>
                         <td>{{ $c->codigo_hash }}</td>
+                        <td>{{ $c->verificado }}</td>
                     </tr>
                 @endforeach
             </tbody>
