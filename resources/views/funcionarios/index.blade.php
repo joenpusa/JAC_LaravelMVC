@@ -4,7 +4,7 @@
     <div class="container">
         <h1>Lista de Dignatarios</h1>
         <a href="{{ route('funcionarios.create') }}" class="btn btn-primary mb-3">Crear Nuevo</a>
-        @if ($errors->any() || $message = Session::get('error'))
+        @if ($errors->any() || ($message = Session::get('error')))
             <div class="alert alert-danger alert-dismissible text-white" role="alert">
                 <span class="text-sm">
                     <p>Proceso no realizado:</p>
@@ -30,7 +30,8 @@
         @endif
         <form action="{{ route('funcionarios.index') }}" method="GET" role="search">
             <div class="input-group mb-3">
-                <input type="text" name="search" class="form-control" placeholder="Buscar funcionarios..." value="{{ request('search') }}">
+                <input type="text" name="search" class="form-control" placeholder="Buscar funcionarios..."
+                    value="{{ request('search') }}">
                 <div class="input-group-append">
                     <button class="btn btn-outline-secondary" type="submit">Buscar</button>
                 </div>
@@ -55,7 +56,8 @@
                         <td>{{ $funcionario->profesion }}</td>
                         <td>
                             <a href="{{ route('funcionarios.edit', $funcionario->id) }}" class="btn btn-warning">Editar</a>
-                            <form action="{{ route('funcionarios.destroy', $funcionario->id) }}" method="POST" style="display:inline;">
+                            <form action="{{ route('funcionarios.destroy', $funcionario->id) }}" method="POST"
+                                style="display:inline;">
                                 @csrf
                                 @method('DELETE')
                                 <button type="submit" class="btn btn-danger">Eliminar</button>

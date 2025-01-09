@@ -1,80 +1,109 @@
-<aside
-    class="sidenav navbar navbar-vertical navbar-expand-xs border-0 border-radius-xl my-3 fixed-start ms-3   bg-gradient-dark"
-    id="sidenav-main">
-    <div class="sidenav-header">
-        <i class="fas fa-times p-3 cursor-pointer text-white opacity-5 position-absolute end-0 top-0 d-none d-xl-none"
-            aria-hidden="true" id="iconSidenav"></i>
-        <a class="navbar-brand m-0" href="{{ route('home') }}">
-            <span class="ms-1 font-weight-bold text-white">{{ $appConfig->nombre_app }}</span>
-        </a>
-    </div>
-    <hr class="horizontal light mt-0 mb-2">
-    <div class="collapse navbar-collapse  w-auto " id="sidenav-collapse-main">
-        <ul class="navbar-nav">
-            <li class="nav-item">
-                <a class="nav-link text-white " href="{{ route('comunas.index') }}">
-                    <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
-                        <i class="material-icons opacity-10">location_city</i>
+<nav class="navbar navbar-vertical navbar-expand-lg">
+    <div class="collapse navbar-collapse" id="navbarVerticalCollapse">
+        <div class="navbar-vertical-content">
+            <ul class="navbar-nav flex-column" id="navbarVerticalNav">
+                <li class="nav-item">
+                    <div class="nav-item-wrapper">
+                        <a href="{{ route('home') }}" class="nav-link label-1" role="button" data-bs-toggle=""
+                            aria-expanded="false">
+                            <div class="d-flex align-items-center">
+                                <span class="nav-link-icon"><span class="bi bi-images"></span></span><span
+                                    class="nav-link-text-wrapper"><span class="nav-link-text">Inicio</span></span>
+                            </div>
+                        </a>
                     </div>
-                    <span class="nav-link-text ms-1">Comunas</span>
-                </a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link text-white " href="{{ route('certificados.index') }}">
-                    <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
-                        <i class="material-icons opacity-10">find_in_page</i>
+                </li>
+                <li class="nav-item">
+                    <div class="nav-item-wrapper">
+                        <a href="{{ route('comunas.index') }}" class="nav-link label-1" role="button" data-bs-toggle=""
+                            aria-expanded="false">
+                            <div class="d-flex align-items-center">
+                                <span class="nav-link-icon"><span class="bi bi-images"></span></span><span
+                                    class="nav-link-text-wrapper"><span class="nav-link-text">Comunas</span></span>
+                            </div>
+                        </a>
                     </div>
-                    <span class="nav-link-text ms-1">Certificados</span>
-                </a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link text-white " href="{{ route('juntas.index') }}">
-                    <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
-                        <i class="material-icons opacity-10">diversity_1</i>
+                </li>
+                <li class="nav-item">
+                    <div class="nav-item-wrapper">
+                        <a href="{{ route('certificados.index') }}" class="nav-link label-1" role="button"
+                            data-bs-toggle="" aria-expanded="false">
+                            <div class="d-flex align-items-center">
+                                <span class="nav-link-icon"><span class="bi bi-images"></span></span><span
+                                    class="nav-link-text-wrapper"><span class="nav-link-text">Certificados</span></span>
+                            </div>
+                        </a>
                     </div>
-                    <span class="nav-link-text ms-1">Juntas</span>
-                </a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link text-white " href="{{ route('asociaciones.index') }}">
-                    <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
-                        <i class="material-icons opacity-10">diversity_1</i>
+                </li>
+                <li class="nav-item">
+                    <div class="nav-item-wrapper">
+                        <a href="{{ route('juntas.index') }}" class="nav-link label-1" role="button" data-bs-toggle=""
+                            aria-expanded="false">
+                            <div class="d-flex align-items-center">
+                                <span class="nav-link-icon"><span class="bi bi-images"></span></span><span
+                                    class="nav-link-text-wrapper"><span class="nav-link-text">Juntas</span></span>
+                            </div>
+                        </a>
                     </div>
-                    <span class="nav-link-text ms-1">Asociaciones</span>
-                </a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link text-white " href="{{ route('funcionarios.index') }}">
-                    <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
-                        <i class="material-icons opacity-10">badge</i>
+                </li>
+                <li class="nav-item">
+                    <div class="nav-item-wrapper">
+                        <a href="{{ route('asociaciones.index') }}" class="nav-link label-1" role="button"
+                            data-bs-toggle="" aria-expanded="false">
+                            <div class="d-flex align-items-center">
+                                <span class="nav-link-icon"><span class="bi bi-images"></span></span><span
+                                    class="nav-link-text-wrapper"><span class="nav-link-text">Asociaciones</span></span>
+                            </div>
+                        </a>
                     </div>
-                    <span class="nav-link-text ms-1">Dignatarios</span>
-                </a>
-            </li>
-            <li class="nav-item mt-3">
-                <h6 class="ps-4 ms-2 text-uppercase text-xs text-white font-weight-bolder opacity-8">Administración</h6>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link text-white " href="{{ route('users.index') }}">
-                    <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
-                        <i class="material-icons opacity-10">group</i>
+                </li>
+                <li class="nav-item">
+                    <div class="nav-item-wrapper">
+                        <a href="{{ route('funcionarios.index') }}" class="nav-link label-1" role="button"
+                            data-bs-toggle="" aria-expanded="false">
+                            <div class="d-flex align-items-center">
+                                <span class="nav-link-icon"><span class="bi bi-images"></span></span><span
+                                    class="nav-link-text-wrapper"><span class="nav-link-text">Dignatarios</span></span>
+                            </div>
+                        </a>
                     </div>
-                    <span class="nav-link-text ms-1">Usuarios</span>
-                </a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link text-white " href="{{ route('configuracion.index') }}">
-                    <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
-                        <i class="material-icons opacity-10">settings</i>
+                </li>
+                <li class="nav-item">
+                    <div class="nav-item-wrapper">
+                        <a href="{{ route('users.index') }}" class="nav-link label-1" role="button" data-bs-toggle=""
+                            aria-expanded="false">
+                            <div class="d-flex align-items-center">
+                                <span class="nav-link-icon"><span class="bi bi-images"></span></span><span
+                                    class="nav-link-text-wrapper"><span class="nav-link-text">Usuarios</span></span>
+                            </div>
+                        </a>
                     </div>
-                    <span class="nav-link-text ms-1">Configuración</span>
-                </a>
-            </li>
-        </ul>
-    </div>
-    <div class="sidenav-footer position-absolute w-100 bottom-0 ">
-        <div class="mx-3 mb-2 text-center">
-            <img src="{{ asset($appConfig->logo) }}" class="logo-footer">
+                </li>
+                <li class="nav-item">
+                    <div class="nav-item-wrapper">
+                        <a href="{{ route('configuracion.index') }}" class="nav-link label-1" role="button"
+                            data-bs-toggle="" aria-expanded="false">
+                            <div class="d-flex align-items-center">
+                                <span class="nav-link-icon"><span class="bi bi-images"></span></span><span
+                                    class="nav-link-text-wrapper"><span
+                                        class="nav-link-text">Configuración</span></span>
+                            </div>
+                        </a>
+                    </div>
+                </li>
+            </ul>
         </div>
     </div>
-</aside>
+    <div class="navbar-vertical-footer">
+        {{-- <div class="sidenav-footer position-absolute w-100 bottom-0 ">
+            <div class="mx-3 mb-2 text-center">
+                 class="logo-footer">
+            </div>
+        </div> --}}
+        <button
+            class="btn navbar-vertical-toggle border-0 fw-semibold w-100 white-space-nowrap d-flex align-items-center"
+            @click="logout">
+            <span class="navbar-vertical-footer-text ms-2">Salir</span>
+        </button>
+    </div>
+</nav>
