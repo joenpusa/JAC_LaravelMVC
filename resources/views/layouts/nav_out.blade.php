@@ -3,7 +3,8 @@
         <a class="navbar-brand text-light" href="{{ Auth::check() ? url('/home') : url('/') }}">
             {{ $appConfig->nombre_app }}
         </a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="OPA JAC Cúcuta">
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="OPA JAC Cúcuta">
             <span class="navbar-toggler-icon"></span>
         </button>
 
@@ -16,7 +17,7 @@
                 @guest
                     @if (Route::has('login'))
                         <li class="nav-item">
-                            <a class="nav-link text-light" href="{{ route('login') }}">{{ __('Login') }}</a>
+                            <a class="nav-link text-light" href="{{ route('login') }}">Ingresar</a>
                         </li>
                     @endif
                 @endguest

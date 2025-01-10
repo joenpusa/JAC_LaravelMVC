@@ -44,9 +44,8 @@
                             @csrf
                             <div class="container">
                                 <div class="mb-3">
-                                    <label for="juntas" class="form-label">Juntas</label>
-                                    <select name="junta_id" id="junta_id" class="form-select select2 form-control"
-                                        required>
+                                    <label for="juntas">Juntas</label>
+                                    <select name="junta_id" id="junta_id" class="form-select form-control" required>
                                         <option value="">Seleccione la JAC</option>
                                         @foreach ($juntas as $j)
                                             <option value="{{ $j->id }}">{{ $j->nombre }}</option>
@@ -79,8 +78,8 @@
                             @csrf
                             <div class="container">
                                 <div class="mb-3">
-                                    <label for="asociaciones" class="form-label">Asociaciones</label>
-                                    <select name="asociacion_id" id="asociacion_id" class="form-select select2 form-control"
+                                    <label for="asociaciones">Asociaciones</label>
+                                    <select name="asociacion_id" id="asociacion_id" class="form-select form-control"
                                         required>
                                         <option value="">Seleccione la Asociación</option>
                                         @foreach ($asociaciones as $j)
@@ -89,9 +88,9 @@
                                     </select>
                                 </div>
                                 <div class="mb-3">
-                                    <label for="num_documentoAso" class="form-label">Documento Presidente</label>
-                                    <input type="number" name="num_documentoAso" id="num_documentoAso"
-                                        class="form-control" required>
+                                    <label for="num_documentoAso">Documento Presidente</label>
+                                    <input type="number" name="num_documentoAso" id="num_documentoAso" class="form-control"
+                                        required>
                                 </div>
                                 <div class="mb-3 col-12">
                                     <button type="submit" class="btn btn-primary">Generar</button>

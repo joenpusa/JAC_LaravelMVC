@@ -91,19 +91,35 @@
                         </a>
                     </div>
                 </li>
+                <li class="nav-item">
+                    <div class="nav-item-wrapper">
+                        <a href="{{ route('password.change') }}" class="nav-link label-1" role="button"
+                            data-bs-toggle="" aria-expanded="false">
+                            <div class="d-flex align-items-center">
+                                <span class="nav-link-icon"><span class="bi bi-images"></span></span><span
+                                    class="nav-link-text-wrapper"><span class="nav-link-text">Cambiar
+                                        clave</span></span>
+                            </div>
+                        </a>
+                    </div>
+                </li>
+                <li class="nav-item">
+                    <div class="nav-item-wrapper">
+                        <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                            @csrf
+                        </form>
+                        <a href="#" class="nav-link label-1" role="button"
+                            onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                            <div class="d-flex align-items-center">
+                                <span class="nav-link-icon"><span class="bi bi-images"></span></span>
+                                <span class="nav-link-text-wrapper">
+                                    <span class="nav-link-text">Salir</span>
+                                </span>
+                            </div>
+                        </a>
+                    </div>
+                </li>
             </ul>
         </div>
-    </div>
-    <div class="navbar-vertical-footer">
-        {{-- <div class="sidenav-footer position-absolute w-100 bottom-0 ">
-            <div class="mx-3 mb-2 text-center">
-                 class="logo-footer">
-            </div>
-        </div> --}}
-        <button
-            class="btn navbar-vertical-toggle border-0 fw-semibold w-100 white-space-nowrap d-flex align-items-center"
-            @click="logout">
-            <span class="navbar-vertical-footer-text ms-2">Salir</span>
-        </button>
     </div>
 </nav>

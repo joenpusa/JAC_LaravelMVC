@@ -1,4 +1,3 @@
-
 @extends('layouts.app')
 
 @section('content')
@@ -22,13 +21,14 @@
             @endif
             <div class="row">
                 <div class="mb-3">
-                    <label for="nombre" class="form-label">Nombre</label>
-                    <input type="text" name="nombre" value="{{ old('nombre', $comuna->nombre ?? '') }}" class="form-control" required>
+                    <label for="nombre">Nombre</label>
+                    <input type="text" name="nombre" value="{{ old('nombre', $comuna->nombre ?? '') }}"
+                        class="form-control" required>
                 </div>
 
                 <div class="mb-3">
-                    <label for="municipio" class="form-label">Municipio</label>
-                    <select name="municipio_id" id="municipio_id" class="form-select select2 form-control" required>
+                    <label for="municipio">Municipio</label>
+                    <select name="municipio_id" id="municipio_id" class="form-select form-control" required>
                         <option value="">Seleccione municipio</option>
                         @foreach ($municipios as $c)
                             <option value="{{ $c->id }}">{{ $c->nombre_municipio }}</option>
