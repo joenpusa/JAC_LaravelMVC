@@ -34,6 +34,7 @@
             @yield('content')
         </div>
     </main>
+
     <!--   Core JS Files   -->
     <script src="{{ asset('assets/js/core/popper.min.js') }}"></script>
     <script src="{{ asset('assets/js/core/bootstrap.min.js') }}"></script>

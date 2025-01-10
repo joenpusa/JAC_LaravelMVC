@@ -2,9 +2,9 @@
 
 @section('content')
     <div class="container">
-        <h1>Lista de Cumunas</h1>
+        <h1>Lista de Comunas</h1>
         <a href="{{ route('comunas.create') }}" class="btn btn-primary mb-3">Crear Nueva</a>
-        @if ($errors->any() || $message = Session::get('error'))
+        @if ($errors->any() || ($message = Session::get('error')))
             <div class="alert alert-danger alert-dismissible text-white" role="alert">
                 <span class="text-sm">
                     <p>Proceso no realizado:</p>
@@ -30,7 +30,8 @@
         @endif
         <form action="{{ route('comunas.index') }}" method="GET" role="search">
             <div class="input-group mb-3">
-                <input type="text" name="search" class="form-control" placeholder="Buscar comunas..." value="{{ request('search') }}">
+                <input type="text" name="search" class="form-control" placeholder="Buscar comunas..."
+                    value="{{ request('search') }}">
                 <div class="input-group-append">
                     <button class="btn btn-outline-secondary" type="submit">Buscar</button>
                 </div>
