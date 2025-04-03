@@ -18,7 +18,7 @@
                         <i class="material-icons opacity-10">location_on</i>
                         <p>
                             Dirección:<br>
-                            {{ $appConfig->horario }}
+                            {{ $appConfig->direccion }}
                         </p>
                     </div>
                     <div class="col-md-6">
