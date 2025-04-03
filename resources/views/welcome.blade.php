@@ -5,14 +5,14 @@
         <div class="row justify-content-center">
             <div class="col-md-8">
                 @if ($errors->any())
-                    <div class="alert alert-danger alert-dismissible fade show mt-2 mb-2" role="alert">
-                        <p>Proceso no realizado:</p>
-                        <ul>
+                    <div class="alert alert-outline-danger d-flex align-items-center" role="alert">
+                        <i class="material-icons opacity-10">error</i>
+                        <p class="mb-0 ml-2 flex-1">Proceso no realizado:
                             @foreach ($errors->all() as $error)
-                                <li>{{ $error }}</li>
+                                {{ $error }}<br>
                             @endforeach
-                        </ul>
-                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                        </p>
+                        <button class="btn-close" type="button" data-bs-dismiss="alert" aria-label="Close"></button>
                     </div>
                 @endif
 
@@ -22,23 +22,36 @@
                         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                     </div>
                 @endif
-                <ul class="nav nav-tabs" id="myTab" role="tablist">
+                <ul class="nav nav-underline" id="myTab" role="tablist">
                     <li class="nav-item" role="presentation">
                         <button class="nav-link active" id="generate-tab" data-bs-toggle="tab" data-bs-target="#generate"
-                            type="button" role="tab" aria-controls="home" aria-selected="true">Tramites JAC</button>
+                            type="button" role="tab" aria-controls="home" aria-selected="true">
+                            <div class="d-flex align-items-center">
+                                <i class="material-icons opacity-10">diversity_1</i>
+                                <span class="ms-2">Tramites JAC</span>
+                            </div>
+                        </button>
                     </li>
                     <li class="nav-item" role="presentation">
                         <button class="nav-link" id="generate-tab" data-bs-toggle="tab" data-bs-target="#generateAso"
-                            type="button" role="tab" aria-controls="homeAso" aria-selected="true">Tramites
-                            Asociación</button>
+                            type="button" role="tab" aria-controls="homeAso" aria-selected="true">
+                            <div class="d-flex align-items-center">
+                                <i class="material-icons opacity-10">apartment</i>
+                                <span class="ms-2">Tramites Asociación</span>
+                            </div>
+                        </button>
                     </li>
                     <li class="nav-item" role="presentation">
                         <button class="nav-link" id="validate-tab" data-bs-toggle="tab" data-bs-target="#validate"
-                            type="button" role="tab" aria-controls="profile" aria-selected="false">Validar
-                            Certificados</button>
+                            type="button" role="tab" aria-controls="profile" aria-selected="false">
+                            <div class="d-flex align-items-center">
+                                <i class="material-icons opacity-10">history_edu</i>
+                                <span class="ms-2">Validar Certificados</span>
+                            </div>
+                        </button>
                     </li>
                 </ul>
-                <div class="tab-content" id="myTabContent">
+                <div class="tab-content p-2" id="myTabContent">
                     <div class="tab-pane fade show active" id="generate" role="tabpanel" aria-labelledby="generate-tab">
                         <form method="POST" action="{{ route('certificado.generar') }}">
                             @csrf
@@ -89,8 +102,8 @@
                                 </div>
                                 <div class="mb-3">
                                     <label for="num_documentoAso">Documento Presidente</label>
-                                    <input type="number" name="num_documentoAso" id="num_documentoAso" class="form-control"
-                                        required>
+                                    <input type="number" name="num_documentoAso" id="num_documentoAso"
+                                        class="form-control" required>
                                 </div>
                                 <div class="mb-3 col-12">
                                     <button type="submit" class="btn btn-primary">Generar</button>
