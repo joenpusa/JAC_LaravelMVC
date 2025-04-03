@@ -2,7 +2,7 @@
     <div class="container">
         <div class="row text-center">
             <div class="col-md-4">
-                <img src="{{ asset($appConfig->logo) }}" class="logo-footer" width="100%">
+                <img src="{{ asset($appConfig->logo) }}" class="logo-footer p-4" width="90%">
             </div>
             <div class="col-md-8">
                 <div class="row">
