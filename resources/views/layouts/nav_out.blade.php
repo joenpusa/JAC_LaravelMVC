@@ -7,7 +7,7 @@
         <a class="navbar-brand me-1 me-sm-3" href="{{ Auth::check() ? url('/home') : url('/') }}">
             <div class="d-flex align-items-center">
                 <div class="d-flex align-items-center">
-                    <img src="{{ asset($appConfig->logo) }}" alt="JUNTAS NDS" width="27" />
+                    <img src="{{ asset($appConfig->logo) }}" alt="JUNTAS NDS" width="100" />
                     <h5 class="logo-text ms-2 d-none d-sm-block">JUNTAS NDS</h5>
                 </div>
             </div>
