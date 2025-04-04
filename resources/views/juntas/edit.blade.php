@@ -57,7 +57,7 @@
                 <!-- Select para Presidente -->
                 <div class="mb-3">
                     <label for="presidente">Presidente</label>
-                    <select name="presidente_id" id="presidente" class="form-select form-control" required>
+                    <select name="presidente_id" id="presidente" class="form-select select2" style="width: 100%" required>
                         <option value="">Seleccione el presidente</option>
                         @foreach ($funcionarios as $funcionario)
                             <option value="{{ $funcionario->id }}"
@@ -69,7 +69,8 @@
                 <!-- Select para Vicepresidente -->
                 <div class="mb-3">
                     <label for="vicepresidente">Vicepresidente</label>
-                    <select name="vicepresidente_id" id="vicepresidente" class="form-select form-control" required>
+                    <select name="vicepresidente_id" id="vicepresidente" class="form-select select2" style="width: 100%"
+                        required>
                         <option value="">Seleccione el vicepresidente</option>
                         @foreach ($funcionarios as $funcionario)
                             <option value="{{ $funcionario->id }}"
@@ -81,7 +82,7 @@
                 <!-- Select para Secretario -->
                 <div class="mb-3">
                     <label for="secretario">Secretario</label>
-                    <select name="secretario_id" id="secretario" class="form-select form-control" required>
+                    <select name="secretario_id" id="secretario" class="form-select select2" style="width: 100%" required>
                         <option value="">Seleccione el secretario</option>
                         @foreach ($funcionarios as $funcionario)
                             <option value="{{ $funcionario->id }}"
@@ -93,7 +94,7 @@
                 <!-- Select para Tesorero -->
                 <div class="mb-3">
                     <label for="tesorero">Tesorero</label>
-                    <select name="tesorero_id" id="tesorero" class="form-select form-control" required>
+                    <select name="tesorero_id" id="tesorero" class="form-select select2" style="width: 100%" required>
                         <option value="">Seleccione el tesorero</option>
                         @foreach ($funcionarios as $funcionario)
                             <option value="{{ $funcionario->id }}"
@@ -105,7 +106,7 @@
                 <!-- Select para Fiscal -->
                 <div class="mb-3">
                     <label for="fiscal">Fiscal</label>
-                    <select name="fiscal_id" id="fiscal" class="form-select form-control" required>
+                    <select name="fiscal_id" id="fiscal" class="form-select select2" style="width: 100%" required>
                         <option value="">Seleccione el fiscal</option>
                         @foreach ($funcionarios as $funcionario)
                             <option value="{{ $funcionario->id }}"
@@ -117,7 +118,7 @@
                 <!-- Select para Concil1 -->
                 <div class="mb-3">
                     <label for="concil1">Conciliador 1</label>
-                    <select name="concil1_id" id="concil1" class="form-select form-control" required>
+                    <select name="concil1_id" id="concil1" class="form-select select2" style="width: 100%" required>
                         <option value="">Seleccione el conciliador 1</option>
                         @foreach ($funcionarios as $funcionario)
                             <option value="{{ $funcionario->id }}"
@@ -128,7 +129,7 @@
                 </div>
                 <div class="mb-3">
                     <label for="concil2">Conciliador 2</label>
-                    <select name="concil2_id" id="concil2" class="form-select form-control" required>
+                    <select name="concil2_id" id="concil2" class="form-select select2" style="width: 100%" required>
                         <option value="">Seleccione el conciliador 2</option>
                         @foreach ($funcionarios as $funcionario)
                             <option value="{{ $funcionario->id }}"
@@ -139,7 +140,7 @@
                 </div>
                 <div class="mb-3">
                     <label for="concil3">Conciliador 3</label>
-                    <select name="concil3_id" id="concil3" class="form-select form-control" required>
+                    <select name="concil3_id" id="concil3" class="form-select select2" style="width: 100%" required>
                         <option value="">Seleccione el conciliador 3</option>
                         @foreach ($funcionarios as $funcionario)
                             <option value="{{ $funcionario->id }}"
@@ -150,7 +151,7 @@
                 </div>
                 <div class="mb-3">
                     <label for="delegado1">Delegado 1</label>
-                    <select name="delegado1_id" id="delegado1" class="form-select form-control" required>
+                    <select name="delegado1_id" id="delegado1" class="form-select select2" style="width: 100%" required>
                         <option value="">Seleccione el delegado 1</option>
                         @foreach ($funcionarios as $funcionario)
                             <option value="{{ $funcionario->id }}"
@@ -161,7 +162,7 @@
                 </div>
                 <div class="mb-3">
                     <label for="delegado2">Delegado 2</label>
-                    <select name="delegado2_id" id="delegado2" class="form-select form-control" required>
+                    <select name="delegado2_id" id="delegado2" class="form-select select2" style="width: 100%" required>
                         <option value="">Seleccione el delegado 2</option>
                         @foreach ($funcionarios as $funcionario)
                             <option
@@ -172,7 +173,7 @@
                 </div>
                 <div class="mb-3">
                     <label for="delegado3">Delegado 3</label>
-                    <select name="delegado3_id" id="delegado3" class="form-select form-control" required>
+                    <select name="delegado3_id" id="delegado3" class="form-select select2" style="width: 100%" required>
                         <option value="">Seleccione el delegado 3</option>
                         @foreach ($funcionarios as $funcionario)
                             <option value="{{ $funcionario->id }}"
@@ -183,7 +184,7 @@
                 </div>
                 <div class="mb-3">
                     <label for="comuna">Comuna de la junta</label>
-                    <select name="comuna_id" id="comuna" class="form-select form-control" required>
+                    <select name="comuna_id" id="comuna" class="form-select select2" style="width: 100%" required>
                         <option value="">Seleccione comuna</option>
                         @foreach ($comunas as $c)
                             <option value="{{ $c->id }}" {{ $c->id == $junta->comuna_id ? 'selected' : '' }}>
@@ -269,4 +270,5 @@
             </div>
         </div>
     </div>
+
 @endsection

@@ -58,7 +58,8 @@
                             <div class="container">
                                 <div class="mb-3">
                                     <label for="juntas">Juntas</label>
-                                    <select name="junta_id" id="junta_id" class="form-select form-control" required>
+                                    <select name="junta_id" id="junta_id" class="form-select form-control select2"
+                                        style="width: 100%" required>
                                         <option value="">Seleccione la JAC</option>
                                         @foreach ($juntas as $j)
                                             <option value="{{ $j->id }}">{{ $j->nombre }}</option>
@@ -92,8 +93,8 @@
                             <div class="container">
                                 <div class="mb-3">
                                     <label for="asociaciones">Asociaciones</label>
-                                    <select name="asociacion_id" id="asociacion_id" class="form-select form-control"
-                                        required>
+                                    <select name="asociacion_id" id="asociacion_id"
+                                        class="form-select form-control select2" style="width: 100%" required>
                                         <option value="">Seleccione la Asociación</option>
                                         @foreach ($asociaciones as $j)
                                             <option value="{{ $j->id }}">{{ $j->nombre }}</option>
@@ -150,6 +151,7 @@
         </div>
     </div>
     <script>
+        // Tus funciones existentes
         function descargarArchivosJunta() {
             const juntaId = document.getElementById('junta_id').value;
             const numDocumento = document.getElementById('num_documento').value;
