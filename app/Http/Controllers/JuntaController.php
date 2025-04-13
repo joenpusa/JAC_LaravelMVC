@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Junta;
 use App\Models\Funcionario;
 use App\Models\Comuna;
+use App\Models\Municipio;
 use Illuminate\Http\Request;
 
 class JuntaController extends Controller
@@ -19,15 +20,15 @@ class JuntaController extends Controller
         $search = $request->input('search');
 
 
-        $juntas = Junta::with(['presidente', 'comuna'])
+        $juntas = Junta::with(['presidente', 'municipio'])
             ->when($search, function ($query, $search) {
                 $query->where('juntas.nombre', 'like', "%{$search}%")
                     ->orWhereHas('presidente', function ($query) use ($search) {
                         $query->where('nombre', 'like', "%{$search}%")
                               ->orWhere('num_documento', 'like', "%{$search}%");
                     })
-                    ->orWhereHas('comuna', function ($query) use ($search) {
-                        $query->where('nombre', 'like', "%{$search}%");
+                    ->orWhereHas('municipio', function ($query) use ($search) {
+                        $query->where('nombre_municipio', 'like', "%{$search}%");
                     })
                     ->orWhere('juntas.resolucion', 'like', "%{$search}%");
             })->paginate(20);
@@ -44,7 +45,8 @@ class JuntaController extends Controller
     {
         $funcionarios = Funcionario::all();
         $comunas = Comuna::all();
-        return view('juntas.create', compact('funcionarios', 'comunas'));
+        $municipios = Municipio::all();
+        return view('juntas.create', compact('funcionarios', 'comunas', 'municipios'));
     }
 
     /**
@@ -57,17 +59,12 @@ class JuntaController extends Controller
     {
         $request->validate([
             'presidente_id' => 'required|exists:funcionarios,id',
-            'secretario_id' => 'required|exists:funcionarios,id',
-            'vicepresidente_id' => 'required|exists:funcionarios,id',
-            'tesorero_id' => 'required|exists:funcionarios,id',
-            'fiscal_id' => 'required|exists:funcionarios,id',
-            'comuna_id' => 'required|exists:comunas,id',
-            'concil1_id' => 'required|exists:funcionarios,id',
-            'concil2_id' => 'required|exists:funcionarios,id',
-            'concil3_id' => 'required|exists:funcionarios,id',
-            'delegado1_id' => 'required|exists:funcionarios,id',
-            'delegado2_id' => 'required|exists:funcionarios,id',
-            'delegado3_id' => 'required|exists:funcionarios,id',
+            'secretario_id' => 'exists:funcionarios,id',
+            'vicepresidente_id' => 'exists:funcionarios,id',
+            'tesorero_id' => 'exists:funcionarios,id',
+            'fiscal_id' => 'exists:funcionarios,id',
+            'comuna_id' => 'exists:comunas,id',
+            'municipio_id' => 'required|exists:municipios,id',
         ], [
             'presidente_id.exists' => 'El presidente debe ser un funcionario registrado.',
             'secretario_id.exists' => 'El secretario debe ser un funcionario registrado.',
@@ -75,12 +72,7 @@ class JuntaController extends Controller
             'tesorero_id.exists' => 'El tesorero debe ser un funcionario registrado.',
             'fiscal_id.exists' => 'El fiscal debe ser un funcionario registrado.',
             'comuna_id.exists' => 'la comuna debe estar registrada.',
-            'concil1_id.exists' => 'El conciliador 1 debe ser un funcionario registrado.',
-            'concil2_id.exists' => 'El conciliador 2 debe ser un funcionario registrado.',
-            'concil3_id.exists' => 'El conciliador 3 debe ser un funcionario registrado.',
-            'delegado1_id.exists' => 'El delegado 1 debe ser un funcionario registrado.',
-            'delegado2_id.exists' => 'El delegado 1 debe ser un funcionario registrado.',
-            'delegado3_id.exists' => 'El delegado 1 debe ser un funcionario registrado.',
+            'municipio_id.exists' => 'El municipio debe estar registrado.',
         ]);
         Junta::create($request->all());
         return redirect()->route('juntas.index')->with('success', 'JAC creada exitosamente.');
@@ -107,10 +99,11 @@ class JuntaController extends Controller
     {
         $funcionarios = Funcionario::all();
         $comunas = Comuna::all();
+        $municipios = Municipio::all();
         $junta->load(['documentos' => function ($query) {
             $query->where('documentable_type', Junta::class);
         }]);
-        return view('juntas.edit', compact('junta','funcionarios','comunas'));
+        return view('juntas.edit', compact('junta','funcionarios','comunas','municipios'));
     }
 
     /**

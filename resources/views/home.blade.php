@@ -7,7 +7,7 @@
                 <h2>Panel de control</h2>
             </div>
             <div class="row mb-4">
-                <div class="col-3 mb-4">
+                <div class="col-4 mb-4">
                     <div class="card mt-4 h-100">
                         <div class="card-header p-3 pt-2">
                             <div
@@ -25,7 +25,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-3 mb-4">
+                <div class="col-4 mb-4">
                     <div class="card mt-4 h-100">
                         <div class="card-header p-3 pt-2">
                             <div
@@ -44,7 +44,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-3 mb-4">
+                <div class="col-4 mb-4">
                     <div class="card mt-4 h-100">
                         <div class="card-header p-3 pt-2">
                             <div
@@ -63,7 +63,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-3 mb-4">
+                {{-- <div class="col-3 mb-4">
                     <div class="card mt-4 h-100">
                         <div class="card-header p-3 pt-2">
                             <div
@@ -80,7 +80,7 @@
                             <p class="mb-0">Número de comunas registradas en la plataforma</p>
                         </div>
                     </div>
-                </div>
+                </div> --}}
 
             </div>
             {{-- <div class="col-12 mt-4 mb-4">

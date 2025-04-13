@@ -18,11 +18,11 @@ class CreateFuncionariosTable extends Migration
             $table->string('nombre');
             $table->string('tipo_documento');
             $table->string('num_documento')->unique();
-            $table->string('num_afiliacion');
-            $table->string('genero');
-            $table->string('email');
-            $table->string('direccion');
-            $table->string('profesion');
+            $table->string('num_afiliacion')->nullable();
+            $table->string('genero')->nullable();
+            $table->string('email')->nullable();
+            $table->string('direccion')->nullable();
+            $table->string('profesion')->nullable();
             $table->string('grupo_etnico')->nullable();
             $table->boolean('discapacidad')->default(false);
             $table->string('name_anexo')->nullable();

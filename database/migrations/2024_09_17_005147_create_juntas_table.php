@@ -16,57 +16,38 @@ class CreateJuntasTable extends Migration
         Schema::create('juntas', function (Blueprint $table) {
             $table->id();
             $table->string('nombre');
-            $table->string('resolucion');
+            $table->string('resolucion')->nullable();
+            $table->string('personeria')->nullable();
             $table->date('fecha_resolucion')->nullable();;
             $table->date('fecha_eleccion')->nullable();;
             $table->unsignedBigInteger('presidente_id');
-            $table->foreign('presidente_id') 
-                  ->references('id')   
+            $table->foreign('presidente_id')
+                  ->references('id')
                   ->on('funcionarios');
-            $table->unsignedBigInteger('vicepresidente_id');
-            $table->foreign('vicepresidente_id') 
-                  ->references('id')   
+            $table->unsignedBigInteger('vicepresidente_id')->nullable();
+            $table->foreign('vicepresidente_id')
+                  ->references('id')
                   ->on('funcionarios');
-            $table->unsignedBigInteger('secretario_id');
-            $table->foreign('secretario_id') 
-                  ->references('id')   
+            $table->unsignedBigInteger('secretario_id')->nullable();
+            $table->foreign('secretario_id')
+                  ->references('id')
                   ->on('funcionarios');
-            $table->unsignedBigInteger('tesorero_id');
-            $table->foreign('tesorero_id') 
-                  ->references('id')   
+            $table->unsignedBigInteger('tesorero_id')->nullable();
+            $table->foreign('tesorero_id')
+                  ->references('id')
                   ->on('funcionarios');
-            $table->unsignedBigInteger('fiscal_id');
-            $table->foreign('fiscal_id') 
-                  ->references('id')   
+            $table->unsignedBigInteger('fiscal_id')->nullable();
+            $table->foreign('fiscal_id')
+                  ->references('id')
                   ->on('funcionarios');
-            $table->unsignedBigInteger('concil1_id');
-            $table->foreign('concil1_id') 
-                  ->references('id')   
-                  ->on('funcionarios');
-            $table->unsignedBigInteger('concil2_id');
-            $table->foreign('concil2_id') 
-                  ->references('id')   
-                  ->on('funcionarios');
-            $table->unsignedBigInteger('concil3_id');
-            $table->foreign('concil3_id') 
-                  ->references('id')   
-                  ->on('funcionarios');
-            $table->unsignedBigInteger('delegado1_id');
-            $table->foreign('delegado1_id') 
-                  ->references('id')   
-                  ->on('funcionarios');
-            $table->unsignedBigInteger('delegado2_id');
-            $table->foreign('delegado2_id') 
-                  ->references('id')   
-                  ->on('funcionarios');
-            $table->unsignedBigInteger('delegado3_id');
-            $table->foreign('delegado3_id') 
-                  ->references('id')   
-                  ->on('funcionarios');
-            $table->unsignedBigInteger('comuna_id');
-            $table->foreign('comuna_id') 
-                  ->references('id')   
-                  ->on('funcionarios');
+            $table->unsignedBigInteger('comuna_id')->nullable();
+            $table->foreign('comuna_id')
+                  ->references('id')
+                  ->on('comunas');
+            $table->unsignedBigInteger('municipio_id')->nullable();
+            $table->foreign('municipio_id')
+                  ->references('id')
+                  ->on('municipios');
             $table->string('nomanexo')->nullable();
             $table->string('keyanexo')->nullable();
             $table->timestamps();

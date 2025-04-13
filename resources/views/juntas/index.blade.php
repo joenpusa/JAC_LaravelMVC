@@ -4,7 +4,7 @@
     <div class="container">
         <h1>Lista de Juntas</h1>
         <a href="{{ route('juntas.create') }}" class="btn btn-primary mb-3">Crear Nueva</a>
-        @if ($errors->any() || $message = Session::get('error'))
+        @if ($errors->any() || ($message = Session::get('error')))
             <div class="alert alert-danger alert-dismissible text-white" role="alert">
                 <span class="text-sm">
                     <p>Proceso no realizado:</p>
@@ -30,7 +30,8 @@
         @endif
         <form action="{{ route('juntas.index') }}" method="GET" role="search">
             <div class="input-group mb-3">
-                <input type="text" name="search" class="form-control" placeholder="Buscar juntas..." value="{{ request('search') }}">
+                <input type="text" name="search" class="form-control" placeholder="Buscar juntas..."
+                    value="{{ request('search') }}">
                 <div class="input-group-append">
                     <button class="btn btn-outline-secondary" type="submit">Buscar</button>
                 </div>
@@ -39,7 +40,7 @@
         <table class="table table-striped">
             <thead>
                 <tr>
-                    <th>Comuna</th>
+                    <th>Municipio</th>
                     <th>Nombre</th>
                     <th>Resolución</th>
                     <th>Presidente</th>
@@ -49,7 +50,7 @@
             <tbody>
                 @foreach ($juntas as $j)
                     <tr>
-                        <td>{{ $j->comuna->nombre }}</td>
+                        <td>{{ $j->municipio->nombre_municipio }}</td>
                         <td>{{ $j->nombre }}</td>
                         <td>{{ $j->resolucion }}</td>
                         <td>{{ $j->presidente->nombre }}</td>

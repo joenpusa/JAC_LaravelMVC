@@ -57,6 +57,16 @@
                             @csrf
                             <div class="container">
                                 <div class="mb-3">
+                                    <label for="municipio">Municipio</label>
+                                    <select name="municipio_id" id="municipio_id" class="form-select form-control select2"
+                                        style="width: 100%" required>
+                                        <option value="">Seleccione un Municipio</option>
+                                        @foreach ($municipios as $m)
+                                            <option value="{{ $m->id }}">{{ $m->nombre_municipio }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                                <div class="mb-3">
                                     <label for="juntas">Juntas</label>
                                     <select name="junta_id" id="junta_id" class="form-select form-control select2"
                                         style="width: 100%" required>
@@ -91,6 +101,16 @@
                         <form method="POST" action="{{ route('certificado.generarAso') }}">
                             @csrf
                             <div class="container">
+                                <div class="mb-3">
+                                    <label for="municipio">Municipio</label>
+                                    <select name="municipio_id2" id="municipio_id2"
+                                        class="form-select form-control select2" style="width: 100%" required>
+                                        <option value="">Seleccione un Municipio</option>
+                                        @foreach ($municipios as $m)
+                                            <option value="{{ $m->id }}">{{ $m->nombre_municipio }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
                                 <div class="mb-3">
                                     <label for="asociaciones">Asociaciones</label>
                                     <select name="asociacion_id" id="asociacion_id"

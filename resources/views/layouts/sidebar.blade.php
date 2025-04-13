@@ -13,7 +13,7 @@
                         </a>
                     </div>
                 </li>
-                <li class="nav-item">
+                {{-- <li class="nav-item">
                     <div class="nav-item-wrapper">
                         <a href="{{ route('comunas.index') }}" class="nav-link label-1" role="button" data-bs-toggle=""
                             aria-expanded="false">
@@ -24,7 +24,7 @@
                             </div>
                         </a>
                     </div>
-                </li>
+                </li> --}}
                 <li class="nav-item">
                     <div class="nav-item-wrapper">
                         <a href="{{ route('certificados.index') }}" class="nav-link label-1" role="button"

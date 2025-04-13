@@ -17,22 +17,16 @@ class CreateAsociacionesTable extends Migration
             $table->id();
             $table->string('nombre');
             $table->string('resolucion');
+            $table->string('personeria')->nullable();
             $table->date('fecha_resolucion')->nullable();
             $table->date('fecha_eleccion')->nullable();
             $table->unsignedBigInteger('presidente_id');
-            $table->unsignedBigInteger('vicepresidente_id');
-            $table->unsignedBigInteger('secretario_id');
-            $table->unsignedBigInteger('tesorero_id');
-            $table->unsignedBigInteger('fiscal_id');
-            $table->unsignedBigInteger('concil1_id')->nullable();
-            $table->unsignedBigInteger('concil2_id')->nullable();
-            $table->unsignedBigInteger('concil3_id')->nullable();
-            $table->unsignedBigInteger('delegado1_id')->nullable();
-            $table->unsignedBigInteger('delegado2_id')->nullable();
-            $table->unsignedBigInteger('delegado3_id')->nullable();
+            $table->unsignedBigInteger('vicepresidente_id')->nullable();
+            $table->unsignedBigInteger('secretario_id')->nullable();
+            $table->unsignedBigInteger('tesorero_id')->nullable();
+            $table->unsignedBigInteger('fiscal_id')->nullable();
             $table->unsignedBigInteger('comuna_id')->nullable();
-            $table->string('nomanexo')->nullable();
-            $table->string('keyanexo')->nullable();
+            $table->unsignedBigInteger('municipio_id')->nullable();
             $table->timestamps();
 
             // Claves foráneas
@@ -41,13 +35,8 @@ class CreateAsociacionesTable extends Migration
             $table->foreign('secretario_id')->references('id')->on('funcionarios');
             $table->foreign('tesorero_id')->references('id')->on('funcionarios');
             $table->foreign('fiscal_id')->references('id')->on('funcionarios');
-            $table->foreign('concil1_id')->references('id')->on('funcionarios');
-            $table->foreign('concil2_id')->references('id')->on('funcionarios');
-            $table->foreign('concil3_id')->references('id')->on('funcionarios');
-            $table->foreign('delegado1_id')->references('id')->on('funcionarios');
-            $table->foreign('delegado2_id')->references('id')->on('funcionarios');
-            $table->foreign('delegado3_id')->references('id')->on('funcionarios');
             $table->foreign('comuna_id')->references('id')->on('comunas');
+            $table->foreign('municipio_id')->references('id')->on('municipios');
         });
     }
 

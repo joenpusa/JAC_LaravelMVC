@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Asociacion;
 use App\Models\Funcionario;
 use App\Models\Comuna;
+use App\Models\Municipio;
 use Illuminate\Http\Request;
 
 class AsociacionController extends Controller
@@ -40,7 +41,8 @@ class AsociacionController extends Controller
     {
         $funcionarios = Funcionario::all();
         $comunas = Comuna::all();
-        return view('asociaciones.create', compact('funcionarios', 'comunas'));
+        $municipios = Municipio::all();
+        return view('asociaciones.create', compact('funcionarios', 'comunas', 'municipios'));
     }
 
     /**
@@ -58,12 +60,7 @@ class AsociacionController extends Controller
             'tesorero_id' => 'required|exists:funcionarios,id',
             'fiscal_id' => 'required|exists:funcionarios,id',
             'comuna_id' => 'required|exists:comunas,id',
-            'concil1_id' => 'required|exists:funcionarios,id',
-            'concil2_id' => 'required|exists:funcionarios,id',
-            'concil3_id' => 'required|exists:funcionarios,id',
-            'delegado1_id' => 'required|exists:funcionarios,id',
-            'delegado2_id' => 'required|exists:funcionarios,id',
-            'delegado3_id' => 'required|exists:funcionarios,id',
+            'municipio_id' => 'required|exists:municipios,id',
         ], [
             'presidente_id.exists' => 'El presidente debe ser un funcionario registrado.',
             'secretario_id.exists' => 'El secretario debe ser un funcionario registrado.',
@@ -71,12 +68,7 @@ class AsociacionController extends Controller
             'tesorero_id.exists' => 'El tesorero debe ser un funcionario registrado.',
             'fiscal_id.exists' => 'El fiscal debe ser un funcionario registrado.',
             'comuna_id.exists' => 'la comuna debe estar registrada.',
-            'concil1_id.exists' => 'El conciliador 1 debe ser un funcionario registrado.',
-            'concil2_id.exists' => 'El conciliador 2 debe ser un funcionario registrado.',
-            'concil3_id.exists' => 'El conciliador 3 debe ser un funcionario registrado.',
-            'delegado1_id.exists' => 'El delegado 1 debe ser un funcionario registrado.',
-            'delegado2_id.exists' => 'El delegado 1 debe ser un funcionario registrado.',
-            'delegado3_id.exists' => 'El delegado 1 debe ser un funcionario registrado.',
+            'municipio_id.exists' => 'El municipio debe estar registrado.',
         ]);
         Asociacion::create($request->all());
         return redirect()->route('asociaciones.index')->with('success', 'Asociación creada exitosamente.');

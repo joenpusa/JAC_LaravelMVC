@@ -16,7 +16,7 @@
             <thead>
                 <tr>
                     <th>Fecha Generación</th>
-                    <th>Junta y Comuna</th>
+                    <th>Municipio - Junta</th>
                     <th>Documento dignatario</th>
                     <th>Dignatario certificado</th>
                     <th>Codigo verificación</th>

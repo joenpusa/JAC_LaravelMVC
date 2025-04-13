@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Junta;
+use App\Models\Municipio;
 use App\Models\Asociacion;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -17,7 +18,8 @@ class WelcomeController extends Controller
         }
         $juntas = Junta::All();
         $asociaciones = Asociacion::All();
-        return view('welcome', compact('juntas', 'asociaciones'));
+        $municipios = Municipio::All();
+        return view('welcome', compact('juntas', 'asociaciones', 'municipios'));
     }
 
 }

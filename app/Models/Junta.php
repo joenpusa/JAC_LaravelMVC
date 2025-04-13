@@ -54,4 +54,8 @@ class Junta extends Model
     {
         return $this->morphMany(Documento::class, 'documentable');
     }
+    public function municipio()
+    {
+        return $this->belongsTo(Municipio::class, 'municipio_id');
+    }
 }

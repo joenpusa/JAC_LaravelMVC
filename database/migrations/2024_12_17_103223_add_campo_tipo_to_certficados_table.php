@@ -11,6 +11,7 @@ class AddCampoTipoToCertficadosTable extends Migration
     {
         Schema::table('certificados', function (Blueprint $table) {
             $table->string('tipo');
+            $table->string('verificado', 3)->default('No')->after('tipo');
         });
     }
 
@@ -19,6 +20,7 @@ class AddCampoTipoToCertficadosTable extends Migration
     {
         Schema::table('certificados', function (Blueprint $table) {
             $table->dropColumn('tipo');
+            $table->dropColumn('verificado');
         });
     }
 }

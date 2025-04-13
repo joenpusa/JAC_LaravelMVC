@@ -16,12 +16,16 @@ class CreateConfiguracionsTable extends Migration
         Schema::create('configuracions', function (Blueprint $table) {
             $table->id();
             $table->string('nombre_app');
-            $table->string('nom_entidad');
+            $table->string('nom_entidad')->nullable();
             $table->string('direccion');
             $table->string('horario');
             $table->string('logo')->nullable();
             $table->string('telefono');
             $table->string('email');
+            $table->string('nombre_secretario');
+            $table->string('secretaria');
+            $table->string('nomfirma')->nullable();
+            $table->string('keyfirma')->nullable();
             $table->timestamps();
         });
     }
