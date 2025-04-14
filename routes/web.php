@@ -10,6 +10,9 @@ use App\Http\Controllers\ConfiguracionController;
 use App\Http\Controllers\DocumentoController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\AsociacionController;
+use App\Http\Controllers\ComisionController;
+use App\Http\Controllers\AutoController;
+use App\Http\Controllers\CarpetaController;
 
 Route::get('/', [WelcomeController::class, 'index']);
 
@@ -41,6 +44,12 @@ Route::middleware(['auth'])->group(function () {
     Route::patch('/users/{user}/reset-password', [UserController::class, 'resetPassword'])->name('users.resetPassword');
     Route::get('/password/change', [UserController::class, 'showChangePasswordForm'])->name('password.change')->middleware('auth');
     Route::post('/password/change', [UserController::class, 'changePassword'])->name('password.update')->middleware('auth');
+
+    Route::post('/comisiones', [ComisionController::class, 'store'])->name('comisiones.store');
+    Route::delete('/comisiones/{id}', [ComisionController::class, 'destroy'])->name('comisiones.destroy');
+    Route::post('/autos', [AutoController::class, 'store'])->name('autos.store');
+    Route::delete('/autos/{auto}', [AutoController::class, 'destroy'])->name('autos.destroy');
+    Route::resource('carpetas', CarpetaController::class);
 
     //rutas de eventos ajax
     Route::put('/funcionario/upload', [FuncionarioController::class, 'upload'])->name('funcionario.upload');

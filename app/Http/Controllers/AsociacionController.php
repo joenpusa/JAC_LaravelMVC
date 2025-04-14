@@ -87,28 +87,13 @@ class AsociacionController extends Controller
         $funcionarios = Funcionario::all();
         $comunas = Comuna::all();
         $municipios = Municipio::all();
-        $asociacion->load(['documentos' => function ($query) {
-            $query->where('documentable_type', Asociacion::class);
-        }]);
+        $asociacion->load(['documentos', 'comisiones', 'autos', 'carpetas']);
         return view('asociaciones.edit', compact('asociacion','funcionarios','comunas','municipios'));
     }
 
 
     public function update(Request $request, Asociacion $asociacion)
     {
-        // dd($asociacion);
-        // $asociacion->nombre = $request->nombre;
-        // $asociacion->resolucion = $request->resolucion;
-        // $asociacion->personeria = $request->personeria;
-        // $asociacion->fecha_resolucion = $request->fecha_resolucion;
-        // $asociacion->fecha_eleccion = $request->fecha_eleccion;
-        // $asociacion->presidente_id = $request->presidente_id;
-        // $asociacion->vicepresidente_id = $request->vicepresidente_id;
-        // $asociacion->secretario_id = $request->secretario_id;
-        // $asociacion->tesorero_id = $request->tesorero_id;
-        // $asociacion->fiscal_id = $request->fiscal_id;
-        // $asociacion->municipio_id = $request->municipio_id;
-        // $asociacion->save();
         $asociacion->update($request->all());
         return redirect()->route('asociaciones.index')->with('success', 'Asociación actualizada exitosamente.');
     }

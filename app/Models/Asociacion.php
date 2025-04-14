@@ -56,4 +56,17 @@ class Asociacion extends Model
     {
         return $this->belongsTo(Municipio::class, 'municipio_id');
     }
+    public function comisiones()
+    {
+        return $this->morphMany(Comision::class, 'owner');
+    }
+    public function autos()
+    {
+        return $this->morphMany(Auto::class, 'owner');
+    }
+    public function carpetas()
+    {
+        return $this->morphMany(Carpeta::class, 'owner');
+    }
+
 }

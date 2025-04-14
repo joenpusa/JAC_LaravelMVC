@@ -159,12 +159,58 @@
                         data-bs-target="#addAutoModal">
                         Crear AUTO
                     </button>
+                    <button type="button" class="btn btn-primary" data-bs-toggle="modal"
+                        data-bs-target="#addCarpetaModal">
+                        Registro carpeta
+                    </button>
                 </div>
             </div>
         </form>
 
 
         <div class="accordion" id="accordionExample">
+            <div class="accordion-item border-top">
+                <h2 class="accordion-header" id="heading3">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                        data-bs-target="#collapse3" aria-expanded="false" aria-controls="collapse3">
+                        Comisionados
+                    </button>
+                </h2>
+                <div class="accordion-collapse collapse" id="collapse3" aria-labelledby="heading3"
+                    data-bs-parent="#accordionExample" style="">
+                    <div class="accordion-body pt-0">
+                        <table class="table table-striped table-bordered">
+                            <thead>
+                                <tr>
+                                    <th>Comisión</th>
+                                    <th>Comisionado</th>
+                                    <th>Acciones</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @forelse($asociacion->comisiones as $comision)
+                                    <tr>
+                                        <td>{{ $comision->nomcomision }}</td>
+                                        <td>{{ $comision->nomcomisionado }}</td>
+                                        <td>
+                                            <form action="{{ route('comisiones.destroy', $comision->id) }}"
+                                                method="POST" onsubmit="return confirm('¿Eliminar esta comisión?')">
+                                                @csrf
+                                                @method('DELETE')
+                                                <button type="submit" class="btn btn-danger btn-sm">Eliminar</button>
+                                            </form>
+                                        </td>
+                                    </tr>
+                                @empty
+                                    <tr>
+                                        <td colspan="3">No hay documentos asociados a esta asociación.</td>
+                                    </tr>
+                                @endforelse
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
             <div class="accordion-item border-top">
                 <h2 class="accordion-header" id="headingOne">
                     <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
@@ -224,28 +270,66 @@
                             <thead>
                                 <tr>
                                     <th>Fecha generado</th>
-                                    <th>Numero</th>
+                                    <th>Número</th>
                                     <th>Responsable</th>
                                     <th>Acciones</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                @forelse($asociacion->documentos as $documento)
+                                @forelse($asociacion->autos as $auto)
                                     <tr>
-                                        <td>{{ $documento->nomanexo }}</td>
-                                        <td>{{ $documento->nomanexo }}</td>
-                                        <td>{{ $documento->nomanexo }}</td>
+                                        <td>{{ \Carbon\Carbon::parse($auto->fecha)->format('d/m/Y') }}</td>
+                                        <td>{{ $auto->numero }}</td>
+                                        <td>{{ $auto->usuario->name }}</td>
                                         <td>
-                                            <a href="{{ route('autos.show', $documento->id) }}"
-                                                class="btn btn-info btn-sm" target="_blank">
-                                                Ver
+                                            <a href="{{ asset($auto->keyarchivo) }}" class="btn btn-info btn-sm"
+                                                target="_blank">
+                                                Ver PDF
                                             </a>
-
                                         </td>
                                     </tr>
                                 @empty
                                     <tr>
-                                        <td colspan="3">No hay autos generados para esta asociación.</td>
+                                        <td colspan="4">No hay autos generados para esta asociación.</td>
+                                    </tr>
+                                @endforelse
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <div class="accordion-item border-top">
+                <h2 class="accordion-header" id="heading3">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                        data-bs-target="#collapse4" aria-expanded="false" aria-controls="collapse4">
+                        Libros de asociación
+                    </button>
+                </h2>
+                <div class="accordion-collapse collapse" id="collapse4" aria-labelledby="heading4"
+                    data-bs-parent="#accordionExample" style="">
+                    <div class="accordion-body pt-0">
+                        <table class="table table-striped table-bordered">
+                            <thead>
+                                <tr>
+                                    <th>tipo libro</th>
+                                    <th>causal</th>
+                                    <th>fecha</th>
+                                    <th>folios</th>
+                                    <th>responsable</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @forelse($asociacion->carpetas as $carpeta)
+                                    <tr>
+                                        <td>{{ $carpeta->libro }}</td>
+                                        <td>{{ $carpeta->causal }}</td>
+                                        <td>{{ $carpeta->fecha }}</td>
+                                        <td>{{ $carpeta->folios }}</td>
+                                        <td>{{ $carpeta->usuario->name }}</td>
+                                    </tr>
+                                @empty
+                                    <tr>
+                                        <td colspan="3">No hay documentos asociados a esta asociación.</td>
                                     </tr>
                                 @endforelse
                             </tbody>
@@ -294,30 +378,18 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <form action="{{ route('documentos.store') }}" method="POST" enctype="multipart/form-data">
+                    <form action="{{ route('comisiones.store') }}" method="POST">
                         @csrf
-                        {{-- <div class="mb-3">
-                            <label for="digantario">Digantario</label>
-                            <select name="digantario_id" id="digantario" class="form-select select2"
-                                style="width: 100%">
-                                <option value="">Seleccione el digantario</option>
-                                @foreach ($funcionarios as $funcionario)
-                                    <option value="{{ $funcionario->id }}">
-                                        {{ $funcionario->num_documento }} - {{ $funcionario->nombre }}
-                                    </option>
-                                @endforeach
-                            </select>
-                        </div> --}}
                         <div class="mb-3">
-                            <label for="nomanexo">Nombre de la comisión</label>
+                            <label for="nomcomision">Nombre de la comisión</label>
                             <input type="text" name="nomcomision" class="form-control" required>
                         </div>
                         <div class="mb-3">
-                            <label for="nomanexo">Nombre del comisionado</label>
+                            <label for="nomcomisionado">Nombre del comisionado</label>
                             <input type="text" name="nomcomisionado" class="form-control" required>
                         </div>
-                        <input type="hidden" name="documentable_type" value="asociacion">
-                        <input type="hidden" name="documentable_id" value="{{ $asociacion->id }}">
+                        <input type="hidden" name="owner_type" value="asociacion">
+                        <input type="hidden" name="owner_id" value="{{ $asociacion->id }}">
                         <button type="submit" class="btn btn-success">Crear</button>
                     </form>
                 </div>
@@ -333,14 +405,70 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <form action="{{ route('documentos.store') }}" method="POST" enctype="multipart/form-data">
+                    <form action="{{ route('autos.store') }}" method="POST" enctype="multipart/form-data">
                         @csrf
                         <div class="mb-3">
                             <label for="nomanexo">Digite el número de AUTO</label>
-                            <input type="text" name="nomanexo" class="form-control" required>
+                            <input type="text" name="numero" class="form-control" required maxlength="5">
                         </div>
-                        <input type="hidden" name="documentable_type" value="asociacion">
-                        <input type="hidden" name="documentable_id" value="{{ $asociacion->id }}">
+                        <input type="hidden" name="owner_type" value="App\Models\Asociacion">
+                        <input type="hidden" name="owner_id" value="{{ $asociacion->id }}">
+                        <input type="hidden" name="usuario_id" value="{{ auth()->user()->id }}">
+                        <button type="submit" class="btn btn-success">Crear</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- MODAL DE registro de carpeta -->
+    <div class="modal fade" id="addCarpetaModal" tabindex="-1" aria-labelledby="addCarpetaModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="addCarpetaModalLabel">¿Esta seguro de generar el AUTO?</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form action="{{ route('carpetas.store') }}" method="POST" enctype="multipart/form-data">
+                        @csrf
+                        <div class="mb-3">
+                            <label for="libro">Libro</label>
+                            <select name="libro" class="form-select" required>
+                                <option value="">Seleccione el libro</option>
+                                <option value="Libro afiliados">Libro afiliados</option>
+                                <option value="Libro asamblea">Libro asamblea</option>
+                                <option value="Libro inventario">Libro inventario</option>
+                                <option value="Libro directiva">Libro directiva</option>
+                                <option value="Libro conciliación">Libro conciliación</option>
+                                <option value="Libro tesoreria">Libro tesoreria</option>
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label for="causal">causal de cambio</label>
+                            <select name="causal" class="form-select" required>
+                                <option value="">Seleccione causal</option>
+                                <option value="DETERIORO">DETERIORO</option>
+                                <option value="PERDIDA">PERDIDA</option>
+                                <option value="RETENCION">RETENCION</option>
+                                <option value="USO TOTAL">USO TOTAL</option>
+                                <option value="HURTO">HURTO</option>
+                                <option value="ENMENDADURAS">ENMENDADURAS</option>
+                                <option value="PRIMERA VEZ">PRIMERA VEZ</option>
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label for="fecha">Fecha</label>
+                            <input type="date" name="fecha" class="form-control" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="folios">Folios</label>
+                            <input type="number" name="folios" class="form-control" required>
+                        </div>
+
+                        <input type="hidden" name="owner_type" value="App\Models\Asociacion">
+                        <input type="hidden" name="owner_id" value="{{ $asociacion->id }}">
+                        <input type="hidden" name="usuario_id" value="{{ auth()->user()->id }}">
                         <button type="submit" class="btn btn-success">Crear</button>
                     </form>
                 </div>
