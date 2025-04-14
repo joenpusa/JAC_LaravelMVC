@@ -40,8 +40,8 @@
         <table class="table table-striped">
             <thead>
                 <tr>
-                    <th>Comuna</th>
-                    <th>Nombre</th>
+                    <th>Municipio</th>
+                    <th>Razón social</th>
                     <th>Resolución</th>
                     <th>Presidente</th>
                     <th>Acciones</th>
@@ -50,7 +50,7 @@
             <tbody>
                 @foreach ($asociaciones as $j)
                     <tr>
-                        <td>{{ $j->comuna->nombre }}</td>
+                        <td>{{ $j->municipio->nombre_municipio }}</td>
                         <td>{{ $j->nombre }}</td>
                         <td>{{ $j->resolucion }}</td>
                         <td>{{ $j->presidente->nombre }}</td>

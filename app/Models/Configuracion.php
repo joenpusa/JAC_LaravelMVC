@@ -18,5 +18,9 @@ class Configuracion extends Model
         'telefono',
         'email',
         'logo',
+        'nombre_secretario',
+        'secretaria',
+        'nomfirma',
+        'keyfirma',
     ];
 }

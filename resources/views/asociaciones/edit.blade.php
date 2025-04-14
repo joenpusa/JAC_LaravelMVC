@@ -45,7 +45,11 @@
                     <input type="text" name="resolucion" value="{{ old('resolucion', $asociacion->resolucion ?? '') }}"
                         class="form-control" required>
                 </div>
-
+                <div class="mb-3 col-6">
+                    <label for="personeria">Personeria</label>
+                    <input type="text" name="personeria" value="{{ old('personeria', $asociacion->personeria ?? '') }}"
+                        class="form-control" required>
+                </div>
                 <div class="mb-3 col-6">
                     <label for="fecha_resolucion">Fecha resolución</label>
                     <input type="date" name="fecha_resolucion"
@@ -73,8 +77,7 @@
                 <!-- Select para Vicepresidente -->
                 <div class="mb-3">
                     <label for="vicepresidente">Vicepresidente</label>
-                    <select name="vicepresidente_id" id="vicepresidente" class="form-select select2" style="width: 100%"
-                        required>
+                    <select name="vicepresidente_id" id="vicepresidente" class="form-select select2" style="width: 100%">
                         <option value="">Seleccione el vicepresidente</option>
                         @foreach ($funcionarios as $funcionario)
                             <option value="{{ $funcionario->id }}"
@@ -86,7 +89,7 @@
                 <!-- Select para Secretario -->
                 <div class="mb-3">
                     <label for="secretario">Secretario</label>
-                    <select name="secretario_id" id="secretario" class="form-select select2" style="width: 100%" required>
+                    <select name="secretario_id" id="secretario" class="form-select select2" style="width: 100%">
                         <option value="">Seleccione el secretario</option>
                         @foreach ($funcionarios as $funcionario)
                             <option value="{{ $funcionario->id }}"
@@ -98,7 +101,7 @@
                 <!-- Select para Tesorero -->
                 <div class="mb-3">
                     <label for="tesorero">Tesorero</label>
-                    <select name="tesorero_id" id="tesorero" class="form-select select2" style="width: 100%" required>
+                    <select name="tesorero_id" id="tesorero" class="form-select select2" style="width: 100%">
                         <option value="">Seleccione el tesorero</option>
                         @foreach ($funcionarios as $funcionario)
                             <option value="{{ $funcionario->id }}"
@@ -110,7 +113,7 @@
                 <!-- Select para Fiscal -->
                 <div class="mb-3">
                     <label for="fiscal">Fiscal</label>
-                    <select name="fiscal_id" id="fiscal" class="form-select select2" style="width: 100%" required>
+                    <select name="fiscal_id" id="fiscal" class="form-select select2" style="width: 100%">
                         <option value="">Seleccione el fiscal</option>
                         @foreach ($funcionarios as $funcionario)
                             <option value="{{ $funcionario->id }}"
@@ -119,74 +122,18 @@
                         @endforeach
                     </select>
                 </div>
-                <!-- Select para Concil1 -->
                 <div class="mb-3">
-                    <label for="concil1">Conciliador 1</label>
-                    <select name="concil1_id" id="concil1" class="form-select select2" style="width: 100%" required>
-                        <option value="">Seleccione el conciliador 1</option>
-                        @foreach ($funcionarios as $funcionario)
-                            <option value="{{ $funcionario->id }}"
-                                {{ $funcionario->id == $asociacion->concil1_id ? 'selected' : '' }}>
-                                {{ $funcionario->num_documento }} - {{ $funcionario->nombre }}</option>
+                    <label for="municipio">Municipio de la asociación</label>
+                    <select name="municipio_id" id="municipio" class="form-select select2" style="width: 100%">
+                        <option value="">Seleccione municipio</option>
+                        @foreach ($municipios as $c)
+                            <option value="{{ $c->id }}"
+                                {{ $c->id == $asociacion->municipio_id ? 'selected' : '' }}>
+                                {{ $c->nombre_municipio }}</option>
                         @endforeach
                     </select>
                 </div>
-                <div class="mb-3">
-                    <label for="concil2">Conciliador 2</label>
-                    <select name="concil2_id" id="concil2" class="form-select select2" style="width: 100%" required>
-                        <option value="">Seleccione el conciliador 2</option>
-                        @foreach ($funcionarios as $funcionario)
-                            <option value="{{ $funcionario->id }}"
-                                {{ $funcionario->id == $asociacion->concil2_id ? 'selected' : '' }}>
-                                {{ $funcionario->num_documento }} - {{ $funcionario->nombre }}</option>
-                        @endforeach
-                    </select>
-                </div>
-                <div class="mb-3">
-                    <label for="concil3">Conciliador 3</label>
-                    <select name="concil3_id" id="concil3" class="form-select select2" style="width: 100%" required>
-                        <option value="">Seleccione el conciliador 3</option>
-                        @foreach ($funcionarios as $funcionario)
-                            <option value="{{ $funcionario->id }}"
-                                {{ $funcionario->id == $asociacion->concil3_id ? 'selected' : '' }}>
-                                {{ $funcionario->num_documento }} - {{ $funcionario->nombre }}</option>
-                        @endforeach
-                    </select>
-                </div>
-                <div class="mb-3">
-                    <label for="delegado1">Delegado 1</label>
-                    <select name="delegado1_id" id="delegado1" class="form-select select2" style="width: 100%" required>
-                        <option value="">Seleccione el delegado 1</option>
-                        @foreach ($funcionarios as $funcionario)
-                            <option value="{{ $funcionario->id }}"
-                                {{ $funcionario->id == $asociacion->delegado1_id ? 'selected' : '' }}>
-                                {{ $funcionario->num_documento }} - {{ $funcionario->nombre }}</option>
-                        @endforeach
-                    </select>
-                </div>
-                <div class="mb-3">
-                    <label for="delegado2">Delegado 2</label>
-                    <select name="delegado2_id" id="delegado2" class="form-select select2" style="width: 100%" required>
-                        <option value="">Seleccione el delegado 2</option>
-                        @foreach ($funcionarios as $funcionario)
-                            <option
-                                value="{{ $funcionario->id }}"{{ $funcionario->id == $asociacion->delegado2_id ? 'selected' : '' }}>
-                                {{ $funcionario->num_documento }} - {{ $funcionario->nombre }}</option>
-                        @endforeach
-                    </select>
-                </div>
-                <div class="mb-3">
-                    <label for="delegado3">Delegado 3</label>
-                    <select name="delegado3_id" id="delegado3" class="form-select select2" style="width: 100%" required>
-                        <option value="">Seleccione el delegado 3</option>
-                        @foreach ($funcionarios as $funcionario)
-                            <option value="{{ $funcionario->id }}"
-                                {{ $funcionario->id == $asociacion->delegado3_id ? 'selected' : '' }}>
-                                {{ $funcionario->num_documento }} - {{ $funcionario->nombre }}</option>
-                        @endforeach
-                    </select>
-                </div>
-                <div class="mb-3">
+                {{-- <div class="mb-3">
                     <label for="comuna">Comuna de la asociación</label>
                     <select name="comuna_id" id="comuna" class="form-select select2" style="width: 100%" required>
                         <option value="">Seleccione comuna</option>
@@ -195,7 +142,7 @@
                                 {{ $c->nombre }}</option>
                         @endforeach
                     </select>
-                </div>
+                </div> --}}
 
                 <div class="mb-3 col-12" style="display:inline-block;">
                     <button type="submit"
@@ -204,50 +151,112 @@
                         data-bs-target="#addDocumentModal">
                         Cargar documento
                     </button>
+                    <button type="button" class="btn btn-primary" data-bs-toggle="modal"
+                        data-bs-target="#addComisionadoModal">
+                        Crear comisionado
+                    </button>
+                    <button type="button" class="btn btn-primary" data-bs-toggle="modal"
+                        data-bs-target="#addAutoModal">
+                        Crear AUTO
+                    </button>
                 </div>
             </div>
         </form>
-        <!-- Botón para abrir el modal y cargar un nuevo documento -->
-        <div class="mb-3">
 
+
+        <div class="accordion" id="accordionExample">
+            <div class="accordion-item border-top">
+                <h2 class="accordion-header" id="headingOne">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                        data-bs-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
+                        Documentos de la asociación
+                    </button>
+                </h2>
+                <div class="accordion-collapse collapse" id="collapseOne" aria-labelledby="headingOne"
+                    data-bs-parent="#accordionExample" style="">
+                    <div class="accordion-body pt-0">
+                        <table class="table table-striped table-bordered">
+                            <thead>
+                                <tr>
+                                    <th>Nombre del Documento</th>
+                                    <th>Acciones</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @forelse($asociacion->documentos as $documento)
+                                    <tr>
+                                        <td>{{ $documento->nomanexo }}</td>
+                                        <td>
+                                            <a href="{{ route('documentos.show', $documento->id) }}"
+                                                class="btn btn-info btn-sm" target="_blank">
+                                                Ver
+                                            </a>
+                                            <form action="{{ route('documentos.destroy', $documento->id) }}"
+                                                method="POST" style="display:inline-block;">
+                                                @csrf
+                                                @method('DELETE')
+                                                <button type="submit" class="btn btn-danger btn-sm"
+                                                    onclick="return confirm('¿Está seguro de eliminar este documento?')">Eliminar</button>
+                                            </form>
+                                        </td>
+                                    </tr>
+                                @empty
+                                    <tr>
+                                        <td colspan="3">No hay documentos asociados a esta asociación.</td>
+                                    </tr>
+                                @endforelse
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <div class="accordion-item">
+                <h2 class="accordion-header" id="headingTwo">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                        data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                        AUTOS generados
+                    </button>
+                </h2>
+                <div class="accordion-collapse collapse" id="collapseTwo" aria-labelledby="headingTwo"
+                    data-bs-parent="#accordionExample">
+                    <div class="accordion-body pt-0">
+                        <table class="table table-striped table-bordered">
+                            <thead>
+                                <tr>
+                                    <th>Fecha generado</th>
+                                    <th>Numero</th>
+                                    <th>Responsable</th>
+                                    <th>Acciones</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @forelse($asociacion->documentos as $documento)
+                                    <tr>
+                                        <td>{{ $documento->nomanexo }}</td>
+                                        <td>{{ $documento->nomanexo }}</td>
+                                        <td>{{ $documento->nomanexo }}</td>
+                                        <td>
+                                            <a href="{{ route('autos.show', $documento->id) }}"
+                                                class="btn btn-info btn-sm" target="_blank">
+                                                Ver
+                                            </a>
+
+                                        </td>
+                                    </tr>
+                                @empty
+                                    <tr>
+                                        <td colspan="3">No hay autos generados para esta asociación.</td>
+                                    </tr>
+                                @endforelse
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
         </div>
 
-        <!-- Tabla de documentos asociados -->
-        <h3>Documentos Asociados</h3>
-        <table class="table table-striped">
-            <thead>
-                <tr>
-                    <th>Nombre del Documento</th>
-                    <th>Acciones</th>
-                </tr>
-            </thead>
-            <tbody>
-                @forelse($asociacion->documentos as $documento)
-                    <tr>
-                        <td>{{ $documento->nomanexo }}</td>
-                        <td>
-                            <a href="{{ route('documentos.show', $documento->id) }}" class="btn btn-info btn-sm"
-                                target="_blank">
-                                Ver
-                            </a>
-                            <form action="{{ route('documentos.destroy', $documento->id) }}" method="POST"
-                                style="display:inline-block;">
-                                @csrf
-                                @method('DELETE')
-                                <button type="submit" class="btn btn-danger btn-sm"
-                                    onclick="return confirm('¿Está seguro de eliminar este documento?')">Eliminar</button>
-                            </form>
-                        </td>
-                    </tr>
-                @empty
-                    <tr>
-                        <td colspan="3">No hay documentos asociados a esta asociación.</td>
-                    </tr>
-                @endforelse
-            </tbody>
-        </table>
     </div>
-
+    <!-- MODAL DE CARGAR DOCUMENTO -->
     <div class="modal fade" id="addDocumentModal" tabindex="-1" aria-labelledby="addDocumentModalLabel"
         aria-hidden="true">
         <div class="modal-dialog">
@@ -270,6 +279,69 @@
                         <input type="hidden" name="documentable_type" value="asociacion">
                         <input type="hidden" name="documentable_id" value="{{ $asociacion->id }}">
                         <button type="submit" class="btn btn-success">Cargar Documento</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- MODAL DE COMISIONADO -->
+    <div class="modal fade" id="addComisionadoModal" tabindex="-1" aria-labelledby="addComisionadoModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="addComisionadoModalLabel">Crear nuevo comisionado</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form action="{{ route('documentos.store') }}" method="POST" enctype="multipart/form-data">
+                        @csrf
+                        {{-- <div class="mb-3">
+                            <label for="digantario">Digantario</label>
+                            <select name="digantario_id" id="digantario" class="form-select select2"
+                                style="width: 100%">
+                                <option value="">Seleccione el digantario</option>
+                                @foreach ($funcionarios as $funcionario)
+                                    <option value="{{ $funcionario->id }}">
+                                        {{ $funcionario->num_documento }} - {{ $funcionario->nombre }}
+                                    </option>
+                                @endforeach
+                            </select>
+                        </div> --}}
+                        <div class="mb-3">
+                            <label for="nomanexo">Nombre de la comisión</label>
+                            <input type="text" name="nomcomision" class="form-control" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="nomanexo">Nombre del comisionado</label>
+                            <input type="text" name="nomcomisionado" class="form-control" required>
+                        </div>
+                        <input type="hidden" name="documentable_type" value="asociacion">
+                        <input type="hidden" name="documentable_id" value="{{ $asociacion->id }}">
+                        <button type="submit" class="btn btn-success">Crear</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- MODAL DE CONFIRMACION DE AUTO-->
+    <div class="modal fade" id="addAutoModal" tabindex="-1" aria-labelledby="addAutoModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="addAutoModalLabel">¿Esta seguro de generar el AUTO?</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form action="{{ route('documentos.store') }}" method="POST" enctype="multipart/form-data">
+                        @csrf
+                        <div class="mb-3">
+                            <label for="nomanexo">Digite el número de AUTO</label>
+                            <input type="text" name="nomanexo" class="form-control" required>
+                        </div>
+                        <input type="hidden" name="documentable_type" value="asociacion">
+                        <input type="hidden" name="documentable_id" value="{{ $asociacion->id }}">
+                        <button type="submit" class="btn btn-success">Crear</button>
                     </form>
                 </div>
             </div>

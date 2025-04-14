@@ -41,7 +41,7 @@
             <thead>
                 <tr>
                     <th>Municipio</th>
-                    <th>Nombre</th>
+                    <th>Razón social</th>
                     <th>Resolución</th>
                     <th>Presidente</th>
                     <th>Acciones</th>

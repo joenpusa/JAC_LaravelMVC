@@ -26,10 +26,12 @@ Route::middleware(['auth'])->group(function () {
     //Rutas protegidas por autenticacion
     Route::resource('funcionarios', FuncionarioController::class);
     Route::resource('juntas', JuntaController::class);
+    Route::resource('asociaciones', AsociacionController::class)->parameters([
+        'asociaciones' => 'asociacion'
+    ]);
     Route::resource('comunas', ComunaController::class);
     Route::resource('certificados', CertificadoController::class);
-    Route::get('asociaciones/{asociacion}/edit', [AsociacionController::class, 'edit']);
-    Route::resource('asociaciones', AsociacionController::class);
+
 
     Route::get('/configuracion', [ConfiguracionController::class, 'index'])->name('configuracion.index');
     Route::post('/configuracion', [ConfiguracionController::class, 'store'])->name('configuracion.store');
@@ -39,8 +41,6 @@ Route::middleware(['auth'])->group(function () {
     Route::patch('/users/{user}/reset-password', [UserController::class, 'resetPassword'])->name('users.resetPassword');
     Route::get('/password/change', [UserController::class, 'showChangePasswordForm'])->name('password.change')->middleware('auth');
     Route::post('/password/change', [UserController::class, 'changePassword'])->name('password.update')->middleware('auth');
-
-
 
     //rutas de eventos ajax
     Route::put('/funcionario/upload', [FuncionarioController::class, 'upload'])->name('funcionario.upload');

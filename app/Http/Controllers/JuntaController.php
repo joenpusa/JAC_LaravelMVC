@@ -59,12 +59,15 @@ class JuntaController extends Controller
     {
         $request->validate([
             'presidente_id' => 'required|exists:funcionarios,id',
-            'secretario_id' => 'exists:funcionarios,id',
-            'vicepresidente_id' => 'exists:funcionarios,id',
-            'tesorero_id' => 'exists:funcionarios,id',
-            'fiscal_id' => 'exists:funcionarios,id',
-            'comuna_id' => 'exists:comunas,id',
+            'secretario_id' => 'nullable|exists:funcionarios,id',
+            'vicepresidente_id' => 'nullable|exists:funcionarios,id',
+            'tesorero_id' => 'nullable|exists:funcionarios,id',
+            'fiscal_id' => 'nullable|exists:funcionarios,id',
+            'comuna_id' => 'nullable|exists:comunas,id',
             'municipio_id' => 'required|exists:municipios,id',
+            'personeria' => 'required|string|max:255',
+            'nombre' => 'required|string|max:255',
+            'resolucion' => 'nullable|string|max:255',
         ], [
             'presidente_id.exists' => 'El presidente debe ser un funcionario registrado.',
             'secretario_id.exists' => 'El secretario debe ser un funcionario registrado.',

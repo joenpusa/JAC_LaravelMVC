@@ -17,15 +17,11 @@ class Junta extends Model
         'secretario_id',
         'tesorero_id',
         'fiscal_id',
-        'concil1_id',
-        'concil2_id',
-        'concil3_id',
-        'delegado1_id',
-        'delegado2_id',
-        'delegado3_id',
         'comuna_id',
         'nomanexo',
-        'keyanexo'
+        'keyanexo',
+        'municipio_id',
+        'personeria'
     ];
 
     public function presidente()

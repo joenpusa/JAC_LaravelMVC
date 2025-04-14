@@ -24,6 +24,9 @@ class ConfiguracionController extends Controller
             'logo' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
             'telefono' => 'required|string|max:40',
             'email' => 'required|email|max:255',
+            'secretaria' => 'nullable|string|max:255',
+            'nombre_secretario' => 'string|max:255',
+            'firma' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:1024',
         ]);
         $config = Configuracion::first();
         if (!$config) {
@@ -35,7 +38,9 @@ class ConfiguracionController extends Controller
         $config->horario = $request->horario;
         $config->telefono = $request->telefono;
         $config->email = $request->email;
-
+        $config->nombre_secretario = $request->nombre_secretario;
+        $config->secretaria = $request->secretaria;
+        // Si se ha subido un logo, se elimina el anterior y se guarda el nuevo
         if ($request->hasFile('logo')) {
             if ($config->logo && file_exists(public_path('images/' . $config->logo))) {
                 unlink(public_path('images/' . $config->logo));
@@ -46,6 +51,18 @@ class ConfiguracionController extends Controller
             $logoFile->move(public_path('images'), $logoName);
 
             $config->logo = 'images/' . $logoName;
+        }
+        // Si se ha subido una firma, se elimina el anterior y se guarda el nuevo
+        if ($request->hasFile('firma')) {
+            if ($config->keyfirma && file_exists(public_path('images/' . $config->keyfirma))) {
+                unlink(public_path('images/' . $config->keyfirma));
+            }
+
+            $firmaFile = $request->file('firma');
+            $firmaName = time() . '_' . $firmaFile->getClientOriginalName();
+            $firmaFile->move(public_path('images'), $firmaName);
+
+            $config->keyfirma = 'images/' . $firmaName;
         }
 
         $config->save();

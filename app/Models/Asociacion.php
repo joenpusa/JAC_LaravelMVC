@@ -17,15 +17,11 @@ class Asociacion extends Model
         'secretario_id',
         'tesorero_id',
         'fiscal_id',
-        'concil1_id',
-        'concil2_id',
-        'concil3_id',
-        'delegado1_id',
-        'delegado2_id',
-        'delegado3_id',
         'comuna_id',
+        'municipio_id',
+        'personeria',
         'nomanexo',
-        'keyanexo'
+        'keyanexo',
     ];
 
     protected $table = 'asociaciones';
@@ -55,5 +51,9 @@ class Asociacion extends Model
     public function documentos()
     {
         return $this->morphMany(Documento::class, 'documentable');
+    }
+    public function municipio()
+    {
+        return $this->belongsTo(Municipio::class, 'municipio_id');
     }
 }

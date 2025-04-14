@@ -44,8 +44,8 @@
                         class="form-control" required>
                 </div>
                 <div class="mb-3 col-6">
-                    <label for="personaeria">Personaria</label>
-                    <input type="text" name="personaeria" value="{{ old('personaeria', $junta->personaeria ?? '') }}"
+                    <label for="personeria">Personeria</label>
+                    <input type="text" name="personeria" value="{{ old('personeria', $junta->personeria ?? '') }}"
                         class="form-control" required>
                 </div>
                 <div class="mb-3 col-6">
@@ -145,6 +145,14 @@
                         data-bs-target="#addDocumentModal">
                         Cargar documento
                     </button>
+                    <button type="button" class="btn btn-primary" data-bs-toggle="modal"
+                        data-bs-target="#addComisionadoModal">
+                        Crear comisionado
+                    </button>
+                    <button type="button" class="btn btn-primary" data-bs-toggle="modal"
+                        data-bs-target="#addAutoModal">
+                        Crear AUTO
+                    </button>
                 </div>
             </div>
         </form>
@@ -188,7 +196,7 @@
             </tbody>
         </table>
     </div>
-
+    <!-- MODAL DE CARGAR DOCUMENTO -->
     <div class="modal fade" id="addDocumentModal" tabindex="-1" aria-labelledby="addDocumentModalLabel"
         aria-hidden="true">
         <div class="modal-dialog">
@@ -216,5 +224,67 @@
             </div>
         </div>
     </div>
-
+    <!-- MODAL DE COMISIONADO -->
+    <div class="modal fade" id="addComisionadoModal" tabindex="-1" aria-labelledby="addComisionadoModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="addComisionadoModalLabel">Crear nuevo comisionado</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form action="{{ route('documentos.store') }}" method="POST" enctype="multipart/form-data">
+                        @csrf
+                        {{-- <div class="mb-3">
+                            <label for="digantario">Digantario</label>
+                            <select name="digantario_id" id="digantario" class="form-select select2"
+                                style="width: 100%">
+                                <option value="">Seleccione el digantario</option>
+                                @foreach ($funcionarios as $funcionario)
+                                    <option value="{{ $funcionario->id }}">
+                                        {{ $funcionario->num_documento }} - {{ $funcionario->nombre }}
+                                    </option>
+                                @endforeach
+                            </select>
+                        </div> --}}
+                        <div class="mb-3">
+                            <label for="nomanexo">Nombre de la comisión</label>
+                            <input type="text" name="nomcomision" class="form-control" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="nomanexo">Nombre del comisionado</label>
+                            <input type="text" name="nomcomisionado" class="form-control" required>
+                        </div>
+                        <input type="hidden" name="documentable_type" value="asociacion">
+                        <input type="hidden" name="documentable_id" value="{{ $asociacion->id }}">
+                        <button type="submit" class="btn btn-success">Crear</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- MODAL DE CONFIRMACION DE AUTO-->
+    <div class="modal fade" id="addAutoModal" tabindex="-1" aria-labelledby="addAutoModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="addAutoModalLabel">¿Esta seguro de generar el AUTO?</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form action="{{ route('documentos.store') }}" method="POST" enctype="multipart/form-data">
+                        @csrf
+                        <div class="mb-3">
+                            <label for="nomanexo">Digite el número de AUTO</label>
+                            <input type="text" name="nomanexo" class="form-control" required>
+                        </div>
+                        <input type="hidden" name="documentable_type" value="asociacion">
+                        <input type="hidden" name="documentable_id" value="{{ $asociacion->id }}">
+                        <button type="submit" class="btn btn-success">Crear</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
 @endsection

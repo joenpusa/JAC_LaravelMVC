@@ -31,8 +31,8 @@
                         class="form-control" required>
                 </div>
                 <div class="mb-3 col-6">
-                    <label for="personaeria">Personaria</label>
-                    <input type="text" name="personaeria" value="{{ old('personaeria', $junta->personaeria ?? '') }}"
+                    <label for="personeria">Personaria</label>
+                    <input type="text" name="personeria" value="{{ old('personeria', $junta->personeria ?? '') }}"
                         class="form-control" required>
                 </div>
                 <div class="mb-3 col-6">
@@ -59,8 +59,7 @@
                 <!-- Select para Vicepresidente -->
                 <div class="mb-3">
                     <label for="vicepresidente">Vicepresidente</label>
-                    <select name="vicepresidente_id" id="vicepresidente" class="form-select select2" style="width: 100%"
-                        required>
+                    <select name="vicepresidente_id" id="vicepresidente" class="form-select select2" style="width: 100%">
                         <option value="">Seleccione el vicepresidente</option>
                         @foreach ($funcionarios as $funcionario)
                             <option value="{{ $funcionario->id }}">{{ $funcionario->num_documento }} -

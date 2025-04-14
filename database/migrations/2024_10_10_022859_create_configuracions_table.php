@@ -22,8 +22,8 @@ class CreateConfiguracionsTable extends Migration
             $table->string('logo')->nullable();
             $table->string('telefono');
             $table->string('email');
-            $table->string('nombre_secretario');
-            $table->string('secretaria');
+            $table->string('nombre_secretario')->nullable();
+            $table->string('secretaria')->nullable();
             $table->string('nomfirma')->nullable();
             $table->string('keyfirma')->nullable();
             $table->timestamps();
