@@ -59,7 +59,7 @@
                                 <div class="mb-3">
                                     <label for="municipio">Municipio</label>
                                     <select name="municipio_id" id="municipio_id" class="form-select form-control select2"
-                                        style="width: 100%" required>
+                                        style="width: 100%" onchange="getJuntasPorMunicipio()" required>
                                         <option value="">Seleccione un Municipio</option>
                                         @foreach ($municipios as $m)
                                             <option value="{{ $m->id }}">{{ $m->nombre_municipio }}</option>
@@ -71,9 +71,6 @@
                                     <select name="junta_id" id="junta_id" class="form-select form-control select2"
                                         style="width: 100%" required>
                                         <option value="">Seleccione la JAC</option>
-                                        @foreach ($juntas as $j)
-                                            <option value="{{ $j->id }}">{{ $j->nombre }}</option>
-                                        @endforeach
                                     </select>
                                 </div>
                                 <div class="mb-3">
@@ -104,7 +101,8 @@
                                 <div class="mb-3">
                                     <label for="municipio">Municipio</label>
                                     <select name="municipio_id2" id="municipio_id2"
-                                        class="form-select form-control select2" style="width: 100%" required>
+                                        class="form-select form-control select2" style="width: 100%"
+                                        onchange="getAsociacionesPorMunicipio()" required>
                                         <option value="">Seleccione un Municipio</option>
                                         @foreach ($municipios as $m)
                                             <option value="{{ $m->id }}">{{ $m->nombre_municipio }}</option>
@@ -116,9 +114,6 @@
                                     <select name="asociacion_id" id="asociacion_id"
                                         class="form-select form-control select2" style="width: 100%" required>
                                         <option value="">Seleccione la Asociación</option>
-                                        @foreach ($asociaciones as $j)
-                                            <option value="{{ $j->id }}">{{ $j->nombre }}</option>
-                                        @endforeach
                                     </select>
                                 </div>
                                 <div class="mb-3">
@@ -171,6 +166,51 @@
         </div>
     </div>
     <script>
+        function getJuntasPorMunicipio() {
+            var municipioId = $('#municipio_id').val();
+            if (municipioId) {
+                $.ajax({
+                    url: '/juntas/por-municipio/' + municipioId,
+                    type: 'GET',
+                    dataType: 'json',
+                    success: function(data) {
+                        $('#junta_id').empty();
+                        $('#junta_id').append(
+                            '<option value="">Seleccione la JAC</option>');
+                        $.each(data, function(key, junta) {
+                            $('#junta_id').append('<option value="' + junta.id +
+                                '">' + junta.nombre + '</option>');
+                        });
+                    }
+                });
+            } else {
+                $('#junta_id').empty();
+                $('#junta_id').append('<option value="">Seleccione la JAC</option>');
+            }
+        }
+
+        function getAsociacionesPorMunicipio() {
+            var municipioId = $('#municipio_id2').val();
+            if (municipioId) {
+                $.ajax({
+                    url: '/asociaciones/por-municipio/' + municipioId,
+                    type: 'GET',
+                    dataType: 'json',
+                    success: function(data) {
+                        $('#asociacion_id').empty();
+                        $('#asociacion_id').append(
+                            '<option value="">Seleccione la Asociación</option>');
+                        $.each(data, function(key, aso) {
+                            $('#asociacion_id').append('<option value="' + aso.id +
+                                '">' + aso.nombre + '</option>');
+                        });
+                    }
+                });
+            } else {
+                $('#asociacion_id').empty();
+                $('#asociacion_id').append('<option value="">Seleccione la JAC</option>');
+            }
+        }
         // Tus funciones existentes
         function descargarArchivosJunta() {
             const juntaId = document.getElementById('junta_id').value;

@@ -131,4 +131,11 @@ class JuntaController extends Controller
         $junta->delete();
         return redirect()->route('juntas.index')->with('success', 'Junta eliminada exitosamente.');
     }
+
+    public function getPorMunicipio($municipioId)
+    {
+        $juntas = Junta::where('municipio_id', $municipioId)->get();
+        return response()->json($juntas);
+    }
+
 }

@@ -27,13 +27,12 @@ class AutoController extends Controller
         $auto->owner_id = $request->owner_id;
         $auto->usuario_id = $request->usuario_id;
         $auto->save();
-
         // Generar el PDF usando la vista certificados.auto
         $pdf = PDF::loadView('certificados.auto', compact('auto'));
 
         // Definir nombre único y ruta del archivo
         $filename = 'AUTO_'.$auto->id.'_'.now()->format('YmdHis').'.pdf';
-        $directory = public_path('autos');
+        $directory = public_path('autosGenerates');
 
         // Verificar si existe la carpeta, si no, crearla
         if (!File::exists($directory)) {
@@ -46,7 +45,7 @@ class AutoController extends Controller
         $pdf->save($path);
 
         // Actualizar registro con la ruta del archivo
-        $auto->keyarchivo = 'autos/'.$filename;
+        $auto->keyarchivo = 'autosGenerates/'.$filename;
         $auto->save();
 
         return back()->with('success', 'AUTO generado exitosamente.');

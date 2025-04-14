@@ -61,8 +61,8 @@
         Que el(la) señor(a) <strong>{{ $certificado->nombre_dignatario }}</strong>, identificado(a) con la cédula de
         ciudadanía No. <strong>{{ $certificado->documento_dignario }}</strong> esta registrado(a) como Representante de
         la {{ $certificado->tipo }} de Acción Cumunal <strong>{{ $certificado->nombre_junta }}</strong> de
-        <strong>{{ $certificado->comuna }}</strong>, con personería y fecha de fundación reconocida mediante resolución:
-        <strong>{{ $certificado->resolucion }}</strong> de <strong>{{ $certificado->fecha_resolucion }}</strong>
+        <strong>{{ $certificado->comuna }} de Norte de Santander</strong>, con
+        personería:<strong>{{ $certificado->resolucion }}</strong>
     </p>
     @php
         use Carbon\Carbon;
@@ -82,6 +82,11 @@
         {{ $anio }}.</p>
     <br>
     <br>
+    <center>
+        <img src="{{ public_path($config->keyfirma) }}" style="max-width: 220px; max-height: 120px;" />
+        <h4>{{ $config->nombre_secretario }}</h4>
+        <h4>{{ $config->secretaria }}</h4>
+    </center>
 </body>
 
 </html>

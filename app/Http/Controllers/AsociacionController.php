@@ -104,4 +104,10 @@ class AsociacionController extends Controller
         $asociacion->delete();
         return redirect()->route('asociaciones.index')->with('success', 'Asociación eliminada exitosamente.');
     }
+
+    public function getPorMunicipio($municipioId)
+    {
+        $asociaciones = Asociacion::where('municipio_id', $municipioId)->get();
+        return response()->json($asociaciones);
+    }
 }

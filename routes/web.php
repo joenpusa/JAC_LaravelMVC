@@ -23,6 +23,8 @@ Route::post('/generar-certificado-aso', [CertificadoController::class, 'generarA
 Route::post('/validar-certificado', [CertificadoController::class, 'validar'])->name('certificado.validar');
 Route::get('/juntas/{junta_id}/descargar-archivos/{num_documento}', [DocumentoController::class, 'descargarArchivos'])->name('juntas.descargar-archivos');
 Route::get('/asociaciones/{asociacion_id}/descargar-archivos/{num_documentoAso}', [DocumentoController::class, 'descargarArchivosAso'])->name('asocoaciones.descargar-archivos');
+Route::get('/juntas/por-municipio/{municipio}', [JuntaController::class, 'getPorMunicipio'])->name('juntas.porMunicipio');
+Route::get('/asociaciones/por-municipio/{municipio}', [AsociacionController::class, 'getPorMunicipio'])->name('asociaciones.porMunicipio');
 //ruta para descargar archivos
 
 Route::middleware(['auth'])->group(function () {

@@ -6,6 +6,7 @@ use App\Models\Certificado;
 use Illuminate\Http\Request;
 use App\Models\Junta;
 use App\Models\Asociacion;
+use App\Models\Configuracion;
 use PDF;
 
 class CertificadoController extends Controller
@@ -32,38 +33,6 @@ class CertificadoController extends Controller
         return view('certificados.index', compact('certificados'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //En caso de que en la sesion el funcionarios los cree de manera manual
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\Certificado  $certificado
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Certificado $certificado)
-    {
-        //
-    }
-
     public function generar(Request $request)
     {
         try {
@@ -77,19 +46,19 @@ class CertificadoController extends Controller
             $junta = Junta::find($validated['junta_id']);
 
             if ($junta && $junta->presidente && $junta->presidente->num_documento == $validated['num_documento']) {
-
                 $certificado = Certificado::create([
                     'nombre_dignatario' => $junta->presidente->nombre,
-                    'comuna' => $junta->comuna->nombre,
+                    'comuna' => $junta->municipio->nombre_municipio,
                     'nombre_junta' => $junta->nombre,
                     'codigo_hash' => uniqid(),
-                    'resolucion' => $junta->resolucion,
+                    'resolucion' => $junta->personeria,
                     'fecha_resolucion' => $junta->fecha_resolucion,
                     'fecha_eleccion' => $junta->fecha_eleccion,
                     'documento_dignario' => $junta->presidente->num_documento,
                     'tipo' => 'Junta'
                 ]);
-                $pdf = PDF::loadView('certificados.certificado', compact('certificado'));
+                $config = Configuracion::first();
+                $pdf = PDF::loadView('certificados.certificado', compact('certificado','config'));
                 return $pdf->download('certificado.pdf');
             } else {
                 return redirect()->back()->withErrors(['num_documento' => 'El número de documento no coincide con el presidente de la junta seleccionada.']);
@@ -116,16 +85,17 @@ class CertificadoController extends Controller
 
                 $certificado = Certificado::create([
                     'nombre_dignatario' => $asociacion->presidente->nombre,
-                    'comuna' => $asociacion->comuna->nombre,
+                    'comuna' => $junta->municipio->nombre_municipio,
                     'nombre_junta' => $asociacion->nombre,
                     'codigo_hash' => uniqid(),
-                    'resolucion' => $asociacion->resolucion,
+                    'resolucion' => $asociacion->personeria,
                     'fecha_resolucion' => $asociacion->fecha_resolucion,
                     'fecha_eleccion' => $asociacion->fecha_eleccion,
                     'documento_dignario' => $asociacion->presidente->num_documento,
                     'tipo' => 'Asociación'
                 ]);
-                $pdf = PDF::loadView('certificados.certificado', compact('certificado'));
+                $config = Configuracion::first();
+                $pdf = PDF::loadView('certificados.certificado', compact('certificado','config'));
                 return $pdf->download('certificadoAsociacion.pdf');
             } else {
                 return redirect()->back()->withErrors(['num_documento' => 'El número de documento no coincide con el presidente de la asociacion seleccionada.']);
