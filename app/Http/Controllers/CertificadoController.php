@@ -70,22 +70,19 @@ class CertificadoController extends Controller
 
     public function generarAso(Request $request)
     {
-
         try {
             $validated = $request->validate([
                 'asociacion_id' => 'required|exists:asociaciones,id',
-                'num_documento' => 'required|numeric',
+                'num_documentoAso' => 'required|numeric',
             ],[
-                'num_documento.numeric' => 'El documento debe ser numérico.',
+                'num_documentoAso.numeric' => 'El documento debe ser numérico.',
                 'asociacion_id.exists' => 'La asociacion no fue encontrada.',
             ]);
             $asociacion = Asociacion::find($validated['asociacion_id']);
-
-            if ($asociacion && $asociacion->presidente && $asociacion->presidente->num_documento == $validated['num_documento']) {
-
+            if ($asociacion && $asociacion->presidente && $asociacion->presidente->num_documento == $validated['num_documentoAso']) {
                 $certificado = Certificado::create([
                     'nombre_dignatario' => $asociacion->presidente->nombre,
-                    'comuna' => $junta->municipio->nombre_municipio,
+                    'comuna' => $asociacion->municipio->nombre_municipio,
                     'nombre_junta' => $asociacion->nombre,
                     'codigo_hash' => uniqid(),
                     'resolucion' => $asociacion->personeria,
