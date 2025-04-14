@@ -3,6 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\Auto;
+use App\Models\Junta;
+use App\Models\Asociacion;
+use App\Models\Configuracion;
 use Illuminate\Http\Request;
 use PDF;
 use Illuminate\Support\Facades\File;
@@ -27,8 +30,16 @@ class AutoController extends Controller
         $auto->owner_id = $request->owner_id;
         $auto->usuario_id = $request->usuario_id;
         $auto->save();
+        // Obtener la configuración de la aplicación
+        $config = Configuracion::first();
+        // datos de owner
+        if ($request->owner_type == 'App\Models\Junta') {
+            $owner = Junta::find($request->owner_id);
+        } else {
+            $owner = Asociacion::find($request->owner_id);
+        }
         // Generar el PDF usando la vista certificados.auto
-        $pdf = PDF::loadView('certificados.auto', compact('auto'));
+        $pdf = PDF::loadView('certificados.auto', compact('auto','config','owner'));
 
         // Definir nombre único y ruta del archivo
         $filename = 'AUTO_'.$auto->id.'_'.now()->format('YmdHis').'.pdf';

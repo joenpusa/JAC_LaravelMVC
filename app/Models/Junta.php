@@ -29,16 +29,24 @@ class Junta extends Model
         return $this->belongsTo(Funcionario::class, 'presidente_id');
     }
 
-    // Relación para el vicepresidente
     public function vicepresidente()
     {
         return $this->belongsTo(Funcionario::class, 'vicepresidente_id');
     }
 
-    // Si también tienes un secretario, sería algo así:
     public function secretario()
     {
         return $this->belongsTo(Funcionario::class, 'secretario_id');
+    }
+
+    public function tesorero()
+    {
+        return $this->belongsTo(Funcionario::class, 'tesorero_id');
+    }
+
+    public function fiscal()
+    {
+        return $this->belongsTo(Funcionario::class, 'fiscal_id');
     }
 
     public function comuna()
@@ -50,18 +58,22 @@ class Junta extends Model
     {
         return $this->morphMany(Documento::class, 'documentable');
     }
+
     public function municipio()
     {
         return $this->belongsTo(Municipio::class, 'municipio_id');
     }
+
     public function comisiones()
     {
         return $this->morphMany(Comision::class, 'owner');
     }
+
     public function autos()
     {
         return $this->morphMany(Auto::class, 'owner');
     }
+
     public function carpetas()
     {
         return $this->morphMany(Carpeta::class, 'owner');

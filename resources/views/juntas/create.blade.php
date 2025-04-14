@@ -31,7 +31,7 @@
                         class="form-control" required>
                 </div>
                 <div class="mb-3 col-6">
-                    <label for="personeria">Personaria</label>
+                    <label for="personeria">Personeria</label>
                     <input type="text" name="personeria" value="{{ old('personeria', $junta->personeria ?? '') }}"
                         class="form-control" required>
                 </div>
