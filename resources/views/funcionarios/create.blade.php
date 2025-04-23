@@ -45,8 +45,7 @@
                 <div class="mb-3 col-6">
                     <label for="num_afiliacion">Numero afiliación</label>
                     <input type="number" name="num_afiliacion"
-                        value="{{ old('num_afiliacion', $funcionario->num_afiliacion ?? '') }}" class="form-control"
-                        required>
+                        value="{{ old('num_afiliacion', $funcionario->num_afiliacion ?? '') }}" class="form-control">
                 </div>
                 <div class="mb-3 col-6">
                     <label for="email">Email</label>
@@ -56,11 +55,11 @@
                 <div class="mb-3 col-6">
                     <label for="profesion">Profesión</label>
                     <input type="text" name="profesion" value="{{ old('profesion', $funcionario->profesion ?? '') }}"
-                        class="form-control" required>
+                        class="form-control">
                 </div>
                 <div class="mb-3 col-6">
                     <label for="genero">Genero</label>
-                    <select name="genero" id="genero" class="form-select" required>
+                    <select name="genero" id="genero" class="form-select">
                         <option value="">Seleccione el genero</option>
                         <option value="Hombre">Hombre</option>
                         <option value="Mujer">Mujer</option>
@@ -68,15 +67,15 @@
                 </div>
                 <div class="mb-3 col-6">
                     <label for="discapacidad">Discapacidad</label>
-                    <select name="discapacidad" id="discapacidad" class="form-select" required>
-                        <option value="">Seleccione</option>
-                        <option value="1">Si</option>
+                    <select name="discapacidad" id="discapacidad" class="form-select">
                         <option value="0">No</option>
+                        <option value="1">Si</option>
+
                     </select>
                 </div>
                 <div class="mb-3 col-6">
                     <label for="grupo_etnico">Grupo etnico</label>
-                    <select name="grupo_etnico" id="grupo_etnico" class="form-select" required>
+                    <select name="grupo_etnico" id="grupo_etnico" class="form-select">
                         <option value="Ninguno">Ninguno</option>
                         <option value="Negro">Negro</option>
                         <option value="Palenquero">Palenquero</option>
@@ -88,7 +87,12 @@
                 <div class="mb-3 col-6">
                     <label for="direccion">Dirección</label>
                     <input type="text" name="direccion" value="{{ old('direccion', $funcionario->direccion ?? '') }}"
-                        class="form-control" required>
+                        class="form-control">
+                </div>
+                <div class="mb-3 col-6">
+                    <label for="direccion">Fecha Nacimiento</label>
+                    <input type="date" name="fecha_nacimiento"
+                        value="{{ old('fecha_nacimiento', $funcionario->fecha_nacimiento ?? '') }}" class="form-control">
                 </div>
                 <div class="mb-3 col-12">
                     <button type="submit"

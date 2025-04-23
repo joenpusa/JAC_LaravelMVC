@@ -334,9 +334,18 @@
                 <div class="modal-body">
                     <form action="{{ route('documentos.store') }}" method="POST" enctype="multipart/form-data">
                         @csrf
-                        <div class="mb-3">
+                        {{-- <div class="mb-3">
                             <label for="nomanexo">Nombre del Documento</label>
                             <input type="text" name="nomanexo" class="form-control" required>
+                        </div> --}}
+                        <div class="mb-3">
+                            <label for="nomanexo">Documento</label>
+                            <select name="nomanexo" id="nomanexo" class="form-select" required>
+                                <option value="">Seleccione el documento</option>
+                                <option value="RUC">RUC</option>
+                                <option value="Camara de comercio">Camara de comercio</option>
+                                <option value="Acta de elección">Acta de elección</option>
+                            </select>
                         </div>
                         <div class="mb-3">
                             <label for="archivo">Archivo</label>

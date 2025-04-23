@@ -21,7 +21,8 @@ class Funcionario extends Model
         'grupo_etnico',
         'discapacidad',
         'name_anexo',
-        'key_anexo'
+        'key_anexo',
+        'fecha_nacimiento'
     ];
 
     public function juntas()

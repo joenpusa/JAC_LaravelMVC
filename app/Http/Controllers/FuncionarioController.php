@@ -52,13 +52,14 @@ class FuncionarioController extends Controller
              'nombre' => 'required',
              'tipo_documento' => 'required',
              'num_documento' => 'required|unique:funcionarios',
-             'num_afiliacion' => 'required',
-             'genero' => 'required',
-             'direccion' => 'required',
-             'profesion' => 'required',
-             'discapacidad' => 'required',
-             'grupo_etnico' => 'required',
-             'email' => 'required',
+             'num_afiliacion' => 'nullable',
+             'genero' => 'nullable',
+             'direccion' => 'nullable',
+             'profesion' => 'nullable',
+             'discapacidad' => 'nullable',
+             'grupo_etnico' => 'nullable',
+             'email' => 'required|email',
+             'fecha_nacimiento' => 'nullable|date',
          ],[
             'num_documento.unique' => 'El número de documento ya está registrado.',
         ]);
@@ -101,11 +102,15 @@ class FuncionarioController extends Controller
         $request->validate([
             'nombre' => 'required',
             'tipo_documento' => 'required',
-            'num_documento' => 'required|unique:funcionarios,num_documento,'.$funcionario->id,
-            'num_afiliacion' => 'required',
-            'genero' => 'required',
-            'direccion' => 'required',
-            'profesion' => 'required',
+            'num_documento' => 'required|unique:funcionarios,num_documento,' . $funcionario->id,
+            'num_afiliacion' => 'nullable',
+            'genero' => 'nullable',
+            'direccion' => 'nullable',
+            'profesion' => 'nullable',
+            'discapacidad' => 'nullable|boolean',
+            'grupo_etnico' => 'nullable',
+            'email' => 'nullable|email',
+            'fecha_nacimiento' => 'nullable|date',
         ]);
 
         $funcionario->update($request->all());

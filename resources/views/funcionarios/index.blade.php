@@ -43,7 +43,7 @@
                     <th>Nombre</th>
                     <th>Tipo Documento</th>
                     <th>Num Documento</th>
-                    <th>Profesión</th>
+                    <th>Email</th>
                     <th>Acciones</th>
                 </tr>
             </thead>
@@ -53,7 +53,7 @@
                         <td>{{ $funcionario->nombre }}</td>
                         <td>{{ $funcionario->tipo_documento }}</td>
                         <td>{{ $funcionario->num_documento }}</td>
-                        <td>{{ $funcionario->profesion }}</td>
+                        <td>{{ $funcionario->email }}</td>
                         <td>
                             <a href="{{ route('funcionarios.edit', $funcionario->id) }}" class="btn btn-warning">Editar</a>
                             <form action="{{ route('funcionarios.destroy', $funcionario->id) }}" method="POST"
