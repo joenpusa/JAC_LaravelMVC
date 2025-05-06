@@ -145,7 +145,7 @@ class JuntaController extends Controller
 
     public function export(Request $request)
     {
-        dd($request->all());
+        // dd($request->all());
         $municipioId = $request->input('municipio_id');
 
         $query = \App\Models\Junta::with(['municipio', 'presidente']);
@@ -165,7 +165,7 @@ class JuntaController extends Controller
 
         // Encabezados
         $sheet->fromArray([
-            ['Municipio', 'Razón Social', 'Resolución', 'Presidente']
+            ['Municipio', 'Razón Social', 'Resolución', 'Presidente', 'Dirección', 'Email']
         ], null, 'A1');
 
         // Datos
@@ -175,6 +175,8 @@ class JuntaController extends Controller
             $sheet->setCellValue("B{$row}", $junta->nombre);
             $sheet->setCellValue("C{$row}", $junta->resolucion);
             $sheet->setCellValue("D{$row}", $junta->presidente->nombre ?? 'N/A');
+            $sheet->setCellValue("E{$row}", $junta->presidente->direccion ?? 'N/A');
+            $sheet->setCellValue("F{$row}", $junta->presidente->email ?? 'N/A');
             $row++;
         }
 

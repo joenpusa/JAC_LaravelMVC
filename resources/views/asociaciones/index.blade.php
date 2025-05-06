@@ -28,6 +28,10 @@
                 </button>
             </div>
         @endif
+        <!-- Botón para abrir la modal -->
+        <button type="button" class="btn btn-success mb-3 ms-2" data-bs-toggle="modal" data-bs-target="#exportModal">
+            Exportar
+        </button>
         <form action="{{ route('asociaciones.index') }}" method="GET" role="search">
             <div class="input-group mb-3">
                 <input type="text" name="search" class="form-control" placeholder="Buscar asociaciones..."
@@ -70,6 +74,34 @@
 
         <div class="d-flex justify-content-center">
             {{ $asociaciones->appends(['search' => request('search')])->links('pagination::bootstrap-4') }}
+        </div>
+    </div>
+
+    <!-- Modal de Exportación -->
+    <div class="modal fade" id="exportModal" tabindex="-1" aria-labelledby="exportModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <form method="GET" action="{{ route('asociaciones.export') }}">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exportModalLabel">Exportar Asociaciones por Municipio</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="mb-3">
+                            <label for="municipio_id" class="form-label">Selecciona un municipio</label>
+                            <select name="municipio_id" id="municipio_id" class="form-select" required>
+                                <option value="all" selected>-- Todos los municipios --</option>
+                                @foreach ($municipios as $municipio)
+                                    <option value="{{ $municipio->id }}">{{ $municipio->nombre_municipio }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-success">Descargar Excel</button>
+                    </div>
+                </div>
+            </form>
         </div>
     </div>
 @endsection

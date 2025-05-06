@@ -30,10 +30,11 @@ Route::get('/asociaciones/por-municipio/{municipio}', [AsociacionController::cla
 Route::middleware(['auth'])->group(function () {
     //Rutas protegidas por autenticacion
     Route::resource('funcionarios', FuncionarioController::class);
-    Route::resource('juntas', JuntaController::class);
     Route::get('/juntas/export', [JuntaController::class, 'export'])->name('juntas.export');
+    Route::resource('juntas', JuntaController::class);
 
 
+    Route::get('/asociaciones/export', [AsociacionController::class, 'export'])->name('asociaciones.export');
     Route::resource('asociaciones', AsociacionController::class)->parameters([
         'asociaciones' => 'asociacion'
     ]);

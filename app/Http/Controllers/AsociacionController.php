@@ -7,6 +7,11 @@ use App\Models\Funcionario;
 use App\Models\Comuna;
 use App\Models\Municipio;
 use Illuminate\Http\Request;
+use Maatwebsite\Excel\Facades\Excel;
+use PhpOffice\PhpSpreadsheet\Spreadsheet;
+use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
+use Illuminate\Support\Facades\Response;
+use Illuminate\Support\Str;
 
 class AsociacionController extends Controller
 {
@@ -15,6 +20,7 @@ class AsociacionController extends Controller
 {
     $search = $request->input('search');
 
+    $municipios = Municipio::orderBy('nombre_municipio')->get();
     $asociaciones = Asociacion::with(['presidente', 'municipio'])
         ->when($search, function ($query, $search) {
             $query->where('nombre', 'like', "%{$search}%")
@@ -29,7 +35,7 @@ class AsociacionController extends Controller
         })
         ->paginate(20);
 
-    return view('asociaciones.index', compact('asociaciones'));
+    return view('asociaciones.index', compact('asociaciones', 'municipios'));
 }
 
     /**
@@ -109,5 +115,50 @@ class AsociacionController extends Controller
     {
         $asociaciones = Asociacion::where('municipio_id', $municipioId)->get();
         return response()->json($asociaciones);
+    }
+
+    public function export(Request $request)
+    {
+        // dd($request->all());
+        $municipioId = $request->input('municipio_id');
+
+        $query = \App\Models\Asociacion::with(['municipio', 'presidente']);
+
+        if ($municipioId !== 'all') {
+            $query->where('municipio_id', $municipioId);
+            $municipio = \App\Models\Municipio::find($municipioId);
+            $filename = 'asociaciones_' . Str::slug($municipio->nombre_municipio) . '.xlsx';
+        } else {
+            $filename = 'asoicaciones_todos_los_municipios.xlsx';
+        }
+
+        $juntas = $query->get();
+
+        $spreadsheet = new Spreadsheet();
+        $sheet = $spreadsheet->getActiveSheet();
+
+        // Encabezados
+        $sheet->fromArray([
+            ['Municipio', 'Razón Social', 'Resolución', 'Presidente', 'Dirección', 'Email']
+        ], null, 'A1');
+
+        // Datos
+        $row = 2;
+        foreach ($juntas as $junta) {
+            $sheet->setCellValue("A{$row}", $junta->municipio->nombre_municipio ?? 'N/A');
+            $sheet->setCellValue("B{$row}", $junta->nombre);
+            $sheet->setCellValue("C{$row}", $junta->resolucion);
+            $sheet->setCellValue("D{$row}", $junta->presidente->nombre ?? 'N/A');
+            $sheet->setCellValue("E{$row}", $junta->presidente->direccion ?? 'N/A');
+            $sheet->setCellValue("F{$row}", $junta->presidente->email ?? 'N/A');
+            $row++;
+        }
+
+        // Crear archivo temporal
+        $writer = new Xlsx($spreadsheet);
+        $tempFile = tempnam(sys_get_temp_dir(), 'excel');
+        $writer->save($tempFile);
+
+        return response()->download($tempFile, $filename)->deleteFileAfterSend(true);
     }
 }
