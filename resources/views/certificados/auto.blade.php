@@ -109,43 +109,58 @@
         <p><strong>DIRECTIVA</strong></p>
         <table border="1" style="width: 100%">
             <tr>
-                <td style="width: 30%">
+                <td style="width: 25%">
                     <strong>PRESIDENTE</strong>
                 </td>
-                <td style="width: 70%">
+                <td style="width: 50%">
                     {{ $owner->presidente->nombre }}
                 </td>
+                <td style="width: 25%">
+                    {{ $owner->presidente->num_documento }}
+                </td>
             </tr>
             <tr>
-                <td style="width: 30%">
+                <td style="width: 25%">
                     <strong>VICEPRESIDENTE</strong>
                 </td>
-                <td style="width: 70%">
+                <td style="width: 50%">
                     {{ $owner->vicepresidente->nombre }}
                 </td>
+                <td style="width: 70%">
+                    {{ $owner->vicepresidente->num_documento }}
+                </td>
             </tr>
             <tr>
-                <td style="width: 30%">
+                <td style="width: 25%">
                     <strong>TESORERO</strong>
                 </td>
-                <td style="width: 70%">
+                <td style="width: 50%">
                     {{ $owner->tesorero->nombre }}
                 </td>
+                <td style="width: 25%">
+                    {{ $owner->tesorero->num_documento }}
+                </td>
             </tr>
             <tr>
-                <td style="width: 30%">
+                <td style="width: 25%">
                     <strong>SECRETARIO</strong>
                 </td>
-                <td style="width: 70%">
+                <td style="width: 50%">
                     {{ $owner->secretario->nombre }}
+                </td>
+                <td style="width: 25%">
+                    {{ $owner->secretario->num_documento }}
                 </td>
             </tr>
             <tr>
-                <td style="width: 30%">
+                <td style="width: 25%">
                     <strong>FISCAL</strong>
                 </td>
-                <td style="width: 70%">
+                <td style="width: 50%">
                     {{ $owner->fiscal->nombre }}
+                </td>
+                <td style="width: 25%">
+                    {{ $owner->fiscal->num_documento }}
                 </td>
             </tr>
 
@@ -154,11 +169,14 @@
         <table border="1" style="width: 100%">
             @foreach ($owner->comisiones as $comision)
                 <tr>
-                    <td style="width: 30%">
+                    <td style="width: 25%">
                         <strong>{{ $comision->nomcomision }}</strong>
                     </td>
-                    <td style="width: 70%">
+                    <td style="width: 50%">
                         {{ $comision->nomcomisionado }}
+                    </td>
+                    <td style="width: 25%">
+                        {{ $comision->doccomisionado }}
                     </td>
                 </tr>
             @endforeach

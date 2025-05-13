@@ -152,7 +152,7 @@
                     </button>
                     <button type="button" class="btn btn-primary" data-bs-toggle="modal"
                         data-bs-target="#addAutoModal">
-                        Crear AUTO
+                        Genenerar documento
                     </button>
                     <button type="button" class="btn btn-primary" data-bs-toggle="modal"
                         data-bs-target="#addCarpetaModal">
@@ -177,6 +177,7 @@
                                 <tr>
                                     <th>Comisión</th>
                                     <th>Comisionado</th>
+                                    <th>Documento</th>
                                     <th>Acciones</th>
                                 </tr>
                             </thead>
@@ -185,6 +186,7 @@
                                     <tr>
                                         <td>{{ $comision->nomcomision }}</td>
                                         <td>{{ $comision->nomcomisionado }}</td>
+                                        <td>{{ $comision->doccomisionado }}</td>
                                         <td>
                                             <form action="{{ route('comisiones.destroy', $comision->id) }}"
                                                 method="POST" onsubmit="return confirm('¿Eliminar esta comisión?')">
@@ -196,7 +198,7 @@
                                     </tr>
                                 @empty
                                     <tr>
-                                        <td colspan="3">No hay documentos asociados a esta asociación.</td>
+                                        <td colspan="3">No hay comisiones asociadas a esta junta.</td>
                                     </tr>
                                 @endforelse
                             </tbody>
@@ -208,7 +210,7 @@
                 <h2 class="accordion-header" id="headingOne">
                     <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
                         data-bs-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
-                        Documentos de la asociación
+                        Documentos de la Junta
                     </button>
                 </h2>
                 <div class="accordion-collapse collapse" id="collapseOne" aria-labelledby="headingOne"
@@ -253,7 +255,7 @@
                 <h2 class="accordion-header" id="headingTwo">
                     <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
                         data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
-                        AUTOS generados
+                        AUTOS y Resoluciones generados
                     </button>
                 </h2>
                 <div class="accordion-collapse collapse" id="collapseTwo" aria-labelledby="headingTwo"
@@ -263,6 +265,7 @@
                             <thead>
                                 <tr>
                                     <th>Fecha generado</th>
+                                    <th>Tipo</th>
                                     <th>Número</th>
                                     <th>Responsable</th>
                                     <th>Acciones</th>
@@ -272,6 +275,7 @@
                                 @forelse($junta->autos as $auto)
                                     <tr>
                                         <td>{{ \Carbon\Carbon::parse($auto->fecha)->format('d/m/Y') }}</td>
+                                        <td>{{ $auto->tipo }}</td>
                                         <td>{{ $auto->numero }}</td>
                                         <td>{{ $auto->usuario->name }}</td>
                                         <td>
@@ -345,10 +349,6 @@
                 <div class="modal-body">
                     <form action="{{ route('documentos.store') }}" method="POST" enctype="multipart/form-data">
                         @csrf
-                        {{-- <div class="mb-3">
-                            <label for="nomanexo">Nombre del Documento</label>
-                            <input type="text" name="nomanexo" class="form-control" required>
-                        </div> --}}
                         <div class="mb-3">
                             <label for="nomanexo">Documento</label>
                             <select name="nomanexo" id="nomanexo" class="form-select" required>
@@ -356,6 +356,8 @@
                                 <option value="Acta de Conformación JAC">Acta de Conformación JAC</option>
                                 <option value="Acta Elección de Dignatarios">Acta Elección de Dignatarios</option>
                                 <option value="Estatutos">Estatutos</option>
+                                <option value="RUC">RUC</option>
+                                <option value="Camara de comercio">Camara de comercio</option>
                             </select>
                         </div>
                         <div class="mb-3">
@@ -425,14 +427,21 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="addAutoModalLabel">¿Esta seguro de generar el AUTO?</h5>
+                    <h5 class="modal-title" id="addAutoModalLabel">¿Esta seguro de generar el documento?</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
                     <form action="{{ url('/autos') }}" method="POST">
                         @csrf
                         <div class="mb-3">
-                            <label for="nomanexo">Digite el número de AUTO</label>
+                            <label for="tipo">Nombre de la comisión</label>
+                            <select name="tipo" id="tipo" class="form-select" required>
+                                <option value="AUTO">AUTO</option>
+                                <option value="Resolución">Resolución</option>
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label for="nomanexo">Digite el número del docyemento</label>
                             <input type="text" name="numero" class="form-control" required maxlength="5">
                         </div>
                         <input type="hidden" name="owner_type" value="App\Models\Junta">

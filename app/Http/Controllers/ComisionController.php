@@ -12,6 +12,7 @@ class ComisionController extends Controller
         $request->validate([
             'nomcomision' => 'required|string|max:255',
             'nomcomisionado' => 'required|string|max:255',
+            'doccomisionado' => 'required|string|max:30',
             'owner_type' => 'required|string',
             'owner_id' => 'required|integer',
         ]);
@@ -22,6 +23,7 @@ class ComisionController extends Controller
         Comision::create([
             'nomcomision' => $request->nomcomision,
             'nomcomisionado' => $request->nomcomisionado,
+            'doccomisionado' => $request->doccomisionado,
             'owner_type' => $ownerType,
             'owner_id' => $request->owner_id,
         ]);

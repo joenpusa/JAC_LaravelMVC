@@ -11,6 +11,7 @@ class Comision extends Model
     protected $fillable = [
         'nomcomision',
         'nomcomisionado',
+        'doccomisionado',
         'owner_type',
         'owner_id',
     ];

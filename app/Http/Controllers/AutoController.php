@@ -19,6 +19,7 @@ class AutoController extends Controller
             'numero' => 'required|string|max:5',
             'owner_type' => 'required|string',
             'owner_id' => 'required|integer',
+            'tipo' => 'nullable|string|max:20',
             'usuario_id' => 'required|exists:users,id',
         ]);
 
@@ -26,6 +27,7 @@ class AutoController extends Controller
         $auto = new Auto();
         $auto->fecha = now();
         $auto->numero = $request->numero;
+        $auto->tipo = $request->tipo;
         $auto->owner_type = $request->owner_type;
         $auto->owner_id = $request->owner_id;
         $auto->usuario_id = $request->usuario_id;
@@ -38,19 +40,25 @@ class AutoController extends Controller
         } else {
             $owner = Asociacion::find($request->owner_id);
         }
-        // Generar el PDF usando la vista certificados.auto
-        $pdf = PDF::loadView('certificados.auto', compact('auto','config','owner'));
+        $view = 'certificados.auto'; // por defecto
 
-        // Definir nombre único y ruta del archivo
-        $filename = 'AUTO_'.$auto->id.'_'.now()->format('YmdHis').'.pdf';
-        $directory = public_path('autosGenerates');
-
-        // Verificar si existe la carpeta, si no, crearla
-        if (!File::exists($directory)) {
-            File::makeDirectory($directory, 0755, true); // permisos, recursivo
+        if (strtolower($request->tipo) === 'resolución' || strtolower($request->tipo) === 'resolucion') {
+            $view = 'certificados.resolucion';
         }
 
-        $path = $directory.'/'.$filename;
+        // Generar PDF
+        $pdf = PDF::loadView($view, compact('auto', 'config', 'owner'));
+
+        // 📄 Nombre de archivo dinámico
+        $tipo_nombre = strtoupper($request->tipo ?? 'AUTO');
+        $filename = $tipo_nombre . '_' . $auto->id . '_' . now()->format('YmdHis') . '.pdf';
+        $directory = public_path('autosGenerates');
+
+        if (!File::exists($directory)) {
+            File::makeDirectory($directory, 0755, true);
+        }
+
+        $path = $directory . '/' . $filename;
 
         // Guardar el archivo
         $pdf->save($path);

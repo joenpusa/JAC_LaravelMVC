@@ -9,6 +9,7 @@ class Auto extends Model
     protected $fillable = [
         'fecha',
         'numero',
+        'tipo',
         'keyarchivo',
         'usuario_id',
         'owner_id',
