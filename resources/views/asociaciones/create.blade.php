@@ -3,6 +3,7 @@
 @section('content')
     <div class="container">
         <h1>{{ isset($asociacion) ? 'Editar' : 'Crear' }} Asociación</h1>
+        <hr>
         @if ($errors->any())
             <div class="alert alert-danger alert-dismissible fade show" role="alert">
                 <p>Proceso no realizado:</p>
@@ -21,6 +22,10 @@
                 @method('PUT')
             @endif
             <div class="row">
+                <div class="col-12">
+                    <h4>Datos basicos</h4>
+                    <hr>
+                </div>
                 <div class="mb-3 col-6">
                     <label for="nombre">Razón social</label>
                     <input type="text" name="nombre" value="{{ old('nombre', $asociacion->nombre ?? '') }}"
@@ -42,11 +47,24 @@
                         value="{{ old('fecha_resolucion', $asociacion->fecha_resolucion ?? '') }}" class="form-control"
                         required>
                 </div>
+                <div class="col-12">
+                    <h4>Dignatarios y Comisionados</h4>
+                    <hr>
+                </div>
                 <div class="mb-3 col-6">
                     <label for="fecha_eleccion">Fecha elección</label>
                     <input type="date" name="fecha_eleccion"
                         value="{{ old('fecha_eleccion', $asociacion->fecha_eleccion ?? '') }}" class="form-control"
                         required>
+                </div>
+                <div class="mb-3 col-6">
+                    <label for="municipio">Municipio de la asociación</label>
+                    <select name="municipio_id" id="municipio" class="form-select select2" style="width: 100%" required>
+                        <option value="">Seleccione municipio</option>
+                        @foreach ($municipios as $c)
+                            <option value="{{ $c->id }}">{{ $c->nombre_municipio }}</option>
+                        @endforeach
+                    </select>
                 </div>
                 <!-- Select para Presidente -->
                 <div class="mb-3">
@@ -103,15 +121,7 @@
                         @endforeach
                     </select>
                 </div>
-                <div class="mb-3">
-                    <label for="municipio">Municipio de la asociación</label>
-                    <select name="municipio_id" id="municipio" class="form-select select2" style="width: 100%" required>
-                        <option value="">Seleccione municipio</option>
-                        @foreach ($municipios as $c)
-                            <option value="{{ $c->id }}">{{ $c->nombre_municipio }}</option>
-                        @endforeach
-                    </select>
-                </div>
+
                 {{-- <div class="mb-3">
                     <label for="comuna">Comuna de la asociación</label>
                     <select name="comuna_id" id="comuna" class="form-select select2" style="width: 100%" required>

@@ -3,6 +3,7 @@
 @section('content')
     <div class="container">
         <h1>{{ isset($junta) ? 'Editar' : 'Crear' }} Junta</h1>
+        <hr>
         @if ($errors->any() || ($message = Session::get('error')))
             <div class="alert alert-danger alert-dismissible text-white" role="alert">
                 <span class="text-sm">
@@ -33,30 +34,49 @@
                 @method('PUT')
             @endif
             <div class="row">
+                <div class="col-12">
+                    <h4>Datos basicos</h4>
+                    <hr>
+                </div>
                 <div class="mb-3 col-6">
-                    <label for="nombre">Nombre</label>
+                    <label for="nombre">Razón social</label>
                     <input type="text" name="nombre" value="{{ old('nombre', $junta->nombre ?? '') }}"
-                        class="form-control" required>
+                        class="form-control" required readonly>
                 </div>
                 <div class="mb-3 col-6">
                     <label for="resolucion">Resolución</label>
                     <input type="text" name="resolucion" value="{{ old('resolucion', $junta->resolucion ?? '') }}"
-                        class="form-control" required>
+                        class="form-control" required readonly>
                 </div>
                 <div class="mb-3 col-6">
                     <label for="personeria">Personeria</label>
                     <input type="text" name="personeria" value="{{ old('personeria', $junta->personeria ?? '') }}"
-                        class="form-control" required>
+                        class="form-control" required readonly>
                 </div>
                 <div class="mb-3 col-6">
                     <label for="fecha_resolucion">Fecha resolución</label>
                     <input type="date" name="fecha_resolucion"
-                        value="{{ old('fecha_resolucion', $junta->fecha_resolucion ?? '') }}" class="form-control" required>
+                        value="{{ old('fecha_resolucion', $junta->fecha_resolucion ?? '') }}" class="form-control" required
+                        readonly>
+                </div>
+                <div class="col-12">
+                    <h4>Dignatarios y Comisionados</h4>
+                    <hr>
                 </div>
                 <div class="mb-3 col-6">
                     <label for="fecha_eleccion">Fecha elección</label>
                     <input type="date" name="fecha_eleccion"
                         value="{{ old('fecha_eleccion', $junta->fecha_eleccion ?? '') }}" class="form-control" required>
+                </div>
+                <div class="mb-3 col-6">
+                    <label for="municipio">Municipio</label>
+                    <select name="municipio_id" id="municipio" class="form-select select2" style="width: 100%" required>
+                        <option value="">Seleccione municipio</option>
+                        @foreach ($municipios as $m)
+                            <option value="{{ $m->id }}" {{ $m->id == $junta->municipio_id ? 'selected' : '' }}>
+                                {{ $m->nombre_municipio }}</option>
+                        @endforeach
+                    </select>
                 </div>
                 <!-- Select para Presidente -->
                 <div class="mb-3">
@@ -118,16 +138,7 @@
                         @endforeach
                     </select>
                 </div>
-                <div class="mb-3">
-                    <label for="municipio">Municipio</label>
-                    <select name="municipio_id" id="municipio" class="form-select select2" style="width: 100%" required>
-                        <option value="">Seleccione municipio</option>
-                        @foreach ($municipios as $m)
-                            <option value="{{ $m->id }}" {{ $m->id == $junta->municipio_id ? 'selected' : '' }}>
-                                {{ $m->nombre_municipio }}</option>
-                        @endforeach
-                    </select>
-                </div>
+
 
                 <div class="mb-3 col-12" style="display:inline-block;">
                     <button type="submit" class="btn btn-success">{{ isset($junta) ? 'Actualizar' : 'Crear' }}</button>
@@ -342,9 +353,9 @@
                             <label for="nomanexo">Documento</label>
                             <select name="nomanexo" id="nomanexo" class="form-select" required>
                                 <option value="">Seleccione el documento</option>
-                                <option value="RUC">RUC</option>
-                                <option value="Camara de comercio">Camara de comercio</option>
-                                <option value="Acta de elección">Acta de elección</option>
+                                <option value="Acta de Conformación JAC">Acta de Conformación JAC</option>
+                                <option value="Acta Elección de Dignatarios">Acta Elección de Dignatarios</option>
+                                <option value="Estatutos">Estatutos</option>
                             </select>
                         </div>
                         <div class="mb-3">
@@ -373,11 +384,33 @@
                         @csrf
                         <div class="mb-3">
                             <label for="nomcomision">Nombre de la comisión</label>
-                            <input type="text" name="nomcomision" class="form-control" required>
+                            <select name="nomcomision" id="nomcomision" class="form-select" required>
+                                <option value="">Seleccione opción</option>
+                                <option value="Conciliador 1">Conciliador 1</option>
+                                <option value="Conciliador 2">Conciliador 2</option>
+                                <option value="Conciliador 3">Conciliador 3</option>
+                                <option value="Conciliador 4">Conciliador 4</option>
+                                <option value="Delegado  principal 1">Delegado principal 1</option>
+                                <option value="Delegado  principal 2">Delegado principal 2</option>
+                                <option value="Delegado  principal 3">Delegado principal 3</option>
+                                <option value="Delegado  principal 4">Delegado principal 4</option>
+                                <option value="Delegado  suplente 1">Delegado suplente 1</option>
+                                <option value="Delegado  suplente 2">Delegado suplente 2</option>
+                                <option value="Delegado  suplente 3">Delegado suplente 3</option>
+                                <option value="Delegado  suplente 4">Delegado suplente 4</option>
+                                <option value="Salud">Salud</option>
+                                <option value="Educación">Educación</option>
+                                <option value="Deportes">Deportes</option>
+                                <option value="Medio Ambiente">Medio Ambiente</option>
+                            </select>
                         </div>
                         <div class="mb-3">
                             <label for="nomcomisionado">Nombre del comisionado</label>
                             <input type="text" name="nomcomisionado" class="form-control" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="nomcomisionado">Documento del comisionado</label>
+                            <input type="text" name="doccomisionado" class="form-control" required>
                         </div>
                         <input type="hidden" name="owner_type" value="junta">
                         <input type="hidden" name="owner_id" value="{{ $junta->id }}">

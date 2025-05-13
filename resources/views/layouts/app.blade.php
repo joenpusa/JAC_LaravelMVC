@@ -53,6 +53,8 @@
     <script async defer src="https://buttons.github.io/buttons.js"></script>
     <!-- jQuery (necesario para Select2) -->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    @stack('scripts')
+
 </body>
 
 </html>
