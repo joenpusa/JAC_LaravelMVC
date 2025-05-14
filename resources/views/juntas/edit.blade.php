@@ -388,22 +388,23 @@
                             <label for="nomcomision">Nombre de la comisión</label>
                             <select name="nomcomision" id="nomcomision" class="form-select" required>
                                 <option value="">Seleccione opción</option>
-                                <option value="Conciliador 1">Conciliador 1</option>
-                                <option value="Conciliador 2">Conciliador 2</option>
-                                <option value="Conciliador 3">Conciliador 3</option>
-                                <option value="Conciliador 4">Conciliador 4</option>
-                                <option value="Delegado  principal 1">Delegado principal 1</option>
-                                <option value="Delegado  principal 2">Delegado principal 2</option>
-                                <option value="Delegado  principal 3">Delegado principal 3</option>
-                                <option value="Delegado  principal 4">Delegado principal 4</option>
-                                <option value="Delegado  suplente 1">Delegado suplente 1</option>
-                                <option value="Delegado  suplente 2">Delegado suplente 2</option>
-                                <option value="Delegado  suplente 3">Delegado suplente 3</option>
-                                <option value="Delegado  suplente 4">Delegado suplente 4</option>
-                                <option value="Salud">Salud</option>
-                                <option value="Educación">Educación</option>
-                                <option value="Deportes">Deportes</option>
-                                <option value="Medio Ambiente">Medio Ambiente</option>
+                                <option value="CONCILIADOR 1">CONCILIADOR 1</option>
+                                <option value="CONCILIADOR 2">CONCILIADOR 2</option>
+                                <option value="CONCILIADOR 3">CONCILIADOR 3</option>
+                                <option value="CONCILIADOR 4">CONCILIADOR 4</option>
+                                <option value="DELEGADO PRINCIPAL 1">DELEGADO PRINCIPAL 1</option>
+                                <option value="DELEGADO PRINCIPAL 2">DELEGADO PRINCIPAL 2</option>
+                                <option value="DELEGADO PRINCIPAL 3">DELEGADO PRINCIPAL 3</option>
+                                <option value="DELEGADO PRINCIPAL 4">DELEGADO PRINCIPAL 4</option>
+                                <option value="DELEGADO SUPLEMENTE 1">DELEGADO SUPLEMENTE 1</option>
+                                <option value="DELEGADO SUPLEMENTE 2">DELEGADO SUPLEMENTE 2</option>
+                                <option value="DELEGADO SUPLEMENTE 3">DELEGADO SUPLEMENTE 3</option>
+                                <option value="DELEGADO SUPLEMENTE 4">DELEGADO SUPLEMENTE 4</option>
+                                <option value="SALUD">SALUD</option>
+                                <option value="EDUCACION">EDUCACION</option>
+                                <option value="DEPORTES">DEPORTES</option>
+                                <option value="OBRAS">OBRAS</option>
+                                <option value="MEDIO AMBIENTE">MEDIO AMBIENTE</option>
                             </select>
                         </div>
                         <div class="mb-3">

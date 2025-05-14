@@ -82,8 +82,9 @@
             Fecha {{ $diaConCero }} de {{ $mesNombre }} de {{ $anio }}
         </center>
         <p>
-            "Por la cual se reconoce una Personeria Juridica a la Junta de Acción Comunal XXXXXXXXXX del municipio de
-            XXXXXXXX del DEPARTAMENTO NORTE DE SANTANDER"
+            "Por la cual se reconoce una <strong>Personería Juridica</strong> a la Junta de Acción Comunal
+            <strong>{{ $owner->nombre }}</strong> del municipio de
+            {{ $owner->municipio->nombre_municipio }} del DEPARTAMENTO NORTE DE SANTANDER"
         </p>
         <p>
             LA SECRETARIA DE DESARROLLO SOCIAL DEL DEPARTAMENTO NORTE DE SANTANDER, en uso de sus facultades legales y
@@ -94,10 +95,10 @@
             <strong>CONSIDERANDO:</strong>
         </center>
         <p>
-            QUE: eL Señor <strong>{{ $owner->nombre }}</strong>, identificado con c'edula de ciudadania No.
+            QUE: eL Señor <strong>{{ $owner->presidente->nombre }}</strong>, identificado con c'edula de ciudadania No.
             <strong>{{ $owner->municipio->nombre_municipio }}</strong>, en su condicion de Presidente de la Junta de
-            Accion Cumunal XXXXXXXXXXXXXXXXXXXx del Departamento Norte de Santander."
-            constituida EN ASAMBLEA General de afiliados el XXX XXXXXXXX XXXXXXXXXXX; Presentó a ésta oficina
+            Accion Cumunal <strong>{{ $owner->nombre }}</strong> del Departamento Norte de Santander."
+            constituida EN ASAMBLEA General de afiliados el {{ $owner->fecha_eleccion }}; Presentó a ésta oficina
             documentación correspondiente a fin de obtener Personería Juridica de conformidad al articulo 11 y 12 de la
             ley 2166 de diciembre 18 de 2021, y de conformidad con el artículo 76 numeral 1° de la ley 2166 de diciembre
             18 de 2021. Y su decreto reglamentario. Articulo 2.3.2.1.1.1.
@@ -110,8 +111,10 @@
             <strong>RESUELVE:</strong>
         </center>
         <p>
-            Articulo 1° Reconocer Personeria Jurídica a la Junta de Acción Comunal XXXXXXXXXX del municipio de
-            XXXXXXXX del DEPARTAMENTO NORTE DE SANTANDER con el No. XXXXXXXXXXXXXXXXXXXXx
+            Articulo 1° Reconocer Personeria Jurídica a la Junta de Acción Comunal
+            <strong>{{ $owner->nombre }}</strong> del municipio de
+            <strong>{{ $owner->municipio->nombre_municipio }}</strong> del DEPARTAMENTO NORTE DE SANTANDER con el No.
+            <strong>{{ $owner->personeria }}</strong>
             <br>
             Articulo 2° Aprobar los estatuto del citado organismo comunal, el cual deberá acogerse a las prescripciones
             de la ley 2166 de diciembre 18 de 2021 paragrafo 1. Artículo 15.

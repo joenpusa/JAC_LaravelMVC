@@ -20,6 +20,16 @@ class ComisionController extends Controller
         // Normalizar owner_type a modelo completo
         $ownerType = $request->owner_type === 'junta' ? 'App\Models\Junta' : 'App\Models\Asociacion';
 
+        // Verificar si ya existe esa comisión para ese owner
+        $existe = \App\Models\Comision::where('nomcomision', $request->nomcomision)
+            ->where('owner_type', $ownerType)
+            ->where('owner_id', $request->owner_id)
+            ->exists();
+
+        if ($existe) {
+            return back()->withErrors('', 'Ya existe una comisión con ese nombre para este registro.');
+        }
+
         Comision::create([
             'nomcomision' => $request->nomcomision,
             'nomcomisionado' => $request->nomcomisionado,

@@ -165,22 +165,91 @@
             </tr>
 
         </table>
-        <p><strong>DIRECTIVA</strong></p>
+        <p><strong>COMISIÓN CONCILIADORA</strong></p>
         <table border="1" style="width: 100%">
-            @foreach ($owner->comisiones as $comision)
-                <tr>
-                    <td style="width: 25%">
-                        <strong>{{ $comision->nomcomision }}</strong>
-                    </td>
-                    <td style="width: 50%">
-                        {{ $comision->nomcomisionado }}
-                    </td>
-                    <td style="width: 25%">
-                        {{ $comision->doccomisionado }}
-                    </td>
-                </tr>
+            @php
+                $cargos = ['CONCILIADOR 1', 'CONCILIADOR 2', 'CONCILIADOR 3', 'CONCILIADOR 4'];
+            @endphp
+
+            @foreach ($cargos as $cargo)
+                @php
+                    $comision = $owner->comisiones->firstWhere('nomcomision', $cargo);
+                @endphp
+                @if ($comision)
+                    <tr>
+                        <td style="width: 25%">
+                            <strong>{{ $cargo }}</strong>
+                        </td>
+                        <td style="width: 50%">
+                            {{ $comision->nomcomisionado }}
+                        </td>
+                        <td style="width: 25%">
+                            {{ $comision->doccomisionado }}
+                        </td>
+                    </tr>
+                @endif
             @endforeach
 
+        </table>
+        <p><strong>CORDINADORES SOCIALES DE TRABAJO</strong></p>
+        <table border="1" style="width: 100%">
+            @php
+                $cargos = ['SALUD', 'EDUCACION', 'DEPORTES', 'OBRAS', 'MEDIO AMBIENTE'];
+            @endphp
+
+            @foreach ($cargos as $cargo)
+                @php
+                    $comision = $owner->comisiones->firstWhere('nomcomision', $cargo);
+                @endphp
+                @if ($comision)
+                    <tr>
+                        <td style="width: 25%">
+                            <strong>{{ $cargo }}</strong>
+                        </td>
+                        <td style="width: 50%">
+                            {{ $comision->nomcomisionado }}
+                        </td>
+                        <td style="width: 25%">
+                            {{ $comision->doccomisionado }}
+                        </td>
+                    </tr>
+                @endif
+            @endforeach
+
+        </table>
+        <p><strong>DELEGADOS A LA ASOCIACIÓN</strong></p>
+        <table border="1" style="width: 100%">
+            @php
+                $cargos = [
+                    'DELEGADO PRINCIPAL 1',
+                    'DELEGADO PRINCIPAL 2',
+                    'DELEGADO PRINCIPAL 3',
+                    'DELEGADO PRINCIPAL 4',
+                    'DELEGADO SUPLEMENTE 1',
+                    'DELEGADO SUPLEMENTE 2',
+                    'DELEGADO SUPLEMENTE 3',
+                    'DELEGADO SUPLEMENTE 4',
+                ];
+            @endphp
+
+            @foreach ($cargos as $cargo)
+                @php
+                    $comision = $owner->comisiones->firstWhere('nomcomision', $cargo);
+                @endphp
+                @if ($comision)
+                    <tr>
+                        <td style="width: 25%">
+                            <strong>{{ $cargo }}</strong>
+                        </td>
+                        <td style="width: 50%">
+                            {{ $comision->nomcomisionado }}
+                        </td>
+                        <td style="width: 25%">
+                            {{ $comision->doccomisionado }}
+                        </td>
+                    </tr>
+                @endif
+            @endforeach
         </table>
         <p>
             <strong>COMUNÍQUESE Y CÚMPLASE</strong>
