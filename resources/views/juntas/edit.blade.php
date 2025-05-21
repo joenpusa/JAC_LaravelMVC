@@ -405,6 +405,7 @@
                                 <option value="DEPORTES">DEPORTES</option>
                                 <option value="OBRAS">OBRAS</option>
                                 <option value="MEDIO AMBIENTE">MEDIO AMBIENTE</option>
+                                <option value="EMPRESARIAL">EMPRESARIAL</option>
                             </select>
                         </div>
                         <div class="mb-3">
@@ -442,7 +443,7 @@
                             </select>
                         </div>
                         <div class="mb-3">
-                            <label for="nomanexo">Digite el número del docyemento</label>
+                            <label for="nomanexo">Digite el número del documento</label>
                             <input type="text" name="numero" class="form-control" required maxlength="5">
                         </div>
                         <input type="hidden" name="owner_type" value="App\Models\Junta">

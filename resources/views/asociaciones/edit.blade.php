@@ -177,7 +177,7 @@
                     </button>
                     <button type="button" class="btn btn-primary" data-bs-toggle="modal"
                         data-bs-target="#addAutoModal">
-                        Crear AUTO
+                        Generar documento
                     </button>
                     <button type="button" class="btn btn-primary" data-bs-toggle="modal"
                         data-bs-target="#addCarpetaModal">
@@ -282,7 +282,7 @@
                 <h2 class="accordion-header" id="headingTwo">
                     <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
                         data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
-                        AUTOS generados
+                        AUTOS generados y documentos
                     </button>
                 </h2>
                 <div class="accordion-collapse collapse" id="collapseTwo" aria-labelledby="headingTwo"
@@ -431,6 +431,7 @@
                                 <option value="DEPORTES">DEPORTES</option>
                                 <option value="OBRAS">OBRAS</option>
                                 <option value="MEDIO AMBIENTE">MEDIO AMBIENTE</option>
+                                <option value="EMPRESARIAL">EMPRESARIAL</option>
                             </select>
                         </div>
                         <div class="mb-3">
@@ -464,10 +465,12 @@
                             <label for="tipo">Nombre de la comisión</label>
                             <select name="tipo" id="tipo" class="form-select" required>
                                 <option value="AUTO">AUTO</option>
+                                <option value="Resolución">Resolución</option>
+
                             </select>
                         </div>
                         <div class="mb-3">
-                            <label for="nomanexo">Digite el número de AUTO</label>
+                            <label for="nomanexo">Digite el número del documento</label>
                             <input type="text" name="numero" class="form-control" required maxlength="5">
                         </div>
                         <input type="hidden" name="owner_type" value="App\Models\Asociacion">

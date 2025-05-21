@@ -95,16 +95,15 @@
             parcialmente dignatarios para el periodo 1 de julio de 2024 al 30 de junio de 2026.
         </p>
         <p>
-            Que, revisamdos los documentos requeridosse encontró con eñ lleno de los requisitos legales y que las
-            deciciones tomadas fueron válidadas.
+            Que, revisados los documentos requeridos se encontró con el lleno de los requisitos legales y que las
+            decisiones tomadas fueron válidadas.
         </p>
         <center>
             <strong>RESUELVE</strong>
         </center>
         <p>Inscribir los dignatarios de la junta de Acción Comunal <strong>{{ $owner->nombre }}</strong>, Municipio
             <strong>{{ $owner->municipio->nombre_municipio }}</strong>, Departamento Norte de Santander. Para el
-            periodo
-            1 de julio de 2024 al 30 de junio de 2026.
+            periodo 1 de julio de 2024 al 30 de junio de 2026.
         </p>
         <p><strong>DIRECTIVA</strong></p>
         <table border="1" style="width: 100%">
@@ -191,10 +190,36 @@
             @endforeach
 
         </table>
-        <p><strong>CORDINADORES SOCIALES DE TRABAJO</strong></p>
+        <p><strong>CORDINADORES COMISIONES DE TRABAJO</strong></p>
         <table border="1" style="width: 100%">
             @php
-                $cargos = ['SALUD', 'EDUCACION', 'DEPORTES', 'OBRAS', 'MEDIO AMBIENTE'];
+                $cargos = ['TRABAJO', 'SALUD', 'EDUCACION', 'DEPORTES', 'OBRAS', 'MEDIO AMBIENTE'];
+            @endphp
+
+            @foreach ($cargos as $cargo)
+                @php
+                    $comision = $owner->comisiones->firstWhere('nomcomision', $cargo);
+                @endphp
+                @if ($comision)
+                    <tr>
+                        <td style="width: 25%">
+                            <strong>{{ $cargo }}</strong>
+                        </td>
+                        <td style="width: 50%">
+                            {{ $comision->nomcomisionado }}
+                        </td>
+                        <td style="width: 25%">
+                            {{ $comision->doccomisionado }}
+                        </td>
+                    </tr>
+                @endif
+            @endforeach
+
+        </table>
+        <p><strong>CORDINADOR COMISIÓN EMPRESARIAL</strong></p>
+        <table border="1" style="width: 100%">
+            @php
+                $cargos = ['EMPRESARIAL'];
             @endphp
 
             @foreach ($cargos as $cargo)

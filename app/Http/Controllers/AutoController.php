@@ -37,10 +37,12 @@ class AutoController extends Controller
         // datos de owner
         if ($request->owner_type == 'App\Models\Junta') {
             $owner = Junta::find($request->owner_id);
+            $view = 'certificados.auto_jac';
         } else {
             $owner = Asociacion::find($request->owner_id);
+            $view = 'certificados.auto_aso';
         }
-        $view = 'certificados.auto'; // por defecto
+         // por defecto
 
         if (strtolower($request->tipo) === 'resolución' || strtolower($request->tipo) === 'resolucion') {
             $view = 'certificados.resolucion';
@@ -49,7 +51,7 @@ class AutoController extends Controller
         // Generar PDF
         $pdf = PDF::loadView($view, compact('auto', 'config', 'owner'));
 
-        // 📄 Nombre de archivo dinámico
+        // Nombre de archivo dinámico
         $tipo_nombre = strtoupper($request->tipo ?? 'AUTO');
         $filename = $tipo_nombre . '_' . $auto->id . '_' . now()->format('YmdHis') . '.pdf';
         $directory = public_path('autosGenerates');
