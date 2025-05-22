@@ -23,6 +23,55 @@ class AutoController extends Controller
             'usuario_id' => 'required|exists:users,id',
         ]);
 
+        // datos de owner
+        if ($request->owner_type == 'App\Models\Junta') {
+            $owner = Junta::find($request->owner_id);
+            $view = 'certificados.auto_jac';
+            $cargos = [
+                'CONCILIADOR 1',
+                'CONCILIADOR 2',
+                'CONCILIADOR 3',
+                'CONCILIADOR 4',
+                'DELEGADO PRINCIPAL 1',
+                'DELEGADO PRINCIPAL 2',
+                'DELEGADO PRINCIPAL 3',
+                'DELEGADO PRINCIPAL 4',
+                'EMPRESARIAL',
+            ];
+        } else {
+            $owner = Asociacion::find($request->owner_id);
+            $view = 'certificados.auto_aso';
+            $cargos = [
+                'CONCILIADOR 1',
+                'CONCILIADOR 2',
+                'CONCILIADOR 3',
+                'CONCILIADOR 4',
+                'FISCAL SUPLENTE',
+                'DELEGADO PRINCIPAL 1',
+                'DELEGADO SUPLEMENTE 1',
+                'DELEGADO PRINCIPAL 2',
+                'DELEGADO SUPLEMENTE 2',
+                'DELEGADO PRINCIPAL 3',
+                'DELEGADO SUPLEMENTE 3',
+                'DELEGADO PRINCIPAL 4',
+                'DELEGADO SUPLEMENTE 4',
+                'EMPRESARIAL',
+            ];
+        }
+
+        if (strtolower($request->tipo) === 'resolución' || strtolower($request->tipo) === 'resolucion') {
+            $view = 'certificados.resolucion';
+        }
+
+        // Verifico si ya tiene todos los comisionados
+        $comisionados = $owner->comisiones()->get();
+        foreach ($cargos as $cargo) {
+            $comision = $owner->comisiones->firstWhere('nomcomision', $cargo);
+            if (!$comision) {
+                return back()->withErrors(['custom' => 'Falta el comisionado ' . $cargo . ' para generar el documento.']);
+            }
+        }
+
         // Crear el registro en la base de datos sin el archivo aún
         $auto = new Auto();
         $auto->fecha = now();
@@ -34,19 +83,7 @@ class AutoController extends Controller
         $auto->save();
         // Obtener la configuración de la aplicación
         $config = Configuracion::first();
-        // datos de owner
-        if ($request->owner_type == 'App\Models\Junta') {
-            $owner = Junta::find($request->owner_id);
-            $view = 'certificados.auto_jac';
-        } else {
-            $owner = Asociacion::find($request->owner_id);
-            $view = 'certificados.auto_aso';
-        }
-         // por defecto
 
-        if (strtolower($request->tipo) === 'resolución' || strtolower($request->tipo) === 'resolucion') {
-            $view = 'certificados.resolucion';
-        }
 
         // Generar PDF
         $pdf = PDF::loadView($view, compact('auto', 'config', 'owner'));

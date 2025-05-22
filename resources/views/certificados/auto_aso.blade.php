@@ -9,17 +9,17 @@
         }
 
         body {
-            margin-top: 100px;
-            margin-bottom: 100px;
+            margin-top: 120px;
+            margin-bottom: 120px;
             margin-left: 0cm;
             margin-right: 0cm;
             font-family: Arial, sans-serif;
-            font-size: 11px;
+            font-size: 12px;
         }
 
         p {
             text-align: justify;
-            font-size: 11px;
+            font-size: 12px;
         }
 
         table {
@@ -77,7 +77,7 @@
         $anio = $fecha->year;
     @endphp
     <div style="margin: 85px">
-        Auto N° {{ $auto->numero }}
+        <H3>Auto N° {{ $auto->numero }}</H3>
         <center>
             Fecha {{ $diaConCero }} de {{ $mesNombre }} de {{ $anio }}
         </center>
@@ -125,7 +125,7 @@
                 <td style="width: 50%">
                     {{ $owner->vicepresidente->nombre }}
                 </td>
-                <td style="width: 70%">
+                <td style="width: 25%">
                     {{ $owner->vicepresidente->num_documento }}
                 </td>
             </tr>
@@ -151,6 +151,9 @@
                     {{ $owner->secretario->num_documento }}
                 </td>
             </tr>
+        </table>
+        <p></p>
+        <table border="1" style="width: 100%">
             <tr>
                 <td style="width: 25%">
                     <strong>FISCAL</strong>
@@ -201,10 +204,10 @@
             @endforeach
 
         </table>
-        <p><strong>CORDINADORES COMISIONES DE TRABAJO</strong></p>
+        <p><strong>SECRETARIAS</strong></p>
         <table border="1" style="width: 100%">
             @php
-                $cargos = ['SALUD', 'EDUCACION', 'DEPORTES', 'OBRAS', 'MEDIO AMBIENTE'];
+                $cargos = ['TRABAJO', 'SALUD', 'EDUCACION', 'DEPORTES', 'OBRAS', 'MEDIO AMBIENTE'];
             @endphp
 
             @foreach ($cargos as $cargo)
@@ -225,19 +228,60 @@
                     </tr>
                 @endif
             @endforeach
+            {{-- AHORA TODOS LOS DE LAS COMISIONES PERSONALIZADAS --}}
+            @php
+                $cargos = [
+                    'TRABAJO',
+                    'SALUD',
+                    'EDUCACION',
+                    'DEPORTES',
+                    'OBRAS',
+                    'MEDIO AMBIENTE',
+                    'CONCILIADOR 1',
+                    'CONCILIADOR 2',
+                    'CONCILIADOR 3',
+                    'CONCILIADOR 4',
+                    'FISCAL SUPLENTE',
+                    'DELEGADO PRINCIPAL 1',
+                    'DELEGADO SUPLEMENTE 1',
+                    'DELEGADO PRINCIPAL 2',
+                    'DELEGADO SUPLEMENTE 2',
+                    'DELEGADO PRINCIPAL 3',
+                    'DELEGADO SUPLEMENTE 3',
+                    'DELEGADO PRINCIPAL 4',
+                    'DELEGADO SUPLEMENTE 4',
+                    'EMPRESARIAL',
+                ];
+                $otrasComisiones = $owner->comisiones->filter(function ($comision) use ($cargos) {
+                    return !in_array($comision->nomcomision, $cargos);
+                });
+            @endphp
 
+            @foreach ($otrasComisiones as $comision)
+                <tr>
+                    <td style="width: 25%">
+                        <strong>{{ $comision->nomcomision }}</strong>
+                    </td>
+                    <td style="width: 50%">
+                        {{ $comision->nomcomisionado }}
+                    </td>
+                    <td style="width: 25%">
+                        {{ $comision->doccomisionado }}
+                    </td>
+                </tr>
+            @endforeach
         </table>
         <p><strong>DELEGADOS A LA ASOCIACIÓN</strong></p>
         <table border="1" style="width: 100%">
             @php
                 $cargos = [
                     'DELEGADO PRINCIPAL 1',
-                    'DELEGADO PRINCIPAL 2',
-                    'DELEGADO PRINCIPAL 3',
-                    'DELEGADO PRINCIPAL 4',
                     'DELEGADO SUPLEMENTE 1',
+                    'DELEGADO PRINCIPAL 2',
                     'DELEGADO SUPLEMENTE 2',
+                    'DELEGADO PRINCIPAL 3',
                     'DELEGADO SUPLEMENTE 3',
+                    'DELEGADO PRINCIPAL 4',
                     'DELEGADO SUPLEMENTE 4',
                 ];
             @endphp

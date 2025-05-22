@@ -418,6 +418,7 @@
                                 <option value="CONCILIADOR 2">CONCILIADOR 2</option>
                                 <option value="CONCILIADOR 3">CONCILIADOR 3</option>
                                 <option value="CONCILIADOR 4">CONCILIADOR 4</option>
+                                <option value="FISCAL SUPLENTE">FISCAL SUPLENTE</option>
                                 <option value="DELEGADO PRINCIPAL 1">DELEGADO PRINCIPAL 1</option>
                                 <option value="DELEGADO PRINCIPAL 2">DELEGADO PRINCIPAL 2</option>
                                 <option value="DELEGADO PRINCIPAL 3">DELEGADO PRINCIPAL 3</option>
@@ -432,7 +433,12 @@
                                 <option value="OBRAS">OBRAS</option>
                                 <option value="MEDIO AMBIENTE">MEDIO AMBIENTE</option>
                                 <option value="EMPRESARIAL">EMPRESARIAL</option>
+                                <option value="OTRO">OTRO</option>
                             </select>
+                        </div>
+                        <div class="mb-3 d-none" id="otraComisionDiv">
+                            <label for="otra_comision">Especifique otra comisión</label>
+                            <input type="text" id="otra_comision" class="form-control">
                         </div>
                         <div class="mb-3">
                             <label for="nomcomisionado">Nombre del comisionado</label>
@@ -537,4 +543,23 @@
             </div>
         </div>
     </div>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const select = document.getElementById('nomcomision');
+            const otraComisionDiv = document.getElementById('otraComisionDiv');
+            const otraComisionInput = document.getElementById('otra_comision');
+
+            select.addEventListener('change', function() {
+                if (select.value === 'OTRO') {
+                    otraComisionDiv.classList.remove('d-none');
+                    otraComisionInput.setAttribute('name', 'nomcomision'); // sobreescribe el name original
+                    select.removeAttribute('name');
+                } else {
+                    otraComisionDiv.classList.add('d-none');
+                    otraComisionInput.removeAttribute('name');
+                    select.setAttribute('name', 'nomcomision'); // se restaura
+                }
+            });
+        });
+    </script>
 @endsection
