@@ -47,15 +47,15 @@ class CertificadoController extends Controller
 
             if ($junta && $junta->presidente && $junta->presidente->num_documento == $validated['num_documento']) {
                 $certificado = Certificado::create([
-                    'nombre_dignatario' => $junta->presidente->nombre,
-                    'comuna' => $junta->municipio->nombre_municipio,
-                    'nombre_junta' => $junta->nombre,
-                    'codigo_hash' => uniqid(),
-                    'resolucion' => $junta->personeria,
-                    'fecha_resolucion' => $junta->fecha_resolucion,
-                    'fecha_eleccion' => $junta->fecha_eleccion,
-                    'documento_dignario' => $junta->presidente->num_documento,
-                    'tipo' => 'Junta'
+                    'nombre_dignatario'   => $junta->presidente->nombre,
+                    'comuna'              => $junta->municipio->nombre_municipio,
+                    'nombre_junta'        => $junta->nombre,
+                    'codigo_hash'         => uniqid(),
+                    'resolucion'          => $junta->personeria ?: 'No Registra',
+                    'fecha_resolucion'    =>  date('Y-m-d'),
+                    'fecha_eleccion'      =>  date('Y-m-d'),
+                    'documento_dignario'  => $junta->presidente->num_documento,
+                    'tipo'              => 'Junta'
                 ]);
                 $config = Configuracion::first();
                 $pdf = PDF::loadView('certificados.certificado', compact('certificado','config'));
@@ -81,15 +81,15 @@ class CertificadoController extends Controller
             $asociacion = Asociacion::find($validated['asociacion_id']);
             if ($asociacion && $asociacion->presidente && $asociacion->presidente->num_documento == $validated['num_documentoAso']) {
                 $certificado = Certificado::create([
-                    'nombre_dignatario' => $asociacion->presidente->nombre,
-                    'comuna' => $asociacion->municipio->nombre_municipio,
-                    'nombre_junta' => $asociacion->nombre,
-                    'codigo_hash' => uniqid(),
-                    'resolucion' => $asociacion->personeria,
-                    'fecha_resolucion' => $asociacion->fecha_resolucion,
-                    'fecha_eleccion' => $asociacion->fecha_eleccion,
-                    'documento_dignario' => $asociacion->presidente->num_documento,
-                    'tipo' => 'Asociación'
+                    'nombre_dignatario'   => $asociacion->presidente->nombre,
+                    'comuna'              => $asociacion->municipio->nombre_municipio,
+                    'nombre_junta'        => $asociacion->nombre,
+                    'codigo_hash'         => uniqid(),
+                    'resolucion'          => $junta->personeria ?: 'No Registra',
+                    'fecha_resolucion'    =>  date('Y-m-d'),
+                    'fecha_eleccion'      =>  date('Y-m-d'),
+                    'documento_dignario'  => $asociacion->presidente->num_documento,
+                    'tipo'                => 'Asociación'
                 ]);
                 $config = Configuracion::first();
                 $pdf = PDF::loadView('certificados.certificado', compact('certificado','config'));
