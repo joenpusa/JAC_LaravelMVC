@@ -66,7 +66,7 @@ class Junta extends Model
 
     public function comisiones()
     {
-        return $this->morphMany(Comision::class, 'owner');
+        return $this->morphMany(Comision::class, 'owner')->orderBy('nomcomision');
     }
 
     public function autos()

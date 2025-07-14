@@ -60,6 +60,7 @@ class FuncionarioController extends Controller
              'grupo_etnico' => 'nullable',
              'email' => 'required|email',
              'fecha_nacimiento' => 'nullable|date',
+             'telefono' => 'nullable',
          ],[
             'num_documento.unique' => 'El número de documento ya está registrado.',
         ]);
@@ -111,6 +112,7 @@ class FuncionarioController extends Controller
             'grupo_etnico' => 'nullable',
             'email' => 'nullable|email',
             'fecha_nacimiento' => 'nullable|date',
+            'telefono' => 'nullable',
         ]);
 
         $funcionario->update($request->all());

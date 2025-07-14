@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Builder;
 
 class Municipio extends Model
 {
@@ -20,5 +21,14 @@ class Municipio extends Model
     public function comunas()
     {
         return $this->hasMany(Comuna::class);
+    }
+
+
+
+    protected static function booted()
+    {
+        static::addGlobalScope('ordered', function (Builder $builder) {
+            $builder->orderBy('nombre_municipio', 'asc');
+        });
     }
 }

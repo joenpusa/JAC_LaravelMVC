@@ -81,6 +81,11 @@
                         class="form-control">
                 </div>
                 <div class="mb-3 col-6">
+                    <label for="telefono">Telefono</label>
+                    <input type="text" name="telefono" value="{{ old('telefono', $funcionario->telefono ?? '') }}"
+                        class="form-control">
+                </div>
+                <div class="mb-3 col-6">
                     <label for="genero">Género</label>
                     <select name="genero" id="genero" class="form-select">
                         <option value="">Seleccione el género</option>

@@ -22,7 +22,8 @@ class Funcionario extends Model
         'discapacidad',
         'name_anexo',
         'key_anexo',
-        'fecha_nacimiento'
+        'fecha_nacimiento',
+        'telefono',
     ];
 
     public function juntas()

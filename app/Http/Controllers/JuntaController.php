@@ -82,6 +82,31 @@ class JuntaController extends Controller
             'comuna_id.exists' => 'la comuna debe estar registrada.',
             'municipio_id.exists' => 'El municipio debe estar registrado.',
         ]);
+        $funcionarios = [
+            $request->presidente_id,
+            $request->vicepresidente_id,
+            $request->secretario_id,
+            $request->tesorero_id,
+            $request->fiscal_id,
+        ];
+
+        // Filtra nulos
+        $funcionarios = array_filter($funcionarios);
+
+        // Consulta si alguno ya está asignado en otra junta
+        $existe = Junta::where(function ($query) use ($funcionarios) {
+            $query->whereIn('presidente_id', $funcionarios)
+                  ->orWhereIn('vicepresidente_id', $funcionarios)
+                  ->orWhereIn('secretario_id', $funcionarios)
+                  ->orWhereIn('tesorero_id', $funcionarios)
+                  ->orWhereIn('fiscal_id', $funcionarios);
+        })->exists();
+
+        if ($existe) {
+            return redirect()->back()
+                ->withInput()
+                ->withErrors(['funcionario' => 'Uno o más funcionarios ya están asignados en otra Junta.']);
+        }
         Junta::create($request->all());
         return redirect()->route('juntas.index')->with('success', 'JAC creada exitosamente.');
     }
@@ -121,6 +146,30 @@ class JuntaController extends Controller
      */
     public function update(Request $request, Junta $junta)
     {
+        $funcionarios = [
+            $request->presidente_id,
+            $request->vicepresidente_id,
+            $request->secretario_id,
+            $request->tesorero_id,
+            $request->fiscal_id,
+        ];
+
+        $funcionarios = array_filter($funcionarios);
+
+        $existe = Junta::where('id', '!=', $junta->id)
+            ->where(function ($query) use ($funcionarios) {
+                $query->whereIn('presidente_id', $funcionarios)
+                      ->orWhereIn('vicepresidente_id', $funcionarios)
+                      ->orWhereIn('secretario_id', $funcionarios)
+                      ->orWhereIn('tesorero_id', $funcionarios)
+                      ->orWhereIn('fiscal_id', $funcionarios);
+            })->exists();
+
+        if ($existe) {
+            return redirect()->back()
+                ->withInput()
+                ->withErrors(['funcionario' => 'Uno o más funcionarios ya están asignados en otra Junta.']);
+        }
         $junta->update($request->all());
         return redirect()->route('juntas.index')->with('success', 'Junta actualizada exitosamente.');
     }

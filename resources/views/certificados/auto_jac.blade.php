@@ -238,7 +238,6 @@
                     'DELEGADO SUPLEMENTE 3',
                     'DELEGADO PRINCIPAL 4',
                     'DELEGADO SUPLEMENTE 4',
-                    'EMPRESARIAL',
                 ];
                 $otrasComisiones = $owner->comisiones->filter(function ($comision) use ($cargos) {
                     return !in_array($comision->nomcomision, $cargos);
@@ -321,8 +320,9 @@
             Dado en San José de Cúcuta,
         </p>
         <center>
-            <img src="{{ public_path($config->keyfirma) }}" style="max-width: 220px; max-height: 120px;" />
-            <h4>{{ $config->nombre_secretario }}<br>{{ $config->secretaria }}</h4>
+            <img src="{{ public_path($config->keyfirma) }}"
+                style="max-width: 220px; max-height: 120px; margin-bottom: -20px;" />
+            <h4 style="margin: 0px;">{{ $config->nombre_secretario }}<br>{{ $config->secretaria }}</h4>
         </center>
     </div>
 </body>

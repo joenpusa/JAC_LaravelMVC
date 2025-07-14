@@ -19,7 +19,7 @@
         p {
             text-align: justify;
             font-size: 15px;
-            text-indent: -40px;
+            text-indent: 0px;
             padding-left: 40px;
 
         }
@@ -109,9 +109,10 @@
         <br>
         <br>
         <center>
-            <img src="{{ public_path($config->keyfirma) }}" style="max-width: 220px; max-height: 120px;" />
-            <h4>{{ $config->nombre_secretario }}</h4>
-            <h4>{{ $config->secretaria }}</h4>
+            <img src="{{ public_path($config->keyfirma) }}"
+                style="max-width: 220px; max-height: 120px; margin-bottom: -20px;" />
+            <h4 style="margin: 0px;">{{ $config->nombre_secretario }}</h4>
+            <h4 style="margin: 0px;">{{ $config->secretaria }}</h4>
         </center>
     </div>
 </body>

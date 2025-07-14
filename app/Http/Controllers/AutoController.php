@@ -36,7 +36,6 @@ class AutoController extends Controller
                 'DELEGADO PRINCIPAL 2',
                 'DELEGADO PRINCIPAL 3',
                 'DELEGADO PRINCIPAL 4',
-                'EMPRESARIAL',
             ];
         } else {
             $owner = Asociacion::find($request->owner_id);
@@ -55,7 +54,6 @@ class AutoController extends Controller
                 'DELEGADO SUPLEMENTE 3',
                 'DELEGADO PRINCIPAL 4',
                 'DELEGADO SUPLEMENTE 4',
-                'EMPRESARIAL',
             ];
         }
 
