@@ -85,7 +85,7 @@ class CertificadoController extends Controller
                     'comuna'              => $asociacion->municipio->nombre_municipio,
                     'nombre_junta'        => $asociacion->nombre,
                     'codigo_hash'         => uniqid(),
-                    'resolucion'          => $junta->personeria ?: 'No Registra',
+                    'resolucion'          => $asociacion->personeria ?: 'No Registra',
                     'fecha_resolucion'    =>  date('Y-m-d'),
                     'fecha_eleccion'      =>  date('Y-m-d'),
                     'documento_dignario'  => $asociacion->presidente->num_documento,

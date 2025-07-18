@@ -11,6 +11,7 @@ use App\Models\Junta;
 use App\Models\Asociacion;
 use ZipArchive;
 use App\Mail\JuntaArchivosMail;
+use App\Mail\AsociacionArchivosMail;
 use Illuminate\Support\Facades\Mail;
 
 
@@ -199,6 +200,53 @@ class DocumentoController extends Controller
     }
 
 
+    // public function descargarArchivosAso($asociacion_id, $num_documentoAso)
+    // {
+    //     $tempDir = storage_path('temp');
+    //     if (!is_dir($tempDir)) {
+    //         mkdir($tempDir, 0777, true);
+    //     }
+    //     putenv("TMPDIR=$tempDir");
+
+    //     // Validar que el número de documento pertenece al presidente de la asociacion
+    //     $asociacion = ASociacion::with('presidente')->find($asociacion_id);
+
+    //     if (!$asociacion || $asociacion->presidente->num_documento !== $num_documentoAso) {
+    //         return redirect()->back()->withErrors(['num_documentoAso' => 'El número de documento no coincide con el presidente de la asociación seleccionada.']);
+    //     }
+
+    //     // Buscar documentos asociados a la asociacion
+    //     $documentos = Documento::where('documentable_type', Asociacion::class)
+    //         ->where('documentable_id', $asociacion_id)
+    //         ->get();
+
+    //     if ($documentos->isEmpty()) {
+    //         return redirect()->back()->withErrors(['error' => 'No hay archivos adjuntos para esta asociación.']);
+    //     }
+
+    //     // Crear el nombre del archivo ZIP
+    //     $zip = new ZipArchive();
+    //     $zipFileName = "archivos_asociacion_{$asociacion_id}.zip";
+    //     $zipPath = $tempDir . '/' . $zipFileName;
+    //     if ($zip->open($zipPath, ZipArchive::CREATE | ZipArchive::OVERWRITE) === true) {
+    //         foreach ($documentos as $documento) {
+    //             $filePath = storage_path('app/public/' . $documento->keyanexo);
+    //             if (file_exists($filePath)) {
+    //                 $zip->addFile($filePath, basename($filePath));
+    //             } else {
+    //                 \Log::error("Archivo no encontrado: $filePath");
+    //             }
+    //         }
+    //         $zip->close();
+    //     } else {
+    //         \Log::error("No se pudo abrir el archivo ZIP: $zipPath");
+    //         return redirect()->back()->withErrors(['num_documento' => 'El número de documento no coincide con el presidente de la asociación seleccionada.']);
+    //     }
+
+    //     // Descargar el archivo ZIP
+    //     return response()->download($zipPath)->deleteFileAfterSend(true);
+    // }
+
     public function descargarArchivosAso($asociacion_id, $num_documentoAso)
     {
         $tempDir = storage_path('temp');
@@ -207,27 +255,25 @@ class DocumentoController extends Controller
         }
         putenv("TMPDIR=$tempDir");
 
-        // Validar que el número de documento pertenece al presidente de la asociacion
-        $asociacion = ASociacion::with('presidente')->find($asociacion_id);
+        $asociacion = Asociacion::with('presidente')->find($asociacion_id);
 
         if (!$asociacion || $asociacion->presidente->num_documento !== $num_documentoAso) {
-            return redirect()->back()->withErrors(['num_documentoAso' => 'El número de documento no coincide con el presidente de la asociación seleccionada.']);
+            return redirect()->back()->withErrors(['num_documento' => 'El número de documento no coincide con el presidente de la asociacion seleccionada.']);
         }
 
-        // Buscar documentos asociados a la asociacion
         $documentos = Documento::where('documentable_type', Asociacion::class)
             ->where('documentable_id', $asociacion_id)
             ->get();
 
         if ($documentos->isEmpty()) {
-            return redirect()->back()->withErrors(['error' => 'No hay archivos adjuntos para esta asociación.']);
+            return redirect()->back()->withErrors(['error' => 'No hay archivos adjuntos para esta asociacion.']);
         }
 
-        // Crear el nombre del archivo ZIP
-        $zip = new ZipArchive();
+        $zip = new \ZipArchive();
         $zipFileName = "archivos_asociacion_{$asociacion_id}.zip";
         $zipPath = $tempDir . '/' . $zipFileName;
-        if ($zip->open($zipPath, ZipArchive::CREATE | ZipArchive::OVERWRITE) === true) {
+
+        if ($zip->open($zipPath, \ZipArchive::CREATE | \ZipArchive::OVERWRITE) === true) {
             foreach ($documentos as $documento) {
                 $filePath = storage_path('app/public/' . $documento->keyanexo);
                 if (file_exists($filePath)) {
@@ -239,10 +285,18 @@ class DocumentoController extends Controller
             $zip->close();
         } else {
             \Log::error("No se pudo abrir el archivo ZIP: $zipPath");
-            return redirect()->back()->withErrors(['num_documento' => 'El número de documento no coincide con el presidente de la asociación seleccionada.']);
+            return redirect()->back()->with('error', 'No se pudo crear el archivo ZIP.');
         }
 
-        // Descargar el archivo ZIP
-        return response()->download($zipPath)->deleteFileAfterSend(true);
+        // Enviar correo con el ZIP adjunto
+        Mail::to($asociacion->presidente->email)->send(new AsociacionArchivosMail($asociacion, $zipPath));
+
+        // Eliminar archivo ZIP después de enviar
+        if (file_exists($zipPath)) {
+            unlink($zipPath);
+        }
+
+        return redirect()->back()->with('success', 'Archivos enviados correctamente al correo.');
     }
+
 }
