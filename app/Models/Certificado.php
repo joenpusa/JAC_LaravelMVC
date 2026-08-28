@@ -9,6 +9,8 @@ class Certificado extends Model
 {
     protected $fillable = [
         'nombre_dignatario',
+        'cargo',
+        'auto_numero',
         'comuna',
         'nombre_junta',
         'codigo_hash',

@@ -81,14 +81,24 @@
             <h3>HACE CONSTAR:</h3>
         </center>
         <br>
-        <p>
-            Que el(la) señor(a) <strong>{{ $certificado->nombre_dignatario }}</strong>, identificado(a) con la cédula de
-            ciudadanía No. <strong>{{ $certificado->documento_dignario }}</strong> esta registrado(a) como Representante
-            de
-            la {{ $certificado->tipo }} de Acción Cumunal <strong>{{ $certificado->nombre_junta }}</strong> de
-            <strong>{{ $certificado->comuna }} de Norte de Santander</strong>, con
-            personería:<strong>{{ $certificado->resolucion }}</strong>
+        <p style="text-align: justify; margin: 0px 40px; line-height: 2;">
+            Que, la Junta de Acción Comunal <strong>{{ $certificado->nombre_junta ?? '________' }}</strong>, 
+            del municipio de <strong>{{ $certificado->comuna ?? '________' }}</strong>, 
+            Departamento Norte de Santander, identificada con la personería jurídica No. 
+            <strong>{{ ($certificado->resolucion && $certificado->resolucion !== 'No Registra') ? $certificado->resolucion : '________' }}</strong>, 
+            se encuentra inscrita y registrada en esta secretaría, su 
+            <strong>{{ $certificado->cargo ?? 'PRESIDENTE' }}</strong> es 
+            <strong>{{ $certificado->nombre_dignatario ?? '________' }}</strong> 
+            identificado con cédula No. <strong>{{ $certificado->documento_dignario ?? '________' }}</strong> 
+            reconocido mediante el auto No. <strong>{{ $certificado->auto_numero ?? '________' }}</strong> 
+            para el periodo 01 de julio de 2026 al 30 de junio de 2030.
         </p>
+        <br>
+        <p style="text-align: justify; margin: 0px 40px; line-height: 2;">
+            La anterior se expide a solicitud de interesado.
+        </p>
+        <br>
+        <br>
         @php
             use Carbon\Carbon;
             function numeroEnLetras($numero)
@@ -103,16 +113,16 @@
             $mesNombre = $fecha->translatedFormat('F');
             $anio = $fecha->year;
         @endphp
-        <p>Se expide la presente a los {{ $diaEnLetras }} ({{ $diaConCero }}) días del mes de {{ $mesNombre }}
-            de
-            {{ $anio }}.</p>
+        <p style="margin: 0px 40px;">Dada en San José de Cúcuta a los {{ $diaEnLetras }} ({{ $diaConCero }}) días del mes de {{ $mesNombre }} de {{ $anio }}.</p>
         <br>
         <br>
         <center>
-            <img src="{{ public_path($config->keyfirma) }}"
-                style="max-width: 220px; max-height: 120px; margin-bottom: -20px;" />
-            <h4 style="margin: 0px;">{{ $config->nombre_secretario }}</h4>
-            <h4 style="margin: 0px;">{{ $config->secretaria }}</h4>
+            @if(isset($config) && $config->keyfirma)
+                <img src="{{ public_path($config->keyfirma) }}"
+                    style="max-width: 220px; max-height: 120px; margin-bottom: -20px;" />
+            @endif
+            <h4 style="margin: 0px;">{{ $config->nombre_secretario ?? 'Secretario(a) de Desarrollo Social' }}</h4>
+            <h4 style="margin: 0px;">{{ $config->secretaria ?? 'Secretaría de Desarrollo Social' }}</h4>
         </center>
     </div>
 </body>

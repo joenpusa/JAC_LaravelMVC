@@ -38,33 +38,41 @@ class CertificadoController extends Controller
         try {
             $validated = $request->validate([
                 'junta_id' => 'required|exists:juntas,id',
+                'cargo' => 'required|in:PRESIDENTE,VICEPRESIDENTE,SECRETARIO,TESORERO,FISCAL',
                 'num_documento' => 'required|numeric',
             ],[
                 'num_documento.numeric' => 'El documento debe ser numérico.',
                 'junta_id.exists' => 'La junta no fue encontrada.',
+                'cargo.required' => 'Debe seleccionar un cargo.',
+                'cargo.in' => 'El cargo seleccionado no es válido.',
             ]);
             $junta = Junta::find($validated['junta_id']);
 
-            if ($junta && $junta->presidente && $junta->presidente->num_documento == $validated['num_documento']) {
+            $relacionCargo = strtolower($validated['cargo']); // presidente, vicepresidente, etc.
+            $dignatario = $junta->{$relacionCargo};
+
+            if ($junta && $dignatario && $dignatario->num_documento == $validated['num_documento']) {
                 $certificado = Certificado::create([
-                    'nombre_dignatario'   => $junta->presidente->nombre,
+                    'nombre_dignatario'   => $dignatario->nombre,
+                    'cargo'               => $validated['cargo'],
+                    'auto_numero'         => $junta->auto_numero,
                     'comuna'              => $junta->municipio->nombre_municipio,
                     'nombre_junta'        => $junta->nombre,
                     'codigo_hash'         => uniqid(),
                     'resolucion'          => $junta->personeria ?: 'No Registra',
                     'fecha_resolucion'    =>  date('Y-m-d'),
                     'fecha_eleccion'      =>  date('Y-m-d'),
-                    'documento_dignario'  => $junta->presidente->num_documento,
+                    'documento_dignario'  => $dignatario->num_documento,
                     'tipo'              => 'Junta'
                 ]);
                 $config = Configuracion::first();
                 $pdf = PDF::loadView('certificados.certificado', compact('certificado','config'));
                 return $pdf->download('certificado.pdf');
             } else {
-                return redirect()->back()->withErrors(['num_documento' => 'El número de documento no coincide con el presidente de la junta seleccionada.']);
+                return redirect()->back()->withErrors(['num_documento' => 'El número de documento no coincide con el ' . strtolower($validated['cargo']) . ' de la junta seleccionada.']);
             }
         }catch(\Exception $e){
-            return redirect()->back()->withErrors('error', 'Ocurrió un error al procesar su solicitud.');
+            return redirect()->back()->withErrors(['error' => 'Ocurrió un error al procesar su solicitud.']);
         }
     }
 
