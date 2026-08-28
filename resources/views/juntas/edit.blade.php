@@ -46,17 +46,17 @@
                 <div class="mb-3 col-6">
                     <label for="resolucion">Resolución</label>
                     <input type="text" name="resolucion" value="{{ old('resolucion', $junta->resolucion ?? '') }}"
-                        class="form-control" required readonly>
+                        class="form-control" readonly>
                 </div>
                 <div class="mb-3 col-6">
                     <label for="personeria">Personeria</label>
                     <input type="text" name="personeria" value="{{ old('personeria', $junta->personeria ?? '') }}"
-                        class="form-control" required readonly>
+                        class="form-control" readonly>
                 </div>
                 <div class="mb-3 col-6">
                     <label for="fecha_resolucion">Fecha resolución</label>
                     <input type="date" name="fecha_resolucion"
-                        value="{{ old('fecha_resolucion', $junta->fecha_resolucion ?? '') }}" class="form-control" required
+                        value="{{ old('fecha_resolucion', $junta->fecha_resolucion ?? '') }}" class="form-control"
                         readonly>
                 </div>
                 <div class="col-12">
@@ -66,7 +66,7 @@
                 <div class="mb-3 col-6">
                     <label for="fecha_eleccion">Fecha elección</label>
                     <input type="date" name="fecha_eleccion"
-                        value="{{ old('fecha_eleccion', $junta->fecha_eleccion ?? '') }}" class="form-control" required>
+                        value="{{ old('fecha_eleccion', $junta->fecha_eleccion ?? '') }}" class="form-control">
                 </div>
                 <div class="mb-3 col-6">
                     <label for="municipio">Municipio</label>
@@ -78,10 +78,43 @@
                         @endforeach
                     </select>
                 </div>
+
+                <div class="mb-3 col-6">
+                    <label for="auto_numero">Auto No.</label>
+                    <input type="text" name="auto_numero" value="{{ old('auto_numero', $junta->auto_numero ?? '') }}" class="form-control">
+                </div>
+                <div class="mb-3 col-6">
+                    <label for="tipo_auto">Tipo Auto</label>
+                    <input type="text" name="tipo_auto" value="{{ old('tipo_auto', $junta->tipo_auto ?? '') }}" class="form-control">
+                </div>
+                <div class="mb-3 col-6">
+                    <label for="fecha_auto">Fecha Auto</label>
+                    <input type="date" name="fecha_auto" value="{{ old('fecha_auto', $junta->fecha_auto ?? '') }}" class="form-control">
+                </div>
+                <div class="mb-3 col-6">
+                    <label for="fecha_inicio_periodo">Fecha Inicio Periodo</label>
+                    <input type="date" name="fecha_inicio_periodo" value="{{ old('fecha_inicio_periodo', $junta->fecha_inicio_periodo ?? '') }}" class="form-control">
+                </div>
+                <div class="mb-3 col-6">
+                    <label for="fecha_final_periodo">Fecha Final Periodo</label>
+                    <input type="date" name="fecha_final_periodo" value="{{ old('fecha_final_periodo', $junta->fecha_final_periodo ?? '') }}" class="form-control">
+                </div>
+                <div class="mb-3 col-6">
+                    <label for="tipo_oac">Tipo O.A.C.</label>
+                    <input type="text" name="tipo_oac" value="{{ old('tipo_oac', $junta->tipo_oac ?? '') }}" class="form-control">
+                </div>
+                <div class="mb-3 col-6">
+                    <label for="zona">Zona</label>
+                    <select name="zona" id="zona" class="form-select">
+                        <option value="">Seleccione zona</option>
+                        <option value="URBANA" {{ old('zona', $junta->zona ?? '') == 'URBANA' ? 'selected' : '' }}>URBANA</option>
+                        <option value="RURAL" {{ old('zona', $junta->zona ?? '') == 'RURAL' ? 'selected' : '' }}>RURAL</option>
+                    </select>
+                </div>
                 <!-- Select para Presidente -->
                 <div class="mb-3">
                     <label for="presidente">Presidente</label>
-                    <select name="presidente_id" id="presidente" class="form-select select2" style="width: 100%" required>
+                    <select name="presidente_id" id="presidente" class="form-select select2" style="width: 100%">
                         <option value="">Seleccione el presidente</option>
                         @foreach ($funcionarios as $funcionario)
                             <option value="{{ $funcionario->id }}"

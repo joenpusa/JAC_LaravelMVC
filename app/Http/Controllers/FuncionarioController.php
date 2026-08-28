@@ -167,4 +167,21 @@ class FuncionarioController extends Controller
 
         return redirect()->back()->with('success', 'Documento cargado correctamente.');
     }
+
+    public function import(Request $request)
+    {
+        $request->validate([
+            'file' => 'required|mimes:xlsx,xls,csv,txt|max:5120',
+        ],[
+            'file.required' => 'El archivo es requerido.',
+            'file.mimes' => 'El archivo debe ser un Excel (.xlsx, .xls) o CSV (.csv).',
+        ]);
+
+        try {
+            \Maatwebsite\Excel\Facades\Excel::import(new \App\Imports\FuncionariosImport, $request->file('file'));
+            return redirect()->route('funcionarios.index')->with('success', 'Funcionarios importados exitosamente.');
+        } catch (\Exception $e) {
+            return redirect()->route('funcionarios.index')->with('error', 'Error al importar los datos: ' . $e->getMessage());
+        }
+    }
 }

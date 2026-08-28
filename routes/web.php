@@ -31,6 +31,7 @@ Route::middleware(['auth'])->group(function () {
     //Rutas protegidas por autenticacion
     Route::resource('funcionarios', FuncionarioController::class);
     Route::get('/juntas/export', [JuntaController::class, 'export'])->name('juntas.export');
+    Route::post('/juntas/import', [JuntaController::class, 'import'])->name('juntas.import');
     Route::resource('juntas', JuntaController::class);
 
 
@@ -59,4 +60,5 @@ Route::middleware(['auth'])->group(function () {
 
     //rutas de eventos ajax
     Route::put('/funcionario/upload', [FuncionarioController::class, 'upload'])->name('funcionario.upload');
+    Route::post('/funcionario/import', [FuncionarioController::class, 'import'])->name('funcionarios.import');
 });

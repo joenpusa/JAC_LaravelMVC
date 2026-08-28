@@ -63,16 +63,23 @@ class JuntaController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'presidente_id' => 'required|exists:funcionarios,id',
+            'presidente_id' => 'nullable|exists:funcionarios,id',
             'secretario_id' => 'nullable|exists:funcionarios,id',
             'vicepresidente_id' => 'nullable|exists:funcionarios,id',
             'tesorero_id' => 'nullable|exists:funcionarios,id',
             'fiscal_id' => 'nullable|exists:funcionarios,id',
             'comuna_id' => 'nullable|exists:comunas,id',
             'municipio_id' => 'required|exists:municipios,id',
-            'personeria' => 'required|string|max:255',
+            'personeria' => 'nullable|string|max:255',
             'nombre' => 'required|string|max:255',
             'resolucion' => 'nullable|string|max:255',
+            'auto_numero' => 'nullable|string|max:255',
+            'tipo_auto' => 'nullable|string|max:255',
+            'fecha_auto' => 'nullable|date',
+            'fecha_inicio_periodo' => 'nullable|date',
+            'fecha_final_periodo' => 'nullable|date',
+            'tipo_oac' => 'nullable|string|max:255',
+            'zona' => 'nullable|string|max:255',
         ], [
             'presidente_id.exists' => 'El presidente debe ser un funcionario registrado.',
             'secretario_id.exists' => 'El secretario debe ser un funcionario registrado.',
@@ -237,5 +244,20 @@ class JuntaController extends Controller
         return response()->download($tempFile, $filename)->deleteFileAfterSend(true);
     }
 
+    public function import(Request $request)
+    {
+        $request->validate([
+            'file' => 'required|mimes:xlsx,xls,csv,txt|max:5120',
+        ],[
+            'file.required' => 'El archivo es requerido.',
+            'file.mimes' => 'El archivo debe ser un Excel (.xlsx, .xls) o CSV (.csv).',
+        ]);
 
+        try {
+            \Maatwebsite\Excel\Facades\Excel::import(new \App\Imports\JuntasImport, $request->file('file'));
+            return redirect()->route('juntas.index')->with('success', 'Juntas importadas exitosamente.');
+        } catch (\Exception $e) {
+            return redirect()->route('juntas.index')->with('error', 'Error al importar los datos: ' . $e->getMessage());
+        }
+    }
 }

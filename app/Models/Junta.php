@@ -21,7 +21,14 @@ class Junta extends Model
         'nomanexo',
         'keyanexo',
         'municipio_id',
-        'personeria'
+        'personeria',
+        'auto_numero',
+        'tipo_auto',
+        'fecha_auto',
+        'fecha_inicio_periodo',
+        'fecha_final_periodo',
+        'tipo_oac',
+        'zona'
     ];
 
     public function presidente()
