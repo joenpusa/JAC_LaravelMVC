@@ -115,7 +115,10 @@
         @endphp
         <p style="margin: 0px 40px;">Dada en San José de Cúcuta a los {{ $diaEnLetras }} ({{ $diaConCero }}) días del mes de {{ $mesNombre }} de {{ $anio }}.</p>
         <br>
-        <br>
+        <p style="text-align: justify; margin: 0px 40px; line-height: 2;">
+            Nota: El número de certificado corresponde a la firma y autenticación de la constancia.
+        </p>
+        <!-- <br>
         <center>
             @if(isset($config) && $config->keyfirma)
                 <img src="{{ public_path($config->keyfirma) }}"
@@ -123,7 +126,7 @@
             @endif
             <h4 style="margin: 0px;">{{ $config->nombre_secretario ?? 'Secretario(a) de Desarrollo Social' }}</h4>
             <h4 style="margin: 0px;">{{ $config->secretaria ?? 'Secretaría de Desarrollo Social' }}</h4>
-        </center>
+        </center> -->
     </div>
 </body>
 
