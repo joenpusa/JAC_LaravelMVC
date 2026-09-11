@@ -10,6 +10,8 @@ use Illuminate\Http\Request;
 use Maatwebsite\Excel\Facades\Excel;
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
+use PhpOffice\PhpSpreadsheet\Cell\Coordinate;
+use PhpOffice\PhpSpreadsheet\Style\Fill;
 use Illuminate\Support\Facades\Response;
 use Illuminate\Support\Str;
 
@@ -201,15 +203,23 @@ class JuntaController extends Controller
 
     public function export(Request $request)
     {
-        // dd($request->all());
         $municipioId = $request->input('municipio_id');
 
-        $query = \App\Models\Junta::with(['municipio', 'presidente']);
+        $query = Junta::with([
+            'municipio',
+            'comuna',
+            'presidente',
+            'vicepresidente',
+            'secretario',
+            'tesorero',
+            'fiscal',
+            'comisiones'
+        ]);
 
         if ($municipioId !== 'all') {
             $query->where('municipio_id', $municipioId);
-            $municipio = \App\Models\Municipio::find($municipioId);
-            $filename = 'juntas_' . Str::slug($municipio->nombre_municipio) . '.xlsx';
+            $municipio = Municipio::find($municipioId);
+            $filename = 'juntas_' . Str::slug($municipio->nombre_municipio ?? 'municipio') . '.xlsx';
         } else {
             $filename = 'juntas_todos_los_municipios.xlsx';
         }
@@ -219,21 +229,141 @@ class JuntaController extends Controller
         $spreadsheet = new Spreadsheet();
         $sheet = $spreadsheet->getActiveSheet();
 
-        // Encabezados
-        $sheet->fromArray([
-            ['Municipio', 'Razón Social', 'Resolución', 'Presidente', 'Dirección', 'Email']
-        ], null, 'A1');
+        // Encabezados completos: Junta y Dignatarios
+        $headers = [
+            'Municipio',
+            'Comuna',
+            'Razón Social',
+            'Resolución',
+            'Fecha Resolución',
+            'Personería Jurídica',
+            'Tipo O.A.C.',
+            'Zona',
+            'Fecha Elección',
+            'Fecha Inicio Periodo',
+            'Fecha Final Periodo',
+            'Auto No.',
+            'Tipo Auto',
+            'Fecha Auto',
 
-        // Datos
-        $row = 2;
+            'Presidente - Tipo Documento',
+            'Presidente - No. Documento',
+            'Presidente - Nombre',
+            'Presidente - Teléfono',
+            'Presidente - Email',
+            'Presidente - Dirección',
+            'Presidente - Profesión',
+            'Presidente - Género',
+
+            'Vicepresidente - Tipo Documento',
+            'Vicepresidente - No. Documento',
+            'Vicepresidente - Nombre',
+            'Vicepresidente - Teléfono',
+            'Vicepresidente - Email',
+            'Vicepresidente - Dirección',
+            'Vicepresidente - Profesión',
+            'Vicepresidente - Género',
+
+            'Secretario - Tipo Documento',
+            'Secretario - No. Documento',
+            'Secretario - Nombre',
+            'Secretario - Teléfono',
+            'Secretario - Email',
+            'Secretario - Dirección',
+            'Secretario - Profesión',
+            'Secretario - Género',
+
+            'Tesorero - Tipo Documento',
+            'Tesorero - No. Documento',
+            'Tesorero - Nombre',
+            'Tesorero - Teléfono',
+            'Tesorero - Email',
+            'Tesorero - Dirección',
+            'Tesorero - Profesión',
+            'Tesorero - Género',
+
+            'Fiscal - Tipo Documento',
+            'Fiscal - No. Documento',
+            'Fiscal - Nombre',
+            'Fiscal - Teléfono',
+            'Fiscal - Email',
+            'Fiscal - Dirección',
+            'Fiscal - Profesión',
+            'Fiscal - Género',
+
+            'Comisionados',
+        ];
+
+        $extractDignatario = function ($funcionario) {
+            if (!$funcionario) {
+                return ['', '', '', '', '', '', '', ''];
+            }
+            return [
+                $funcionario->tipo_documento ?? '',
+                $funcionario->num_documento ?? '',
+                $funcionario->nombre ?? '',
+                $funcionario->telefono ?? '',
+                $funcionario->email ?? '',
+                $funcionario->direccion ?? '',
+                $funcionario->profesion ?? '',
+                $funcionario->genero ?? '',
+            ];
+        };
+
+        $rows = [$headers];
+
         foreach ($juntas as $junta) {
-            $sheet->setCellValue("A{$row}", $junta->municipio->nombre_municipio ?? 'N/A');
-            $sheet->setCellValue("B{$row}", $junta->nombre);
-            $sheet->setCellValue("C{$row}", $junta->resolucion);
-            $sheet->setCellValue("D{$row}", $junta->presidente->nombre ?? 'N/A');
-            $sheet->setCellValue("E{$row}", $junta->presidente->direccion ?? 'N/A');
-            $sheet->setCellValue("F{$row}", $junta->presidente->email ?? 'N/A');
-            $row++;
+            $comisionados = $junta->comisiones->isNotEmpty()
+                ? $junta->comisiones->map(function ($c) {
+                    return "{$c->nomcomision}: {$c->nomcomisionado} ({$c->doccomisionado})";
+                })->implode(' | ')
+                : '';
+
+            $rows[] = array_merge(
+                [
+                    $junta->municipio->nombre_municipio ?? 'N/A',
+                    $junta->comuna->nombre_comuna ?? '',
+                    $junta->nombre ?? '',
+                    $junta->resolucion ?? '',
+                    $junta->fecha_resolucion ?? '',
+                    $junta->personeria ?? '',
+                    $junta->tipo_oac ?? '',
+                    $junta->zona ?? '',
+                    $junta->fecha_eleccion ?? '',
+                    $junta->fecha_inicio_periodo ?? '',
+                    $junta->fecha_final_periodo ?? '',
+                    $junta->auto_numero ?? '',
+                    $junta->tipo_auto ?? '',
+                    $junta->fecha_auto ?? '',
+                ],
+                $extractDignatario($junta->presidente),
+                $extractDignatario($junta->vicepresidente),
+                $extractDignatario($junta->secretario),
+                $extractDignatario($junta->tesorero),
+                $extractDignatario($junta->fiscal),
+                [
+                    $comisionados,
+                ]
+            );
+        }
+
+        $sheet->fromArray($rows, null, 'A1');
+
+        $highestColumn = $sheet->getHighestDataColumn();
+
+        // Estilos para encabezado
+        $sheet->getStyle("A1:{$highestColumn}1")->getFont()->setBold(true);
+        $sheet->getStyle("A1:{$highestColumn}1")->getFill()
+            ->setFillType(Fill::FILL_SOLID)
+            ->getStartColor()->setARGB('FFEFEFEF');
+
+        // Congelar fila de encabezados
+        $sheet->freezePane('A2');
+
+        // Autoajuste del ancho de columnas
+        $highestColumnIndex = Coordinate::columnIndexFromString($highestColumn);
+        for ($col = 1; $col <= $highestColumnIndex; $col++) {
+            $sheet->getColumnDimensionByColumn($col)->setAutoSize(true);
         }
 
         // Crear archivo temporal

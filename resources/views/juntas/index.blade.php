@@ -104,6 +104,10 @@
                                 @endforeach
                             </select>
                         </div>
+                        <p class="text-muted small mb-0">
+                            <i class="fas fa-info-circle me-1"></i>
+                            El archivo Excel generado incluirá toda la información de cada junta (datos básicos, fechas, autos, período) y la información completa de sus dignatarios (Presidente, Vicepresidente, Secretario, Tesorero, Fiscal y Comisionados).
+                        </p>
                     </div>
                     <div class="modal-footer">
                         <button type="submit" class="btn btn-success">Descargar Excel</button>

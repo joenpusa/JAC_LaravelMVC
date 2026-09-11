@@ -41,23 +41,22 @@
                 <div class="mb-3 col-6">
                     <label for="nombre">Razón social</label>
                     <input type="text" name="nombre" value="{{ old('nombre', $junta->nombre ?? '') }}"
-                        class="form-control" required readonly>
+                        class="form-control" required>
                 </div>
                 <div class="mb-3 col-6">
                     <label for="resolucion">Resolución</label>
                     <input type="text" name="resolucion" value="{{ old('resolucion', $junta->resolucion ?? '') }}"
-                        class="form-control" readonly>
+                        class="form-control">
                 </div>
                 <div class="mb-3 col-6">
                     <label for="personeria">Personeria</label>
                     <input type="text" name="personeria" value="{{ old('personeria', $junta->personeria ?? '') }}"
-                        class="form-control" readonly>
+                        class="form-control">
                 </div>
                 <div class="mb-3 col-6">
                     <label for="fecha_resolucion">Fecha resolución</label>
                     <input type="date" name="fecha_resolucion"
-                        value="{{ old('fecha_resolucion', $junta->fecha_resolucion ?? '') }}" class="form-control"
-                        readonly>
+                        value="{{ old('fecha_resolucion', $junta->fecha_resolucion ?? '') }}" class="form-control">
                 </div>
                 <div class="col-12">
                     <h4>Dignatarios y Comisionados</h4>
