@@ -54,6 +54,8 @@ class JuntasImport implements ToModel, WithHeadingRow
             'fiscal_id' => $getFuncionarioId($row['documento_fiscal'] ?? null),
             'municipio_id' => $municipio->id,
             'personeria' => $row['personeria_juridica_no'] ?? null,
+            'res_personeria_juridica' => $row['res_personeria_juridica'] ?? $row['res_personeria_juridica_no'] ?? null,
+            'fecha_res_personeria_juridica' => $parseDate($row['fecha_res_personeria_juridica'] ?? null),
             'auto_numero' => $row['auto_no'] ?? null,
             'tipo_auto' => $row['tipo_auto'] ?? null,
             'fecha_auto' => $parseDate($row['fecha_auto'] ?? null),

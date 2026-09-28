@@ -11,6 +11,8 @@ class Junta extends Model
         'nombre',
         'resolucion',
         'fecha_resolucion',
+        'res_personeria_juridica',
+        'fecha_res_personeria_juridica',
         'fecha_eleccion',
         'presidente_id',
         'vicepresidente_id',

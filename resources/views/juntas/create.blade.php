@@ -45,6 +45,18 @@
                     <input type="date" name="fecha_resolucion"
                         value="{{ old('fecha_resolucion', $junta->fecha_resolucion ?? '') }}" class="form-control">
                 </div>
+                <div class="mb-3 col-6">
+                    <label for="res_personeria_juridica">Res. Personeria Juridica</label>
+                    <input type="text" name="res_personeria_juridica" id="res_personeria_juridica"
+                        value="{{ old('res_personeria_juridica', $junta->res_personeria_juridica ?? '') }}"
+                        class="form-control">
+                </div>
+                <div class="mb-3 col-6">
+                    <label for="fecha_res_personeria_juridica">Fecha Res. Personeria Juridica</label>
+                    <input type="date" name="fecha_res_personeria_juridica" id="fecha_res_personeria_juridica"
+                        value="{{ old('fecha_res_personeria_juridica', $junta->fecha_res_personeria_juridica ?? '') }}"
+                        class="form-control">
+                </div>
 
                 <div class="col-12">
                     <h4>Dignatarios y Comisionados</h4>
