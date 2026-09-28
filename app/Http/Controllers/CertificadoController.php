@@ -124,14 +124,36 @@ class CertificadoController extends Controller
                 ->where('codigo_hash', $request->cod_certificado)
                 ->first();
             if (!$certificado) {
-                return redirect()->back()->withErrors(['error' => 'El certificado no es válido.']);
+                return redirect()->back()
+                    ->withInput()
+                    ->withErrors(['error' => 'El certificado no es válido o los datos no coinciden con nuestros registros.'])
+                    ->with('tab', 'validate');
             }
 
             // Actualizar el campo 'verificado' a 'Si'
             $certificado->update(['verificado' => 'Si']);
-            return redirect()->back()->with('success', 'Certificado encontrado con éxito.');
+
+            $fecha = \Carbon\Carbon::parse($certificado->created_at)->format('d/m/Y');
+            $tipo = $certificado->tipo === 'Asociación' ? 'Asociación de Juntas' : 'Junta de Acción Comunal';
+            $mensaje = "Certificado verificado con éxito. Fue generado el {$fecha} para la {$tipo} \"{$certificado->nombre_junta}\".";
+
+            return redirect()->back()
+                ->with('success', $mensaje)
+                ->with('certificado_validado', [
+                    'codigo'     => $certificado->codigo_hash,
+                    'fecha'      => $fecha,
+                    'tipo'       => $tipo,
+                    'nombre'     => $certificado->nombre_junta,
+                    'municipio'  => $certificado->comuna,
+                    'cargo'      => $certificado->cargo,
+                    'resolucion' => ($certificado->resolucion && $certificado->resolucion !== 'No Registra') ? $certificado->resolucion : null,
+                ])
+                ->with('tab', 'validate');
         }catch(\Exception $e){
-            return redirect()->back()->withErrors('error', 'Ocurrió un error al procesar su solicitud.');
+            return redirect()->back()
+                ->withInput()
+                ->withErrors(['error' => 'Ocurrió un error al procesar su solicitud.'])
+                ->with('tab', 'validate');
         }
     }
 }
