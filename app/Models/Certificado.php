@@ -15,6 +15,8 @@ class Certificado extends Model
         'nombre_junta',
         'codigo_hash',
         'resolucion',
+        'res_personeria_juridica',
+        'fecha_res_personeria_juridica',
         'fecha_resolucion',
         'fecha_eleccion',
         'documento_dignario',

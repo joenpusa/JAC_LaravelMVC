@@ -53,20 +53,22 @@ class CertificadoController extends Controller
 
             if ($junta && $dignatario && $dignatario->num_documento == $validated['num_documento']) {
                 $certificado = Certificado::create([
-                    'nombre_dignatario'   => $dignatario->nombre,
-                    'cargo'               => $validated['cargo'],
-                    'auto_numero'         => $junta->auto_numero,
-                    'comuna'              => $junta->municipio->nombre_municipio,
-                    'nombre_junta'        => $junta->nombre,
-                    'codigo_hash'         => uniqid(),
-                    'resolucion'          => $junta->personeria ?: 'No Registra',
-                    'fecha_resolucion'    =>  date('Y-m-d'),
-                    'fecha_eleccion'      =>  date('Y-m-d'),
-                    'documento_dignario'  => $dignatario->num_documento,
-                    'tipo'              => 'Junta'
+                    'nombre_dignatario'             => $dignatario->nombre,
+                    'cargo'                         => $validated['cargo'],
+                    'auto_numero'                   => $junta->auto_numero,
+                    'comuna'                        => $junta->municipio->nombre_municipio,
+                    'nombre_junta'                  => $junta->nombre,
+                    'codigo_hash'                   => uniqid(),
+                    'resolucion'                    => $junta->personeria ?: 'No Registra',
+                    'res_personeria_juridica'       => $junta->res_personeria_juridica ?? null,
+                    'fecha_res_personeria_juridica' => $junta->fecha_res_personeria_juridica ?? null,
+                    'fecha_resolucion'              => date('Y-m-d'),
+                    'fecha_eleccion'                => date('Y-m-d'),
+                    'documento_dignario'            => $dignatario->num_documento,
+                    'tipo'                          => 'Junta'
                 ]);
                 $config = Configuracion::first();
-                $pdf = PDF::loadView('certificados.certificado', compact('certificado','config'));
+                $pdf = PDF::loadView('certificados.certificado', compact('certificado','config','junta'));
                 return $pdf->download('certificado.pdf');
             } else {
                 return redirect()->back()->withErrors(['num_documento' => 'El número de documento no coincide con el ' . strtolower($validated['cargo']) . ' de la junta seleccionada.']);

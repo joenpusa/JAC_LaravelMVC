@@ -81,11 +81,24 @@
             <h3>HACE CONSTAR:</h3>
         </center>
         <br>
+        @php
+            $resPersoneria = $certificado->res_personeria_juridica ?? ($junta->res_personeria_juridica ?? null);
+            $fechaResPersoneriaRaw = $certificado->fecha_res_personeria_juridica ?? ($junta->fecha_res_personeria_juridica ?? null);
+            $fechaResPersoneria = null;
+            if (!empty($fechaResPersoneriaRaw)) {
+                try {
+                    $fechaResPersoneria = \Carbon\Carbon::parse($fechaResPersoneriaRaw)->format('d/m/Y');
+                } catch (\Exception $e) {
+                    $fechaResPersoneria = $fechaResPersoneriaRaw;
+                }
+            }
+        @endphp
         <p style="text-align: justify; margin: 0px 40px; line-height: 2;">
             Que, la Junta de Acción Comunal <strong>{{ $certificado->nombre_junta ?? '________' }}</strong>, 
             del municipio de <strong>{{ $certificado->comuna ?? '________' }}</strong>, 
             Departamento Norte de Santander, identificada con la personería jurídica No. 
-            <strong>{{ ($certificado->resolucion && $certificado->resolucion !== 'No Registra') ? $certificado->resolucion : '________' }}</strong>, 
+            <strong>{{ ($certificado->resolucion && $certificado->resolucion !== 'No Registra') ? $certificado->resolucion : '________' }}</strong>,
+            expedida mediante resolución No. <strong>{{ !empty($resPersoneria) ? $resPersoneria : '________' }}</strong> del <strong>{{ !empty($fechaResPersoneria) ? $fechaResPersoneria : '________' }}</strong>, 
             se encuentra inscrita y registrada en esta secretaría, su 
             <strong>{{ $certificado->cargo ?? 'PRESIDENTE' }}</strong> es 
             <strong>{{ $certificado->nombre_dignatario ?? '________' }}</strong> 
@@ -101,10 +114,12 @@
         <br>
         @php
             use Carbon\Carbon;
-            function numeroEnLetras($numero)
-            {
-                $formatter = new NumberFormatter('es', NumberFormatter::SPELLOUT);
-                return $formatter->format($numero);
+            if (!function_exists('numeroEnLetras')) {
+                function numeroEnLetras($numero)
+                {
+                    $formatter = new NumberFormatter('es', NumberFormatter::SPELLOUT);
+                    return $formatter->format($numero);
+                }
             }
             $fecha = Carbon::parse($certificado->created_at);
             $dia = $fecha->day;
