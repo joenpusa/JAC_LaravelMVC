@@ -11,6 +11,8 @@ class Asociacion extends Model
         'nombre',
         'resolucion',
         'fecha_resolucion',
+        'res_personeria_juridica',
+        'fecha_res_personeria_juridica',
         'fecha_eleccion',
         'presidente_id',
         'vicepresidente_id',
@@ -18,10 +20,17 @@ class Asociacion extends Model
         'tesorero_id',
         'fiscal_id',
         'comuna_id',
-        'municipio_id',
-        'personeria',
         'nomanexo',
         'keyanexo',
+        'municipio_id',
+        'personeria',
+        'auto_numero',
+        'tipo_auto',
+        'fecha_auto',
+        'fecha_inicio_periodo',
+        'fecha_final_periodo',
+        'tipo_oac',
+        'zona'
     ];
 
     protected $table = 'asociaciones';

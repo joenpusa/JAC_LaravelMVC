@@ -64,10 +64,12 @@
     </div>
     @php
         use Carbon\Carbon;
-        function numeroEnLetras($numero)
-        {
-            $formatter = new NumberFormatter('es', NumberFormatter::SPELLOUT);
-            return $formatter->format($numero);
+        if (!function_exists('numeroEnLetras')) {
+            function numeroEnLetras($numero)
+            {
+                $formatter = new NumberFormatter('es', NumberFormatter::SPELLOUT);
+                return $formatter->format($numero);
+            }
         }
         $fecha = Carbon::parse($auto->created_at);
         $dia = $fecha->day;
@@ -90,8 +92,8 @@
         </center>
         <p>
             Que la Asociación de Acción Comunal <strong>{{ $owner->nombre }}</strong>, Municipio
-            <strong>{{ $owner->municipio->nombre_municipio }}</strong>, Departamento Norte de Santander, con
-            personeria jurídica No. <strong>{{ $owner->personeria }}</strong>, realizo asamblea con el fin de elegir
+            <strong>{{ $owner->municipio->nombre_municipio ?? 'N/A' }}</strong>, Departamento Norte de Santander, con
+            personeria jurídica No. <strong>{{ $owner->personeria ?? 'No Registra' }}</strong>, realizo asamblea con el fin de elegir
             parcialmente dignatarios para el periodo 1 de julio de 2024 al 30 de junio de 2026.
         </p>
         <p>
@@ -102,7 +104,7 @@
             <strong>RESUELVE</strong>
         </center>
         <p>Inscribir los dignatarios de la asociación de Acción Comunal <strong>{{ $owner->nombre }}</strong>, Municipio
-            <strong>{{ $owner->municipio->nombre_municipio }}</strong>, Departamento Norte de Santander. Para el
+            <strong>{{ $owner->municipio->nombre_municipio ?? 'N/A' }}</strong>, Departamento Norte de Santander. Para el
             periodo 1 de julio de 2024 al 30 de junio de 2026.
         </p>
         <p><strong>DIRECTIVA</strong></p>
@@ -112,10 +114,10 @@
                     <strong>PRESIDENTE</strong>
                 </td>
                 <td style="width: 50%">
-                    {{ $owner->presidente->nombre }}
+                    {{ $owner->presidente->nombre ?? 'Sin asignar' }}
                 </td>
                 <td style="width: 25%">
-                    {{ $owner->presidente->num_documento }}
+                    {{ $owner->presidente->num_documento ?? '' }}
                 </td>
             </tr>
             <tr>
@@ -123,10 +125,10 @@
                     <strong>VICEPRESIDENTE</strong>
                 </td>
                 <td style="width: 50%">
-                    {{ $owner->vicepresidente->nombre }}
+                    {{ $owner->vicepresidente->nombre ?? 'Sin asignar' }}
                 </td>
                 <td style="width: 25%">
-                    {{ $owner->vicepresidente->num_documento }}
+                    {{ $owner->vicepresidente->num_documento ?? '' }}
                 </td>
             </tr>
             <tr>
@@ -134,10 +136,10 @@
                     <strong>TESORERO</strong>
                 </td>
                 <td style="width: 50%">
-                    {{ $owner->tesorero->nombre }}
+                    {{ $owner->tesorero->nombre ?? 'Sin asignar' }}
                 </td>
                 <td style="width: 25%">
-                    {{ $owner->tesorero->num_documento }}
+                    {{ $owner->tesorero->num_documento ?? '' }}
                 </td>
             </tr>
             <tr>
@@ -145,10 +147,10 @@
                     <strong>SECRETARIO</strong>
                 </td>
                 <td style="width: 50%">
-                    {{ $owner->secretario->nombre }}
+                    {{ $owner->secretario->nombre ?? 'Sin asignar' }}
                 </td>
                 <td style="width: 25%">
-                    {{ $owner->secretario->num_documento }}
+                    {{ $owner->secretario->num_documento ?? '' }}
                 </td>
             </tr>
         </table>
@@ -159,10 +161,10 @@
                     <strong>FISCAL</strong>
                 </td>
                 <td style="width: 50%">
-                    {{ $owner->fiscal->nombre }}
+                    {{ $owner->fiscal->nombre ?? 'Sin asignar' }}
                 </td>
                 <td style="width: 25%">
-                    {{ $owner->fiscal->num_documento }}
+                    {{ $owner->fiscal->num_documento ?? '' }}
                 </td>
             </tr>
             <tr>

@@ -82,8 +82,10 @@
         </center>
         <br>
         @php
-            $resPersoneria = $certificado->res_personeria_juridica ?? ($junta->res_personeria_juridica ?? null);
-            $fechaResPersoneriaRaw = $certificado->fecha_res_personeria_juridica ?? ($junta->fecha_res_personeria_juridica ?? null);
+            $esAsociacion = ($certificado->tipo === 'Asociación' || isset($asociacion));
+            $entidad = $junta ?? ($asociacion ?? null);
+            $resPersoneria = $certificado->res_personeria_juridica ?? ($entidad->res_personeria_juridica ?? null);
+            $fechaResPersoneriaRaw = $certificado->fecha_res_personeria_juridica ?? ($entidad->fecha_res_personeria_juridica ?? null);
             $fechaResPersoneria = null;
             if (!empty($fechaResPersoneriaRaw)) {
                 try {
@@ -92,9 +94,10 @@
                     $fechaResPersoneria = $fechaResPersoneriaRaw;
                 }
             }
+            $tipoEntidadTexto = $esAsociacion ? 'Asociación de Juntas de Acción Comunal' : 'Junta de Acción Comunal';
         @endphp
         <p style="text-align: justify; margin: 0px 40px; line-height: 2;">
-            Que, la Junta de Acción Comunal <strong>{{ $certificado->nombre_junta ?? '________' }}</strong>, 
+            Que, la {{ $tipoEntidadTexto }} <strong>{{ $certificado->nombre_junta ?? '________' }}</strong>, 
             del municipio de <strong>{{ $certificado->comuna ?? '________' }}</strong>, 
             Departamento Norte de Santander, identificada con la personería jurídica No. 
             <strong>{{ ($certificado->resolucion && $certificado->resolucion !== 'No Registra') ? $certificado->resolucion : '________' }}</strong>,

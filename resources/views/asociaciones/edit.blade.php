@@ -37,59 +37,104 @@
             @endif
             <div class="row">
                 <div class="col-12">
-                    <h4>Datos basicos</h4>
+                    <h4>Datos básicos</h4>
                     <hr>
                 </div>
                 <div class="mb-3 col-6">
-                    <label for="nombre">Razón social</label>
+                    <label for="nombre">Razón social <span class="text-danger">*</span></label>
                     <input type="text" name="nombre" value="{{ old('nombre', $asociacion->nombre ?? '') }}"
-                        class="form-control" required readonly>
+                        class="form-control" required>
                 </div>
                 <div class="mb-3 col-6">
                     <label for="resolucion">Resolución</label>
                     <input type="text" name="resolucion" value="{{ old('resolucion', $asociacion->resolucion ?? '') }}"
-                        class="form-control" required readonly>
+                        class="form-control">
                 </div>
                 <div class="mb-3 col-6">
-                    <label for="personeria">Personeria</label>
+                    <label for="personeria">Personería</label>
                     <input type="text" name="personeria" value="{{ old('personeria', $asociacion->personeria ?? '') }}"
-                        class="form-control" required readonly>
+                        class="form-control">
                 </div>
                 <div class="mb-3 col-6">
                     <label for="fecha_resolucion">Fecha resolución</label>
                     <input type="date" name="fecha_resolucion"
-                        value="{{ old('fecha_resolucion', $asociacion->fecha_resolucion ?? '') }}" class="form-control"
-                        required readonly>
+                        value="{{ old('fecha_resolucion', $asociacion->fecha_resolucion ?? '') }}" class="form-control">
                 </div>
+                <div class="mb-3 col-6">
+                    <label for="res_personeria_juridica">Res. Personería Jurídica</label>
+                    <input type="text" name="res_personeria_juridica" id="res_personeria_juridica"
+                        value="{{ old('res_personeria_juridica', $asociacion->res_personeria_juridica ?? '') }}"
+                        class="form-control">
+                </div>
+                <div class="mb-3 col-6">
+                    <label for="fecha_res_personeria_juridica">Fecha Res. Personería Jurídica</label>
+                    <input type="date" name="fecha_res_personeria_juridica" id="fecha_res_personeria_juridica"
+                        value="{{ old('fecha_res_personeria_juridica', $asociacion->fecha_res_personeria_juridica ?? '') }}"
+                        class="form-control">
+                </div>
+
                 <div class="col-12">
-                    <h4>Dignatarios y Comisionados</h4>
+                    <h4>Dignatarios y Período</h4>
                     <hr>
                 </div>
                 <div class="mb-3 col-6">
                     <label for="fecha_eleccion">Fecha elección</label>
                     <input type="date" name="fecha_eleccion"
-                        value="{{ old('fecha_eleccion', $asociacion->fecha_eleccion ?? '') }}" class="form-control"
-                        required>
+                        value="{{ old('fecha_eleccion', $asociacion->fecha_eleccion ?? '') }}" class="form-control">
                 </div>
                 <div class="mb-3 col-6">
-                    <label for="municipio">Municipio</label>
+                    <label for="municipio">Municipio <span class="text-danger">*</span></label>
                     <select name="municipio_id" id="municipio" class="form-select select2" style="width: 100%" required>
                         <option value="">Seleccione municipio</option>
                         @foreach ($municipios as $m)
                             <option value="{{ $m->id }}"
-                                {{ $m->id == $asociacion->municipio_id ? 'selected' : '' }}>
+                                {{ old('municipio_id', $asociacion->municipio_id ?? '') == $m->id ? 'selected' : '' }}>
                                 {{ $m->nombre_municipio }}</option>
                         @endforeach
                     </select>
                 </div>
+
+                <div class="mb-3 col-6">
+                    <label for="auto_numero">Auto No.</label>
+                    <input type="text" name="auto_numero" value="{{ old('auto_numero', $asociacion->auto_numero ?? '') }}" class="form-control">
+                </div>
+                <div class="mb-3 col-6">
+                    <label for="tipo_auto">Tipo Auto</label>
+                    <input type="text" name="tipo_auto" value="{{ old('tipo_auto', $asociacion->tipo_auto ?? '') }}" class="form-control">
+                </div>
+                <div class="mb-3 col-6">
+                    <label for="fecha_auto">Fecha Auto</label>
+                    <input type="date" name="fecha_auto" value="{{ old('fecha_auto', $asociacion->fecha_auto ?? '') }}" class="form-control">
+                </div>
+                <div class="mb-3 col-6">
+                    <label for="fecha_inicio_periodo">Fecha Inicio Periodo</label>
+                    <input type="date" name="fecha_inicio_periodo" value="{{ old('fecha_inicio_periodo', $asociacion->fecha_inicio_periodo ?? '') }}" class="form-control">
+                </div>
+                <div class="mb-3 col-6">
+                    <label for="fecha_final_periodo">Fecha Final Periodo</label>
+                    <input type="date" name="fecha_final_periodo" value="{{ old('fecha_final_periodo', $asociacion->fecha_final_periodo ?? '') }}" class="form-control">
+                </div>
+                <div class="mb-3 col-6">
+                    <label for="tipo_oac">Tipo O.A.C.</label>
+                    <input type="text" name="tipo_oac" value="{{ old('tipo_oac', $asociacion->tipo_oac ?? '') }}" class="form-control">
+                </div>
+                <div class="mb-3 col-6">
+                    <label for="zona">Zona</label>
+                    <select name="zona" id="zona" class="form-select">
+                        <option value="">Seleccione zona</option>
+                        <option value="URBANA" {{ old('zona', $asociacion->zona ?? '') == 'URBANA' ? 'selected' : '' }}>URBANA</option>
+                        <option value="RURAL" {{ old('zona', $asociacion->zona ?? '') == 'RURAL' ? 'selected' : '' }}>RURAL</option>
+                    </select>
+                </div>
+
                 <!-- Select para Presidente -->
                 <div class="mb-3">
                     <label for="presidente">Presidente</label>
-                    <select name="presidente_id" id="presidente" class="form-select select2" style="width: 100%" required>
+                    <select name="presidente_id" id="presidente" class="form-select select2" style="width: 100%">
                         <option value="">Seleccione el presidente</option>
                         @foreach ($funcionarios as $funcionario)
                             <option value="{{ $funcionario->id }}"
-                                {{ $funcionario->id == $asociacion->presidente_id ? 'selected' : '' }}>
+                                {{ old('presidente_id', $asociacion->presidente_id ?? '') == $funcionario->id ? 'selected' : '' }}>
                                 {{ $funcionario->num_documento }} - {{ $funcionario->nombre }}</option>
                         @endforeach
                     </select>
@@ -101,7 +146,7 @@
                         <option value="">Seleccione el vicepresidente</option>
                         @foreach ($funcionarios as $funcionario)
                             <option value="{{ $funcionario->id }}"
-                                {{ $funcionario->id == $asociacion->vicepresidente_id ? 'selected' : '' }}>
+                                {{ old('vicepresidente_id', $asociacion->vicepresidente_id ?? '') == $funcionario->id ? 'selected' : '' }}>
                                 {{ $funcionario->num_documento }} - {{ $funcionario->nombre }}</option>
                         @endforeach
                     </select>
@@ -113,7 +158,7 @@
                         <option value="">Seleccione el secretario</option>
                         @foreach ($funcionarios as $funcionario)
                             <option value="{{ $funcionario->id }}"
-                                {{ $funcionario->id == $asociacion->secretario_id ? 'selected' : '' }}>
+                                {{ old('secretario_id', $asociacion->secretario_id ?? '') == $funcionario->id ? 'selected' : '' }}>
                                 {{ $funcionario->num_documento }} - {{ $funcionario->nombre }}</option>
                         @endforeach
                     </select>
@@ -125,7 +170,7 @@
                         <option value="">Seleccione el tesorero</option>
                         @foreach ($funcionarios as $funcionario)
                             <option value="{{ $funcionario->id }}"
-                                {{ $funcionario->id == $asociacion->tesorero_id ? 'selected' : '' }}>
+                                {{ old('tesorero_id', $asociacion->tesorero_id ?? '') == $funcionario->id ? 'selected' : '' }}>
                                 {{ $funcionario->num_documento }} - {{ $funcionario->nombre }}</option>
                         @endforeach
                     </select>
@@ -137,32 +182,11 @@
                         <option value="">Seleccione el fiscal</option>
                         @foreach ($funcionarios as $funcionario)
                             <option value="{{ $funcionario->id }}"
-                                {{ $funcionario->id == $asociacion->fiscal_id ? 'selected' : '' }}>
+                                {{ old('fiscal_id', $asociacion->fiscal_id ?? '') == $funcionario->id ? 'selected' : '' }}>
                                 {{ $funcionario->num_documento }} - {{ $funcionario->nombre }}</option>
                         @endforeach
                     </select>
                 </div>
-                <div class="mb-3">
-                    <label for="municipio">Municipio de la asociación</label>
-                    <select name="municipio_id" id="municipio" class="form-select select2" style="width: 100%">
-                        <option value="">Seleccione municipio</option>
-                        @foreach ($municipios as $c)
-                            <option value="{{ $c->id }}"
-                                {{ $c->id == $asociacion->municipio_id ? 'selected' : '' }}>
-                                {{ $c->nombre_municipio }}</option>
-                        @endforeach
-                    </select>
-                </div>
-                {{-- <div class="mb-3">
-                    <label for="comuna">Comuna de la asociación</label>
-                    <select name="comuna_id" id="comuna" class="form-select select2" style="width: 100%" required>
-                        <option value="">Seleccione comuna</option>
-                        @foreach ($comunas as $c)
-                            <option value="{{ $c->id }}" {{ $c->id == $asociacion->comuna_id ? 'selected' : '' }}>
-                                {{ $c->nombre }}</option>
-                        @endforeach
-                    </select>
-                </div> --}}
 
                 <div class="mb-3 col-12" style="display:inline-block;">
                     <button type="submit"
@@ -183,10 +207,10 @@
                         data-bs-target="#addCarpetaModal">
                         Registro carpeta
                     </button>
+                    <a href="{{ route('asociaciones.index') }}" class="btn btn-secondary">Volver</a>
                 </div>
             </div>
         </form>
-
 
         <div class="accordion" id="accordionExample">
             <div class="accordion-item border-top">
@@ -197,7 +221,7 @@
                     </button>
                 </h2>
                 <div class="accordion-collapse collapse" id="collapse3" aria-labelledby="heading3"
-                    data-bs-parent="#accordionExample" style="">
+                    data-bs-parent="#accordionExample">
                     <div class="accordion-body pt-0">
                         <table class="table table-striped table-bordered">
                             <thead>
@@ -225,7 +249,7 @@
                                     </tr>
                                 @empty
                                     <tr>
-                                        <td colspan="3">No hay documentos asociados a esta asociación.</td>
+                                        <td colspan="4">No hay comisionados asociados a esta asociación.</td>
                                     </tr>
                                 @endforelse
                             </tbody>
@@ -241,7 +265,7 @@
                     </button>
                 </h2>
                 <div class="accordion-collapse collapse" id="collapseOne" aria-labelledby="headingOne"
-                    data-bs-parent="#accordionExample" style="">
+                    data-bs-parent="#accordionExample">
                     <div class="accordion-body pt-0">
                         <table class="table table-striped table-bordered">
                             <thead>
@@ -270,7 +294,7 @@
                                     </tr>
                                 @empty
                                     <tr>
-                                        <td colspan="3">No hay documentos asociados a esta asociación.</td>
+                                        <td colspan="2">No hay documentos asociados a esta asociación.</td>
                                     </tr>
                                 @endforelse
                             </tbody>
@@ -302,7 +326,7 @@
                                     <tr>
                                         <td>{{ \Carbon\Carbon::parse($auto->fecha)->format('d/m/Y') }}</td>
                                         <td>{{ $auto->numero }}</td>
-                                        <td>{{ $auto->usuario->name }}</td>
+                                        <td>{{ $auto->usuario->name ?? 'N/A' }}</td>
                                         <td>
                                             <a href="{{ asset($auto->keyarchivo) }}" class="btn btn-info btn-sm"
                                                 target="_blank">
@@ -321,23 +345,23 @@
                 </div>
             </div>
             <div class="accordion-item border-top">
-                <h2 class="accordion-header" id="heading3">
+                <h2 class="accordion-header" id="heading4">
                     <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
                         data-bs-target="#collapse4" aria-expanded="false" aria-controls="collapse4">
                         Libros de asociación
                     </button>
                 </h2>
                 <div class="accordion-collapse collapse" id="collapse4" aria-labelledby="heading4"
-                    data-bs-parent="#accordionExample" style="">
+                    data-bs-parent="#accordionExample">
                     <div class="accordion-body pt-0">
                         <table class="table table-striped table-bordered">
                             <thead>
                                 <tr>
-                                    <th>tipo libro</th>
-                                    <th>causal</th>
-                                    <th>fecha</th>
-                                    <th>folios</th>
-                                    <th>responsable</th>
+                                    <th>Tipo libro</th>
+                                    <th>Causal</th>
+                                    <th>Fecha</th>
+                                    <th>Folios</th>
+                                    <th>Responsable</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -347,11 +371,11 @@
                                         <td>{{ $carpeta->causal }}</td>
                                         <td>{{ $carpeta->fecha }}</td>
                                         <td>{{ $carpeta->folios }}</td>
-                                        <td>{{ $carpeta->usuario->name }}</td>
+                                        <td>{{ $carpeta->usuario->name ?? 'N/A' }}</td>
                                     </tr>
                                 @empty
                                     <tr>
-                                        <td colspan="3">No hay documentos asociados a esta asociación.</td>
+                                        <td colspan="5">No hay libros registrados para esta asociación.</td>
                                     </tr>
                                 @endforelse
                             </tbody>
@@ -445,7 +469,7 @@
                             <input type="text" name="nomcomisionado" class="form-control" required>
                         </div>
                         <div class="mb-3">
-                            <label for="nomcomisionado">Documento del comisionado</label>
+                            <label for="doccomisionado">Documento del comisionado</label>
                             <input type="text" name="doccomisionado" class="form-control" required>
                         </div>
                         <input type="hidden" name="owner_type" value="asociacion">
@@ -461,22 +485,21 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="addAutoModalLabel">¿Esta seguro de generar el AUTO?</h5>
+                    <h5 class="modal-title" id="addAutoModalLabel">¿Está seguro de generar el AUTO?</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
                     <form action="{{ route('autos.store') }}" method="POST" enctype="multipart/form-data">
                         @csrf
                         <div class="mb-3">
-                            <label for="tipo">Nombre de la comisión</label>
+                            <label for="tipo">Tipo de documento</label>
                             <select name="tipo" id="tipo" class="form-select" required>
                                 <option value="AUTO">AUTO</option>
                                 <option value="Resolución">Resolución</option>
-
                             </select>
                         </div>
                         <div class="mb-3">
-                            <label for="nomanexo">Digite el número del documento</label>
+                            <label for="numero">Digite el número del documento</label>
                             <input type="text" name="numero" class="form-control" required maxlength="5">
                         </div>
                         <input type="hidden" name="owner_type" value="App\Models\Asociacion">
@@ -494,7 +517,7 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="addCarpetaModalLabel">¿Esta seguro de generar el AUTO?</h5>
+                    <h5 class="modal-title" id="addCarpetaModalLabel">Registro de libro</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
@@ -513,7 +536,7 @@
                             </select>
                         </div>
                         <div class="mb-3">
-                            <label for="causal">causal de cambio</label>
+                            <label for="causal">Causal de cambio</label>
                             <select name="causal" class="form-select" required>
                                 <option value="">Seleccione causal</option>
                                 <option value="DETERIORO">DETERIORO</option>
@@ -549,17 +572,19 @@
             const otraComisionDiv = document.getElementById('otraComisionDiv');
             const otraComisionInput = document.getElementById('otra_comision');
 
-            select.addEventListener('change', function() {
-                if (select.value === 'OTRO') {
-                    otraComisionDiv.classList.remove('d-none');
-                    otraComisionInput.setAttribute('name', 'nomcomision'); // sobreescribe el name original
-                    select.removeAttribute('name');
-                } else {
-                    otraComisionDiv.classList.add('d-none');
-                    otraComisionInput.removeAttribute('name');
-                    select.setAttribute('name', 'nomcomision'); // se restaura
-                }
-            });
+            if (select) {
+                select.addEventListener('change', function() {
+                    if (select.value === 'OTRO') {
+                        otraComisionDiv.classList.remove('d-none');
+                        otraComisionInput.setAttribute('name', 'nomcomision');
+                        select.removeAttribute('name');
+                    } else {
+                        otraComisionDiv.classList.add('d-none');
+                        otraComisionInput.removeAttribute('name');
+                        select.setAttribute('name', 'nomcomision');
+                    }
+                });
+            }
         });
     </script>
 @endsection

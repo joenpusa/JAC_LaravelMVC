@@ -61,6 +61,10 @@ class AutoController extends Controller
             $view = 'certificados.resolucion';
         }
 
+        if (!$owner) {
+            return back()->withErrors(['custom' => 'No se encontró la entidad correspondiente.']);
+        }
+
         // Verifico si ya tiene todos los comisionados
         $comisionados = $owner->comisiones()->get();
         foreach ($cargos as $cargo) {

@@ -64,10 +64,12 @@
     </div>
     @php
         use Carbon\Carbon;
-        function numeroEnLetras($numero)
-        {
-            $formatter = new NumberFormatter('es', NumberFormatter::SPELLOUT);
-            return $formatter->format($numero);
+        if (!function_exists('numeroEnLetras')) {
+            function numeroEnLetras($numero)
+            {
+                $formatter = new NumberFormatter('es', NumberFormatter::SPELLOUT);
+                return $formatter->format($numero);
+            }
         }
         $fecha = Carbon::parse($auto->created_at);
         $dia = $fecha->day;

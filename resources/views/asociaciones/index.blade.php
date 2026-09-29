@@ -3,7 +3,20 @@
 @section('content')
     <div class="container">
         <h1>Lista de Asociaciones</h1>
-        <a href="{{ route('asociaciones.create') }}" class="btn btn-primary mb-3">Crear Nueva</a>
+        <div class="d-flex mb-3 gap-2">
+            <a href="{{ route('asociaciones.create') }}" class="btn btn-primary">Crear Nueva</a>
+            <!-- Botón para abrir la modal de exportación -->
+            <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#exportModal">
+                Exportar
+            </button>
+            @if(auth()->check() && auth()->user()->role && auth()->user()->role->name === 'administrador')
+                <!-- Botón para abrir la modal de importación masiva -->
+                <button type="button" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#importModal">
+                    Importar Masivo
+                </button>
+            @endif
+        </div>
+        
         @if ($errors->any() || ($message = Session::get('error')))
             <div class="alert alert-danger alert-dismissible text-white" role="alert">
                 <span class="text-sm">
@@ -28,10 +41,6 @@
                 </button>
             </div>
         @endif
-        <!-- Botón para abrir la modal -->
-        <button type="button" class="btn btn-success mb-3 ms-2" data-bs-toggle="modal" data-bs-target="#exportModal">
-            Exportar
-        </button>
         <form action="{{ route('asociaciones.index') }}" method="GET" role="search">
             <div class="input-group mb-3">
                 <input type="text" name="search" class="form-control" placeholder="Buscar asociaciones..."
@@ -54,17 +63,17 @@
             <tbody>
                 @foreach ($asociaciones as $j)
                     <tr>
-                        <td>{{ $j->municipio->nombre_municipio }}</td>
+                        <td>{{ $j->municipio->nombre_municipio ?? 'N/A' }}</td>
                         <td>{{ $j->nombre }}</td>
-                        <td>{{ $j->resolucion }}</td>
-                        <td>{{ $j->presidente->nombre }}</td>
+                        <td>{{ $j->resolucion ?? 'Sin resolución' }}</td>
+                        <td>{{ $j->presidente->nombre ?? 'Sin presidente asignado' }}</td>
                         <td>
                             <a href="{{ route('asociaciones.edit', $j->id) }}" class="btn btn-warning">Editar</a>
                             <form action="{{ route('asociaciones.destroy', $j->id) }}" method="POST"
                                 style="display:inline;">
                                 @csrf
                                 @method('DELETE')
-                                <button type="submit" class="btn btn-danger">Eliminar</button>
+                                <button type="submit" class="btn btn-danger" onclick="return confirm('¿Está seguro de eliminar esta asociación?')">Eliminar</button>
                             </form>
                         </td>
                     </tr>
@@ -96,6 +105,10 @@
                                 @endforeach
                             </select>
                         </div>
+                        <p class="text-muted small mb-0">
+                            <i class="fas fa-info-circle me-1"></i>
+                            El archivo Excel generado incluirá toda la información de cada asociación (datos básicos, fechas, autos, período) y la información completa de sus dignatarios (Presidente, Vicepresidente, Secretario, Tesorero, Fiscal y Comisionados).
+                        </p>
                     </div>
                     <div class="modal-footer">
                         <button type="submit" class="btn btn-success">Descargar Excel</button>
@@ -104,4 +117,43 @@
             </form>
         </div>
     </div>
+
+    <!-- Modal de Importación Masiva -->
+    @if(auth()->check() && auth()->user()->role && auth()->user()->role->name === 'administrador')
+    <div class="modal fade" id="importModal" tabindex="-1" aria-labelledby="importModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="importModalLabel">Importar Asociaciones (Masivo)</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <form action="{{ route('asociaciones.import') }}" method="POST" enctype="multipart/form-data">
+                    @csrf
+                    <div class="modal-body">
+                        <div class="mb-3">
+                            <label for="file" class="form-label">Seleccionar archivo (CSV, Excel)</label>
+                            <input class="form-control" type="file" id="file" name="file" required accept=".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel">
+                            <div class="form-text">
+                                El archivo debe contener las columnas: MUNICIPIO, AUTO No., TIPO AUTO, FECHA AUTO, FECHA ELECCION, FECHA INICIO PERIODO, FECHA FINAL PERIODO, NOMBRE O.A.C., PERSONERIA JURIDICA No., TIPO O.A.C., ZONA, # DOCUMENTO PRESIDENTE, # DOCUMENTO VICEPRESIDENTE, # DOCUMENTO SECRETARIO, # DOCUMENTO TESORERO, # DOCUMENTO FISCAL.
+                                <br>
+                                <div class="mt-2 d-flex flex-wrap gap-2 align-items-center">
+                                    <a href="{{ route('asociaciones.plantilla') }}" class="btn btn-outline-primary btn-sm">
+                                        <i class="fas fa-file-excel me-1"></i>Descargar plantilla Excel (.xlsx)
+                                    </a>
+                                    <a href="{{ asset('ejemplo_asociaciones.csv') }}" class="btn btn-link btn-sm p-0" download>
+                                        <i class="fas fa-file-csv me-1"></i>Descargar CSV de referencia
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                        <button type="submit" class="btn btn-success">Importar</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    @endif
 @endsection

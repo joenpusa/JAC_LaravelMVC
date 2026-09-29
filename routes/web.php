@@ -36,6 +36,8 @@ Route::middleware(['auth'])->group(function () {
 
 
     Route::get('/asociaciones/export', [AsociacionController::class, 'export'])->name('asociaciones.export');
+    Route::get('/asociaciones/plantilla', [AsociacionController::class, 'plantilla'])->name('asociaciones.plantilla');
+    Route::post('/asociaciones/import', [AsociacionController::class, 'import'])->name('asociaciones.import');
     Route::resource('asociaciones', AsociacionController::class)->parameters([
         'asociaciones' => 'asociacion'
     ]);

@@ -157,8 +157,12 @@ class DocumentoController extends Controller
 
         $junta = Junta::with('presidente')->find($junta_id);
 
-        if (!$junta || $junta->presidente->num_documento !== $num_documento) {
+        if (!$junta || !$junta->presidente || $junta->presidente->num_documento !== $num_documento) {
             return redirect()->back()->withErrors(['num_documento' => 'El número de documento no coincide con el presidente de la junta seleccionada.']);
+        }
+
+        if (empty($junta->presidente->email)) {
+            return redirect()->back()->withErrors(['error' => 'El presidente no tiene registrado un correo electrónico para el envío de archivos.']);
         }
 
         $documentos = Documento::where('documentable_type', Junta::class)
@@ -257,8 +261,12 @@ class DocumentoController extends Controller
 
         $asociacion = Asociacion::with('presidente')->find($asociacion_id);
 
-        if (!$asociacion || $asociacion->presidente->num_documento !== $num_documentoAso) {
-            return redirect()->back()->withErrors(['num_documento' => 'El número de documento no coincide con el presidente de la asociacion seleccionada.']);
+        if (!$asociacion || !$asociacion->presidente || $asociacion->presidente->num_documento !== $num_documentoAso) {
+            return redirect()->back()->withErrors(['num_documento' => 'El número de documento no coincide con el presidente de la asociación seleccionada.']);
+        }
+
+        if (empty($asociacion->presidente->email)) {
+            return redirect()->back()->withErrors(['error' => 'El presidente no tiene registrado un correo electrónico para el envío de archivos.']);
         }
 
         $documentos = Documento::where('documentable_type', Asociacion::class)
@@ -266,7 +274,7 @@ class DocumentoController extends Controller
             ->get();
 
         if ($documentos->isEmpty()) {
-            return redirect()->back()->withErrors(['error' => 'No hay archivos adjuntos para esta asociacion.']);
+            return redirect()->back()->withErrors(['error' => 'No hay archivos adjuntos para esta asociación.']);
         }
 
         $zip = new \ZipArchive();

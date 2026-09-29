@@ -83,32 +83,44 @@ class CertificadoController extends Controller
         try {
             $validated = $request->validate([
                 'asociacion_id' => 'required|exists:asociaciones,id',
+                'cargo' => 'required|in:PRESIDENTE,VICEPRESIDENTE,SECRETARIO,TESORERO,FISCAL',
                 'num_documentoAso' => 'required|numeric',
             ],[
                 'num_documentoAso.numeric' => 'El documento debe ser numérico.',
-                'asociacion_id.exists' => 'La asociacion no fue encontrada.',
+                'asociacion_id.exists' => 'La asociación no fue encontrada.',
+                'cargo.required' => 'Debe seleccionar un cargo.',
+                'cargo.in' => 'El cargo seleccionado no es válido.',
             ]);
-            $asociacion = Asociacion::find($validated['asociacion_id']);
-            if ($asociacion && $asociacion->presidente && $asociacion->presidente->num_documento == $validated['num_documentoAso']) {
+
+            $asociacion = Asociacion::with(['municipio', 'presidente', 'vicepresidente', 'secretario', 'tesorero', 'fiscal'])->find($validated['asociacion_id']);
+
+            $relacionCargo = strtolower($validated['cargo']); // presidente, vicepresidente, etc.
+            $dignatario = $asociacion ? $asociacion->{$relacionCargo} : null;
+
+            if ($asociacion && $dignatario && $dignatario->num_documento == $validated['num_documentoAso']) {
                 $certificado = Certificado::create([
-                    'nombre_dignatario'   => $asociacion->presidente->nombre,
-                    'comuna'              => $asociacion->municipio->nombre_municipio,
-                    'nombre_junta'        => $asociacion->nombre,
-                    'codigo_hash'         => uniqid(),
-                    'resolucion'          => $asociacion->personeria ?: 'No Registra',
-                    'fecha_resolucion'    =>  date('Y-m-d'),
-                    'fecha_eleccion'      =>  date('Y-m-d'),
-                    'documento_dignario'  => $asociacion->presidente->num_documento,
-                    'tipo'                => 'Asociación'
+                    'nombre_dignatario'             => $dignatario->nombre,
+                    'cargo'                         => $validated['cargo'],
+                    'auto_numero'                   => $asociacion->auto_numero,
+                    'comuna'                        => $asociacion->municipio ? $asociacion->municipio->nombre_municipio : 'N/A',
+                    'nombre_junta'                  => $asociacion->nombre,
+                    'codigo_hash'                   => uniqid(),
+                    'resolucion'                    => $asociacion->personeria ?: 'No Registra',
+                    'res_personeria_juridica'       => $asociacion->res_personeria_juridica ?? null,
+                    'fecha_res_personeria_juridica' => $asociacion->fecha_res_personeria_juridica ?? null,
+                    'fecha_resolucion'              => date('Y-m-d'),
+                    'fecha_eleccion'                => date('Y-m-d'),
+                    'documento_dignario'            => $dignatario->num_documento,
+                    'tipo'                          => 'Asociación'
                 ]);
                 $config = Configuracion::first();
-                $pdf = PDF::loadView('certificados.certificado', compact('certificado','config'));
+                $pdf = PDF::loadView('certificados.certificado', compact('certificado', 'config', 'asociacion'));
                 return $pdf->download('certificadoAsociacion.pdf');
             } else {
-                return redirect()->back()->withErrors(['num_documento' => 'El número de documento no coincide con el presidente de la asociacion seleccionada.']);
+                return redirect()->back()->withErrors(['num_documento' => 'El número de documento no coincide con el ' . strtolower($validated['cargo']) . ' de la asociación seleccionada.']);
             }
         }catch(\Exception $e){
-            return redirect()->back()->withErrors('error', 'Ocurrió un error al procesar su solicitud.');
+            return redirect()->back()->withErrors(['error' => 'Ocurrió un error al procesar su solicitud.']);
         }
     }
 

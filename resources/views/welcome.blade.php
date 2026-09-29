@@ -126,7 +126,18 @@
                                     </select>
                                 </div>
                                 <div class="mb-3">
-                                    <label for="num_documentoAso">Documento Presidente</label>
+                                    <label for="cargoAso" class="form-label">Cargo (Dignidad)</label>
+                                    <select name="cargo" id="cargoAso" class="form-select form-control" required>
+                                        <option value="">Seleccione un cargo</option>
+                                        <option value="PRESIDENTE">PRESIDENTE</option>
+                                        <option value="VICEPRESIDENTE">VICEPRESIDENTE</option>
+                                        <option value="SECRETARIO">SECRETARIO</option>
+                                        <option value="TESORERO">TESORERO</option>
+                                        <option value="FISCAL">FISCAL</option>
+                                    </select>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="num_documentoAso" class="form-label">Documento del Dignatario</label>
                                     <input type="number" name="num_documentoAso" id="num_documentoAso"
                                         class="form-control" required>
                                 </div>
@@ -136,12 +147,10 @@
                                         onclick="descargarArchivosAsociacion()">Solicitar Documentos</button>
                                 </div>
                                 <p class="mt-3">
-                                    Para generar un certificado debes seleccionar la asociación a la que perteneces y
-                                    posteriormente
-                                    digitar el número de documento del dignatario que está registrado asociado como
-                                    presidente.
+                                    Para generar un certificado debes seleccionar la asociación a la que perteneces, el cargo que ocupas y
+                                    posteriormente digitar tu número de documento.
                                     Si los datos son correctos, se descargará automáticamente el documento en PDF con un
-                                    código único de confirmación
+                                    código único de confirmación.
                                 </p>
                             </div>
                         </form>
@@ -260,7 +269,7 @@
                 });
             } else {
                 $('#asociacion_id').empty();
-                $('#asociacion_id').append('<option value="">Seleccione la JAC</option>');
+                $('#asociacion_id').append('<option value="">Seleccione la Asociación</option>');
             }
         }
         // Tus funciones existentes
@@ -280,7 +289,7 @@
             const numDocumento = document.getElementById('num_documentoAso').value;
 
             if (!asociacionId || !numDocumento) {
-                alert('Por favor selecciona una asociación y digita el número de documento del presidente.');
+                alert('Por favor selecciona una asociación y digita el número de documento del dignatario.');
                 return;
             }
             window.location.href = `/asociaciones/${asociacionId}/descargar-archivos/${numDocumento}`;
