@@ -98,7 +98,7 @@
             del municipio de <strong>{{ $certificado->comuna ?? '________' }}</strong>, 
             Departamento Norte de Santander, identificada con la personería jurídica No. 
             <strong>{{ ($certificado->resolucion && $certificado->resolucion !== 'No Registra') ? $certificado->resolucion : '________' }}</strong>,
-            expedida mediante resolución No. <strong>{{ !empty($resPersoneria) ? $resPersoneria : '________' }}</strong> del <strong>{{ !empty($fechaResPersoneria) ? $fechaResPersoneria : '________' }}</strong>, 
+            <!-- expedida mediante resolución No. <strong>{{ !empty($resPersoneria) ? $resPersoneria : '________' }}</strong> del <strong>{{ !empty($fechaResPersoneria) ? $fechaResPersoneria : '________' }}</strong>,  -->
             se encuentra inscrita y registrada en esta secretaría, su 
             <strong>{{ $certificado->cargo ?? 'PRESIDENTE' }}</strong> es 
             <strong>{{ $certificado->nombre_dignatario ?? '________' }}</strong> 
