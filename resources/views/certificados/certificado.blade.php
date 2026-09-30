@@ -93,13 +93,13 @@
             // 2. Conector inteligente 'del ' para el nombre de la entidad
             $rawNombre = trim($certificado->nombre_junta ?? ($entidad->nombre ?? ''));
             if (empty($rawNombre)) {
-                $conector = 'del ';
+                $conector = '';
                 $nombreEntidad = '________';
             } elseif (preg_match('/^(del|de\s+la|de\s+los|de\s+las|de)\s+/i', $rawNombre)) {
                 $conector = '';
                 $nombreEntidad = $rawNombre;
             } else {
-                $conector = 'del ';
+                $conector = '';
                 $nombreEntidad = $rawNombre;
             }
 
