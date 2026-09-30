@@ -82,41 +82,89 @@
         </center>
         <br>
         @php
+            use Carbon\Carbon;
+
             $esAsociacion = ($certificado->tipo === 'Asociación' || isset($asociacion));
             $entidad = $junta ?? ($asociacion ?? null);
-            $resPersoneria = $certificado->res_personeria_juridica ?? ($entidad->res_personeria_juridica ?? null);
-            $fechaResPersoneriaRaw = $certificado->fecha_res_personeria_juridica ?? ($entidad->fecha_res_personeria_juridica ?? null);
-            $fechaResPersoneria = null;
-            if (!empty($fechaResPersoneriaRaw)) {
+
+            // 1. Tipo de entidad diferenciador
+            $tipoEntidadTexto = $esAsociacion ? 'Asociación Comunal de Juntas' : 'Junta de Acción Comunal';
+
+            // 2. Conector inteligente 'del ' para el nombre de la entidad
+            $rawNombre = trim($certificado->nombre_junta ?? ($entidad->nombre ?? ''));
+            if (empty($rawNombre)) {
+                $conector = 'del ';
+                $nombreEntidad = '________';
+            } elseif (preg_match('/^(del|de\s+la|de\s+los|de\s+las|de)\s+/i', $rawNombre)) {
+                $conector = '';
+                $nombreEntidad = $rawNombre;
+            } else {
+                $conector = 'del ';
+                $nombreEntidad = $rawNombre;
+            }
+
+            // 3. Municipio
+            $municipio = $certificado->comuna ?? ($entidad->municipio->nombre_municipio ?? '________');
+            $municipioTexto = strtoupper($municipio);
+
+            // 4. Personería jurídica (desde $entidad->personeria)
+            $personeriaJuridica = !empty($entidad->personeria) ? $entidad->personeria : '________';
+
+            // 5. Resolución y fecha de resolución (usando campos originales 'resolucion' y 'fecha_resolucion')
+            $numResolucion = ($certificado->resolucion && $certificado->resolucion !== 'No Registra') 
+                ? $certificado->resolucion 
+                : (!empty($entidad->resolucion) ? $entidad->resolucion : '________');
+
+            $fechaResolucionRaw = $certificado->fecha_resolucion ?? ($entidad->fecha_resolucion ?? null);
+            $fechaResolucion = '________';
+            if (!empty($fechaResolucionRaw)) {
                 try {
-                    $fechaResPersoneria = \Carbon\Carbon::parse($fechaResPersoneriaRaw)->format('d/m/Y');
+                    $fechaResolucion = Carbon::parse($fechaResolucionRaw)->format('d/m/Y');
                 } catch (\Exception $e) {
-                    $fechaResPersoneria = $fechaResPersoneriaRaw;
+                    $fechaResolucion = $fechaResolucionRaw;
                 }
             }
-            $tipoEntidadTexto = $esAsociacion ? 'Asociación de Juntas de Acción Comunal' : 'Junta de Acción Comunal';
+
+            // 6. Cargo con sufijo (A)
+            $cargoRaw = $certificado->cargo ?? 'PRESIDENTE';
+            $cargoTexto = str_contains($cargoRaw, '(A)') ? $cargoRaw : ($cargoRaw . ' (A)');
+
+            // 7. Periodo dinámico con fallback
+            $inicioPeriodo = null;
+            $finalPeriodo = null;
+            if (!empty($entidad->fecha_inicio_periodo)) {
+                try {
+                    $inicioPeriodo = Carbon::parse($entidad->fecha_inicio_periodo)->locale('es')->translatedFormat('d \d\e F \d\e Y');
+                } catch (\Exception $e) {}
+            }
+            if (!empty($entidad->fecha_final_periodo)) {
+                try {
+                    $finalPeriodo = Carbon::parse($entidad->fecha_final_periodo)->locale('es')->translatedFormat('d \d\e F \d\e Y');
+                } catch (\Exception $e) {}
+            }
+
+            if (!$inicioPeriodo || !$finalPeriodo) {
+                if ($esAsociacion) {
+                    $inicioPeriodo = '01 de septiembre de 2026';
+                    $finalPeriodo = '31 de agosto de 2030';
+                } else {
+                    $inicioPeriodo = '01 de julio de 2026';
+                    $finalPeriodo = '30 de junio de 2030';
+                }
+            }
+            $periodoTexto = "{$inicioPeriodo} al {$finalPeriodo}";
         @endphp
+
         <p style="text-align: justify; margin: 0px 40px; line-height: 2;">
-            Que, la {{ $tipoEntidadTexto }} <strong>{{ $certificado->nombre_junta ?? '________' }}</strong>, 
-            del municipio de <strong>{{ $certificado->comuna ?? '________' }}</strong>, 
-            Departamento Norte de Santander, identificada con la personería jurídica No. 
-            <strong>{{ ($certificado->resolucion && $certificado->resolucion !== 'No Registra') ? $certificado->resolucion : '________' }}</strong>,
-            <!-- expedida mediante resolución No. <strong>{{ !empty($resPersoneria) ? $resPersoneria : '________' }}</strong> del <strong>{{ !empty($fechaResPersoneria) ? $fechaResPersoneria : '________' }}</strong>,  -->
-            se encuentra inscrita y registrada en esta secretaría, su 
-            <strong>{{ $certificado->cargo ?? 'PRESIDENTE' }}</strong> es 
-            <strong>{{ $certificado->nombre_dignatario ?? '________' }}</strong> 
-            identificado con cédula No. <strong>{{ $certificado->documento_dignario ?? '________' }}</strong> 
-            reconocido mediante el auto No. <strong>{{ $certificado->auto_numero ?? '________' }}</strong> 
-            para el periodo 01 de julio de 2026 al 30 de junio de 2030.
+            Que, la {{ $tipoEntidadTexto }} {{ $conector }}{{ $nombreEntidad }}, del municipio de <strong>{{ $municipioTexto }}</strong>, Departamento Norte de Santander, identificada con la personería jurídica No. <strong>{{ $personeriaJuridica }}</strong>, expedida mediante resolución No. <strong>{{ $numResolucion }}</strong> del <strong>{{ $fechaResolucion }}</strong>, se encuentra inscrita y registrada en esta secretaría, su <strong>{{ $cargoTexto }}</strong> es <strong>{{ $certificado->nombre_dignatario ?? '________' }}</strong> identificado (a) con cédula No. <strong>{{ $certificado->documento_dignario ?? '________' }}</strong> reconocido (a) para el periodo <strong>{{ $periodoTexto }}</strong>.
         </p>
         <br>
         <p style="text-align: justify; margin: 0px 40px; line-height: 2;">
-            La anterior se expide a solicitud de interesado.
+            La anterior se expide a solicitud del interesado.
         </p>
         <br>
         <br>
         @php
-            use Carbon\Carbon;
             if (!function_exists('numeroEnLetras')) {
                 function numeroEnLetras($numero)
                 {
@@ -128,7 +176,7 @@
             $dia = $fecha->day;
             $diaEnLetras = numeroEnLetras($dia);
             $diaConCero = str_pad($dia, 2, '0', STR_PAD_LEFT);
-            $mesNombre = $fecha->translatedFormat('F');
+            $mesNombre = $fecha->locale('es')->translatedFormat('F');
             $anio = $fecha->year;
         @endphp
         <p style="margin: 0px 40px;">Dada en San José de Cúcuta a los {{ $diaEnLetras }} ({{ $diaConCero }}) días del mes de {{ $mesNombre }} de {{ $anio }}.</p>
@@ -136,15 +184,6 @@
         <p style="text-align: justify; margin: 0px 40px; line-height: 2;">
             Nota: El número de certificado corresponde a la firma y autenticación de la constancia.
         </p>
-        <!-- <br>
-        <center>
-            @if(isset($config) && $config->keyfirma)
-                <img src="{{ public_path($config->keyfirma) }}"
-                    style="max-width: 220px; max-height: 120px; margin-bottom: -20px;" />
-            @endif
-            <h4 style="margin: 0px;">{{ $config->nombre_secretario ?? 'Secretario(a) de Desarrollo Social' }}</h4>
-            <h4 style="margin: 0px;">{{ $config->secretaria ?? 'Secretaría de Desarrollo Social' }}</h4>
-        </center> -->
     </div>
 </body>
 

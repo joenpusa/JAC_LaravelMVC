@@ -56,14 +56,12 @@ class CertificadoController extends Controller
                     'nombre_dignatario'             => $dignatario->nombre,
                     'cargo'                         => $validated['cargo'],
                     'auto_numero'                   => $junta->auto_numero,
-                    'comuna'                        => $junta->municipio->nombre_municipio,
+                    'comuna'                        => $junta->municipio ? $junta->municipio->nombre_municipio : 'N/A',
                     'nombre_junta'                  => $junta->nombre,
                     'codigo_hash'                   => uniqid(),
-                    'resolucion'                    => $junta->personeria ?: 'No Registra',
-                    'res_personeria_juridica'       => $junta->res_personeria_juridica ?? null,
-                    'fecha_res_personeria_juridica' => $junta->fecha_res_personeria_juridica ?? null,
-                    'fecha_resolucion'              => date('Y-m-d'),
-                    'fecha_eleccion'                => date('Y-m-d'),
+                    'resolucion'                    => $junta->resolucion ?: 'No Registra',
+                    'fecha_resolucion'              => $junta->fecha_resolucion ?? date('Y-m-d'),
+                    'fecha_eleccion'                => $junta->fecha_eleccion ?? date('Y-m-d'),
                     'documento_dignario'            => $dignatario->num_documento,
                     'tipo'                          => 'Junta'
                 ]);
@@ -105,11 +103,9 @@ class CertificadoController extends Controller
                     'comuna'                        => $asociacion->municipio ? $asociacion->municipio->nombre_municipio : 'N/A',
                     'nombre_junta'                  => $asociacion->nombre,
                     'codigo_hash'                   => uniqid(),
-                    'resolucion'                    => $asociacion->personeria ?: 'No Registra',
-                    'res_personeria_juridica'       => $asociacion->res_personeria_juridica ?? null,
-                    'fecha_res_personeria_juridica' => $asociacion->fecha_res_personeria_juridica ?? null,
-                    'fecha_resolucion'              => date('Y-m-d'),
-                    'fecha_eleccion'                => date('Y-m-d'),
+                    'resolucion'                    => $asociacion->resolucion ?: 'No Registra',
+                    'fecha_resolucion'              => $asociacion->fecha_resolucion ?? date('Y-m-d'),
+                    'fecha_eleccion'                => $asociacion->fecha_eleccion ?? date('Y-m-d'),
                     'documento_dignario'            => $dignatario->num_documento,
                     'tipo'                          => 'Asociación'
                 ]);

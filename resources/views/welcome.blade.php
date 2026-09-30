@@ -193,7 +193,7 @@
                                                         @endif
                                                         @if(!empty($certInfo['resolucion']))
                                                         <tr>
-                                                            <td class="text-muted pe-2"><i class="material-icons align-middle" style="font-size: 16px;">description</i> Personería Jurídica No.:</td>
+                                                            <td class="text-muted pe-2"><i class="material-icons align-middle" style="font-size: 16px;">description</i> Resolución No.:</td>
                                                             <td class="fw-bold text-dark">{{ $certInfo['resolucion'] }}</td>
                                                         </tr>
                                                         @endif
