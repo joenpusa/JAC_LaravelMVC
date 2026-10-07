@@ -97,7 +97,7 @@
             <strong>CONSIDERANDO:</strong>
         </center>
         <p>
-            QUE: eL Señor <strong>{{ $owner->presidente->nombre }}</strong>, identificado con c'edula de ciudadania No.
+            QUE: eL Señor <strong>{{ $owner->presidente->nombre ?? 'Sin asignar' }}</strong>, identificado con c'edula de ciudadania No.
             <strong>{{ $owner->municipio->nombre_municipio }}</strong>, en su condicion de Presidente de la Junta de
             Accion Cumunal <strong>{{ $owner->nombre }}</strong> del Departamento Norte de Santander."
             constituida EN ASAMBLEA General de afiliados el {{ $owner->fecha_eleccion }}; Presentó a ésta oficina
@@ -141,10 +141,20 @@
             Expedida en San José de Cúcuta, a los {{ $diaEnLetras }} ({{ $diaConCero }}) días del mes de
             {{ $mesNombre }} de {{ $anio }}.
         </p>
-        <center>
-            <img src="{{ public_path($config->keyfirma) }}" style="max-width: 220px; max-height: 120px;" />
-            <h4>{{ $config->nombre_secretario }}<br>{{ $config->secretaria }}</h4>
-        </center>
+        @php
+            $tieneFirma = $config && !empty($config->keyfirma) && file_exists(public_path($config->keyfirma));
+            $tieneSecretario = $config && (!empty($config->nombre_secretario) || !empty($config->secretaria));
+        @endphp
+        @if ($tieneFirma || $tieneSecretario)
+            <center>
+                @if ($tieneFirma)
+                    <img src="{{ public_path($config->keyfirma) }}" style="max-width: 220px; max-height: 120px;" />
+                @endif
+                @if ($tieneSecretario)
+                    <h4>{{ $config->nombre_secretario ?? '' }}<br>{{ $config->secretaria ?? '' }}</h4>
+                @endif
+            </center>
+        @endif
     </div>
 </body>
 

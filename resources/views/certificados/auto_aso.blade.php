@@ -167,17 +167,19 @@
                     {{ $owner->fiscal->num_documento ?? '' }}
                 </td>
             </tr>
+            @if ($owner->comisiones->firstWhere('nomcomision', 'FISCAL SUPLENTE'))
             <tr>
                 <td style="width: 25%">
                     <strong>FISCAL SUPLENTE</strong>
                 </td>
                 <td style="width: 50%">
-                    {{ $owner->comisiones->firstWhere('nomcomision', 'FISCAL SUPLENTE')?->nomcomisionado }}
+                    {{ $owner->comisiones->firstWhere('nomcomision', 'FISCAL SUPLENTE')->nomcomisionado }}
                 </td>
                 <td style="width: 25%">
-                    {{ $owner->comisiones->firstWhere('nomcomision', 'FISCAL SUPLENTE')?->doccomisionado }}
+                    {{ $owner->comisiones->firstWhere('nomcomision', 'FISCAL SUPLENTE')->doccomisionado }}
                 </td>
             </tr>
+            @endif
 
         </table>
         <p><strong>COMISIÓN CONCILIADORA</strong></p>
@@ -311,11 +313,21 @@
             <br>
             Dado en San José de Cúcuta,
         </p>
-        <center>
-            <img src="{{ public_path($config->keyfirma) }}"
-                style="max-width: 220px; max-height: 120px; margin-bottom: -20px;" />
-            <h4 style="margin: 0px;">{{ $config->nombre_secretario }}<br>{{ $config->secretaria }}</h4>
-        </center>
+        @php
+            $tieneFirma = $config && !empty($config->keyfirma) && file_exists(public_path($config->keyfirma));
+            $tieneSecretario = $config && (!empty($config->nombre_secretario) || !empty($config->secretaria));
+        @endphp
+        @if ($tieneFirma || $tieneSecretario)
+            <center>
+                @if ($tieneFirma)
+                    <img src="{{ public_path($config->keyfirma) }}"
+                        style="max-width: 220px; max-height: 120px; margin-bottom: -20px;" />
+                @endif
+                @if ($tieneSecretario)
+                    <h4 style="margin: 0px;">{{ $config->nombre_secretario ?? '' }}<br>{{ $config->secretaria ?? '' }}</h4>
+                @endif
+            </center>
+        @endif
     </div>
 </body>
 

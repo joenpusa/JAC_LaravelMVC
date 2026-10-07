@@ -406,9 +406,25 @@
                                 <option value="Acta de Conformación Asociación">Acta de Conformación Asociación</option>
                                 <option value="Acta Elección de Dignatarios">Acta Elección de Dignatarios</option>
                                 <option value="Estatutos">Estatutos</option>
+                                <option value="Auto Total">Auto Total</option>
+                                <option value="Auto Parcial">Auto Parcial</option>
+                                <option value="Auto Corrección">Auto Corrección</option>
+                                <option value="Auto no Inscripción">Auto no Inscripción</option>
+                                <option value="Auto de Requerimiento">Auto de Requerimiento</option>
+                                <option value="Resolución Personería Jurídica">Resolución Personería Jurídica</option>
+                                <option value="Resolución de Estatutos">Resolución de Estatutos</option>
+                                <option value="Resolución Cambio de Jurisdicción">Resolución Cambio de Jurisdicción</option>
+                                <option value="Resolución Cambio de Razón social">Resolución Cambio de Razón social</option>
                                 <option value="RUC">RUC</option>
-                                <option value="Camara de comercio">Camara de comercio</option>
+                                <option value="RUT">RUT</option>
+                                <option value="RUV">RUV</option>
+                                <option value="Cámara de Comercio">Cámara de Comercio</option>
+                                <option value="OTRO">OTRO</option>
                             </select>
+                        </div>
+                        <div class="mb-3 d-none" id="otroDocumentoDiv">
+                            <label for="otro_documento">Nombre del soporte a cargar</label>
+                            <input type="text" id="otro_documento" class="form-control" placeholder="Especifique el nombre del soporte">
                         </div>
                         <div class="mb-3">
                             <label for="archivo">Archivo</label>
@@ -577,11 +593,35 @@
                     if (select.value === 'OTRO') {
                         otraComisionDiv.classList.remove('d-none');
                         otraComisionInput.setAttribute('name', 'nomcomision');
+                        otraComisionInput.setAttribute('required', 'required');
                         select.removeAttribute('name');
                     } else {
                         otraComisionDiv.classList.add('d-none');
                         otraComisionInput.removeAttribute('name');
+                        otraComisionInput.removeAttribute('required');
                         select.setAttribute('name', 'nomcomision');
+                    }
+                });
+            }
+
+            const selectDoc = document.getElementById('nomanexo');
+            const otroDocDiv = document.getElementById('otroDocumentoDiv');
+            const otroDocInput = document.getElementById('otro_documento');
+
+            if (selectDoc) {
+                selectDoc.addEventListener('change', function() {
+                    if (selectDoc.value === 'OTRO') {
+                        otroDocDiv.classList.remove('d-none');
+                        otroDocInput.setAttribute('name', 'nomanexo');
+                        otroDocInput.setAttribute('required', 'required');
+                        selectDoc.removeAttribute('name');
+                        selectDoc.removeAttribute('required');
+                    } else {
+                        otroDocDiv.classList.add('d-none');
+                        otroDocInput.removeAttribute('name');
+                        otroDocInput.removeAttribute('required');
+                        selectDoc.setAttribute('name', 'nomanexo');
+                        selectDoc.setAttribute('required', 'required');
                     }
                 });
             }

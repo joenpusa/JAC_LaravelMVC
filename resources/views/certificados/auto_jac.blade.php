@@ -114,10 +114,10 @@
                     <strong>PRESIDENTE</strong>
                 </td>
                 <td style="width: 50%">
-                    {{ $owner->presidente->nombre }}
+                    {{ $owner->presidente->nombre ?? 'Sin asignar' }}
                 </td>
                 <td style="width: 25%">
-                    {{ $owner->presidente->num_documento }}
+                    {{ $owner->presidente->num_documento ?? '' }}
                 </td>
             </tr>
             <tr>
@@ -125,10 +125,10 @@
                     <strong>VICEPRESIDENTE</strong>
                 </td>
                 <td style="width: 50%">
-                    {{ $owner->vicepresidente->nombre }}
+                    {{ $owner->vicepresidente->nombre ?? 'Sin asignar' }}
                 </td>
                 <td style="width: 25%">
-                    {{ $owner->vicepresidente->num_documento }}
+                    {{ $owner->vicepresidente->num_documento ?? '' }}
                 </td>
             </tr>
             <tr>
@@ -136,10 +136,10 @@
                     <strong>TESORERO</strong>
                 </td>
                 <td style="width: 50%">
-                    {{ $owner->tesorero->nombre }}
+                    {{ $owner->tesorero->nombre ?? 'Sin asignar' }}
                 </td>
                 <td style="width: 25%">
-                    {{ $owner->tesorero->num_documento }}
+                    {{ $owner->tesorero->num_documento ?? '' }}
                 </td>
             </tr>
             <tr>
@@ -147,10 +147,10 @@
                     <strong>SECRETARIO</strong>
                 </td>
                 <td style="width: 50%">
-                    {{ $owner->secretario->nombre }}
+                    {{ $owner->secretario->nombre ?? 'Sin asignar' }}
                 </td>
                 <td style="width: 25%">
-                    {{ $owner->secretario->num_documento }}
+                    {{ $owner->secretario->num_documento ?? '' }}
                 </td>
             </tr>
         </table>
@@ -161,10 +161,10 @@
                     <strong>FISCAL</strong>
                 </td>
                 <td style="width: 50%">
-                    {{ $owner->fiscal->nombre }}
+                    {{ $owner->fiscal->nombre ?? 'Sin asignar' }}
                 </td>
                 <td style="width: 25%">
-                    {{ $owner->fiscal->num_documento }}
+                    {{ $owner->fiscal->num_documento ?? '' }}
                 </td>
             </tr>
         </table>
@@ -321,11 +321,21 @@
             <br>
             Dado en San José de Cúcuta,
         </p>
-        <center>
-            <img src="{{ public_path($config->keyfirma) }}"
-                style="max-width: 220px; max-height: 120px; margin-bottom: -20px;" />
-            <h4 style="margin: 0px;">{{ $config->nombre_secretario }}<br>{{ $config->secretaria }}</h4>
-        </center>
+        @php
+            $tieneFirma = $config && !empty($config->keyfirma) && file_exists(public_path($config->keyfirma));
+            $tieneSecretario = $config && (!empty($config->nombre_secretario) || !empty($config->secretaria));
+        @endphp
+        @if ($tieneFirma || $tieneSecretario)
+            <center>
+                @if ($tieneFirma)
+                    <img src="{{ public_path($config->keyfirma) }}"
+                        style="max-width: 220px; max-height: 120px; margin-bottom: -20px;" />
+                @endif
+                @if ($tieneSecretario)
+                    <h4 style="margin: 0px;">{{ $config->nombre_secretario ?? '' }}<br>{{ $config->secretaria ?? '' }}</h4>
+                @endif
+            </center>
+        @endif
     </div>
 </body>
 
