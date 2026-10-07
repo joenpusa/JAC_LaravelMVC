@@ -1,37 +1,28 @@
-<nav class="collapse navbar-collapse justify-content-between">
-    <div class="navbar-logo w-100">
-        <a class="btn navbar-toggler navbar-toggler-humburger-icon hover-bg-transparent"
-            href="{{ Auth::check() ? url('/home') : url('/') }}">
-            <span class="navbar-toggle-icon"><span class="toggle-line"></span></span>
-        </a>
-        <a class="navbar-brand me-1 me-sm-3" href="{{ Auth::check() ? url('/home') : url('/') }}">
-            <div class="d-flex align-items-center">
-                <div class="d-flex align-items-center">
-                    <img src="{{ asset($appConfig->logo) }}" alt="JUNTAS NDS" width="100" />
-                    <h5 class="logo-text ms-2 d-none d-sm-block">JUNTAS NDS</h5>
-                </div>
+<div class="container d-flex align-items-center justify-content-between py-2">
+    <a class="navbar-brand d-flex align-items-center text-decoration-none" href="{{ Auth::check() ? url('/home') : url('/') }}">
+        @if(isset($appConfig) && $appConfig->logo)
+            <img src="{{ asset($appConfig->logo) }}" alt="{{ $appConfig->nombre_app ?? 'JUNTAS NDS' }}" height="38" style="object-fit: contain;" />
+        @else
+            <div class="d-inline-flex align-items-center justify-content-center bg-primary text-white rounded-3 p-2 me-2 shadow-sm" style="width: 36px; height: 36px;">
+                <i class="material-icons" style="font-size: 20px;">account_balance</i>
             </div>
-        </a>
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul class="navbar-nav me-auto">
+        @endif
+        <span class="fw-bold ms-2 fs-6 text-dark tracking-tight">{{ $appConfig->nombre_app ?? 'JUNTAS NDS' }}</span>
+    </a>
 
-            </ul>
-
-            <ul class="navbar-nav ms-auto">
-                @guest
-                    @if (Route::has('login'))
-                        <li class="nav-item">
-                            <a class="nav-link" href="{{ route('login') }}">
-                                <div class="d-flex align-items-center">
-                                    <i class="material-icons opacity-10">login</i>
-                                    <span class="ms-2">Ingresar</span>
-                                </div>
-                            </a>
-                        </li>
-                    @endif
-                @endguest
-            </ul>
-        </div>
+    <div class="d-flex align-items-center gap-2">
+        @auth
+            <a href="{{ route('home') }}" class="btn btn-primary d-inline-flex align-items-center gap-1">
+                <i class="material-icons" style="font-size: 18px;">dashboard</i>
+                <span>Panel de Control</span>
+            </a>
+        @else
+            @if (Route::has('login'))
+                <a href="{{ route('login') }}" class="btn btn-outline-primary d-inline-flex align-items-center gap-1">
+                    <i class="material-icons" style="font-size: 18px;">login</i>
+                    <span>Iniciar Sesión</span>
+                </a>
+            @endif
+        @endauth
     </div>
-
-</nav>
+</div>

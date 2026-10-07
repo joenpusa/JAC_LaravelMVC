@@ -4,24 +4,7 @@
     <div class="container">
         <div class="row justify-content-center">
             <div class="col-md-8">
-                @if ($errors->any())
-                    <div class="alert alert-outline-danger d-flex align-items-center" role="alert">
-                        <i class="material-icons opacity-10">error</i>
-                        <p class="mb-0 ml-2 flex-1">Proceso no realizado:
-                            @foreach ($errors->all() as $error)
-                                {{ $error }}<br>
-                            @endforeach
-                        </p>
-                        <button class="btn-close" type="button" data-bs-dismiss="alert" aria-label="Close"></button>
-                    </div>
-                @endif
-
-                @if (session('success') && !session('certificado_validado'))
-                    <div class="alert alert-success alert-dismissible fade show mt-2 mb-2" role="alert">
-                        {{ session('success') }}
-                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                    </div>
-                @endif
+                @include('layouts.alerts')
                 <ul class="nav nav-underline" id="myTab" role="tablist">
                     <li class="nav-item" role="presentation">
                         <button class="nav-link {{ session('tab') === 'validate' ? '' : 'active' }}" id="generate-tab" data-bs-toggle="tab" data-bs-target="#generate"
